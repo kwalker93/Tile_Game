@@ -1,0 +1,262 @@
+#include "stdafx.h"
+
+#include "Utilities/Point.h"
+#include "Utilities/Rect.h"
+#include "DxFramework/DxFramework.h"
+#include "Bomberman/Kitty.h"
+
+//Check on device
+//=======================================================================
+Kitty::Kitty ( )
+{
+   myFirstTimeFlag = true;
+   myDirection = STILLDOWN;
+   mySpeed = 1.3F;
+	myPosition.x = myPosition.y = myPosition.z = 0;
+	myLastPosition.x = myLastPosition.y = myLastPosition.z = 0;
+
+}
+//=======================================================================
+Kitty::~Kitty ( )
+{
+}
+//=======================================================================
+bool Kitty::init()
+{
+   myDirection = STILLDOWN;
+   //TODO: other static init...?
+   return true;
+}
+//=======================================================================
+void Kitty::update()
+{
+   myLastPosition.x = myPosition.x;
+   myLastPosition.y = myPosition.y;
+   mySprite.update();
+   myPosition.x = mySprite.getXPosition();
+   myPosition.y = mySprite.getYPosition();
+
+}
+//=======================================================================
+
+//=======================================================================
+bool Kitty::loadCharacterAnimations ()
+{
+   if( myFirstTimeFlag )
+   {
+      myFirstTimeFlag = false;
+      myCatStillAnim = DxAssetManager::getInstance().getAnimationCopy( "BCAT-STILL", 10, D3DCOLOR_XRGB( 170, 181, 129 ) );
+
+      myCatWalkDownAnim = DxAssetManager::getInstance().getAnimationCopy( "BCAT-DOWN", 10, D3DCOLOR_XRGB( 170, 181, 129 ) );
+      myCatWalkLeftAnim = DxAssetManager::getInstance().getAnimationCopy( "BCAT-LEFT", 10, D3DCOLOR_XRGB( 170, 181, 129 ) );
+      myCatWalkRightAnim = DxAssetManager::getInstance().getAnimationCopy( "BCAT-RIGHT", 10, D3DCOLOR_XRGB( 170, 181, 129 ) );
+      myCatWalkUpAnim = DxAssetManager::getInstance().getAnimationCopy( "BCAT-UP", 10, D3DCOLOR_XRGB( 170, 181, 129 ) );
+      
+      myCatStillDownAnim = DxAssetManager::getInstance().getAnimationCopy( "BCAT-STILLDOWN", 10, D3DCOLOR_XRGB( 170, 181, 129 ) );
+      myCatStillLeftAnim = DxAssetManager::getInstance().getAnimationCopy( "BCAT-STILLLEFT", 10, D3DCOLOR_XRGB( 170, 181, 129 ) );
+      myCatStillRightAnim = DxAssetManager::getInstance().getAnimationCopy( "BCAT-STILLRIGHT", 10, D3DCOLOR_XRGB( 170, 181, 129 ) );
+      myCatStillUpAnim = DxAssetManager::getInstance().getAnimationCopy( "BCAT-STILLUP", 10, D3DCOLOR_XRGB( 170, 181, 129 ) );
+      
+      myCatBlowUpAnim = DxAssetManager::getInstance().getAnimationCopy( "BCAT-BLOWUP", 10, D3DCOLOR_XRGB( 170, 181, 129 ) );   
+   }
+   return true;
+}
+//=======================================================================
+// TURNS OFF ALL KITTY DIRECTIONAL MOTION!!!@
+bool Kitty::goStop ( )
+{
+   Direction prevDirection = myDirection;
+
+   // Stop actual sprite motion.
+   mySprite.setXVel(0.0f);
+   mySprite.setYVel(0.0f);
+
+   // Set next state based on Current state.
+   switch ( myDirection )
+   {
+   case Direction::UP:
+   case Direction::STILLUP:
+      myDirection = Direction::STILLUP;
+      break;
+   case Direction::DOWN:
+   case Direction::STILLDOWN:
+      myDirection = Direction::STILLDOWN;
+      break;
+   case Direction::LEFT:
+   case Direction::STILLLEFT:
+      myDirection = Direction::STILLLEFT;
+      break;
+   case Direction::RIGHT:
+   case Direction::STILLRIGHT:
+      myDirection = Direction::STILLRIGHT;
+      break;
+   default:
+      myDirection = Direction::STILL;
+      break;
+   }
+
+
+   if ( prevDirection != myDirection )
+        stillDirection( prevDirection );
+
+   return true;
+}
+//=======================================================================
+//TODO: Consider actual motion...
+//  If current move state == up, nothing to do.
+// otherwise....
+//    kitty state == UP : Immediate change
+   // if kitty is ANY OTHER STILL, change to STILLUP state
+//    ??? Change from any to STILL UP on first keypress????
+//    if kitty is ANY STILL or STILLUP, change to UP state.
+bool Kitty::goUp ( )
+{
+   Direction temp = myDirection;
+   myDirection = Direction::UP;
+   mySprite.setXVel(+0.0f);
+   mySprite.setYVel(-mySpeed);   //TODO :  Constant somewhere for kitty speed
+   //mySprite.changeAnimation( "BCAT-UP" );
+
+   if(myDirection != temp)
+      mySprite.changeAnimation( myCatWalkUpAnim );
+
+   return true;
+}
+//=======================================================================
+bool Kitty::goDown ( )
+{
+   Direction temp = myDirection;
+   myDirection = Direction::DOWN;
+   mySprite.setXVel(+0.0f);
+   mySprite.setYVel(+mySpeed);   //TODO :  Constant somewhere for kitty speed
+   //mySprite.changeAnimation( "BCAT-UP" );
+   if(myDirection != temp)
+      mySprite.changeAnimation( myCatWalkDownAnim );
+
+   return true;
+}
+//=======================================================================
+bool Kitty::goLeft()
+{
+   Direction temp = myDirection;
+   myDirection = Direction::LEFT;
+   mySprite.setXVel(-mySpeed);
+   mySprite.setYVel(+0.0f); //TODO :  Constant somewhere for kitty speed
+   //mySprite.changeAnimation( "BCAT-UP" );
+   if(myDirection != temp)
+      mySprite.changeAnimation( myCatWalkLeftAnim );
+
+   return true;
+}
+//=======================================================================
+bool Kitty::goRight()
+{
+   Direction temp = myDirection;
+   myDirection = Direction::RIGHT;
+   mySprite.setXVel(+mySpeed);
+   mySprite.setYVel(+0.0f); //TODO :  Constant somewhere for kitty speed
+   if(myDirection != temp)
+      mySprite.changeAnimation( myCatWalkRightAnim );
+
+   return true;
+}
+
+bool Kitty::goReverse()
+{
+   mySprite.setXVel( -mySprite.getXVel() );
+   mySprite.setYVel( -mySprite.getYVel() );
+   return true;
+}
+
+//=======================================================================
+bool Kitty::goStillUp()
+{
+   mySprite.changeAnimation( myCatStillUpAnim );
+   return true;
+}
+
+//=======================================================================
+bool Kitty::goStillDown()
+{
+   mySprite.changeAnimation( myCatStillDownAnim );
+   return true;
+}
+
+//=======================================================================
+bool Kitty::goStillLeft()
+{
+   mySprite.changeAnimation( myCatStillLeftAnim );
+   return true;
+}
+
+//=======================================================================
+bool Kitty::goStillRight()
+{
+   mySprite.changeAnimation( myCatStillRightAnim );
+   return true;
+}
+
+
+//=======================================================================
+bool Kitty::stillDirection( Direction prevDirection )
+{
+   switch( prevDirection )
+   {
+      case UP:
+         myDirection = STILLUP;
+         goStillUp();
+         break;
+      case DOWN:
+         myDirection = STILLDOWN;
+         goStillDown();
+         break;
+      case LEFT:
+         myDirection = STILLLEFT;
+         goStillLeft();
+         break;
+      case RIGHT:
+         myDirection = STILLRIGHT;
+         goStillRight();
+         break;
+      default:
+         myDirection = STILL;
+         assert( false );
+         break;
+   }
+   return true;
+}
+//=======================================================================
+
+bool Kitty::create ( IDXDEVICE device, int xPos, int yPos )
+{
+   myDirection = STILLDOWN;
+   loadCharacterAnimations();
+   
+   // Kitty::bCatStandStill.drawFrame( DxFramework::spriteInterface(), &myPlayerPos, &D3DXVECTOR2(1,1), 0, NULL, D3DCOLOR_ARGB( 255, 255, 255, 255 ) );
+   //TODO: Multiple animations associated with Kitty sprite
+   bool b = mySprite.create( "BCAT-STILL" );
+
+   mySprite.setScale( .25f, .25f );
+   mySprite.evaluateCenter();
+   Rect boundRect( xPos, yPos, xPos+32, yPos+32 );
+   mySprite.setCollisionArea( boundRect );
+   mySprite.setPosition( float(xPos), float(yPos) );
+   myPosition.x = mySprite.getXPosition();
+   myPosition.y = mySprite.getYPosition();
+
+   assert(b);
+
+   //TODO: OTHER ANIMATIONS ?  Add?  Select??
+   
+   return b;
+}
+
+//=======================================================================
+bool Kitty::draw ( IDXSPRITE spriteObj )
+{
+   bool  b = true;
+   
+   mySprite.draw( spriteObj );
+
+   return b;
+}

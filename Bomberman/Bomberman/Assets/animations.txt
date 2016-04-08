@@ -1,0 +1,68 @@
+# Base read file. This file will call any sprite sheets needed, 
+# load them, and allow us to create animations from specified
+# frames
+
+
+
+
+# filename is the texture's symbol
+@file spritesheet01.png
+
+
+# This makes a texture symbol that is 100x100 at 0,0  TLC.
+#THEENDTEXTURE 3 0 0 100 100
+
+
+# Type		- The type of animatio, this can be the following:
+#			0 - Looping
+#			1 - Rocking
+#			2 - Single loop
+#           		3 - Texture
+#           		4 - Surface
+
+
+# ALL LINES MUST BE IN THE FOLLOWING FORMAT:
+# symbol			type	x   y   width height	{more x y width height's}
+#
+BCAT-UP				0	365 5   80  108		455 5   80  108		545 5   80  108 	635 5 	80 108
+BCAT-STILLUP			0	365 5   80  108      
+
+BCAT-DOWN			0	5   5   80  108		95  5   80  108		185 5   80  108         275 5 	80 108		
+BCAT-STILLDOWN			0       5   5 	80  108	
+
+BCAT-LEFT			0	725 5   80  108		815 5   80  108		905 5   80  108		995 5   80 108
+BCAT-STILLLEFT                  0       725 5   80  108
+
+BCAT-RIGHT			0	1085   5 80  108	1175  5 80  108		1265 5 80  108		1355 5 80 108
+BCAT-STILLRIGHT                 0       1085   5 80  108
+
+BCAT-BLOWUP			0	5 123 80  108		95 123 80  108		185 123 80  108 	275 123 80 108 		365 123 80 108		455 123 80 108		545 123 80 108		635 123 80 108		725 123 80 108
+
+BCAT-STILL			0       5   5 	80  108	
+
+
+
+BBOMB-STATIC			0	1631 281 128 128
+BBOMB-START			0	1385  1109 128 128		1385 1247 128 128		
+BBOMB-MID			0	1385  1385 128 128		1643    5 128 128
+
+BBOMB-WICK			0	1493  281  128 128		1493  419 128 128		1513 557  128 128		1513 695  128 128		1513 833  128 128		1385 971  128 128		1109 1305  128 128		1247 1305  128 128		1505 5  128 128		1505 143  128 128
+
+BEXP-CENTER			0	143 1029  128 128		281 1029  128 128		419 1029  128 128		1265 615  128 128		
+
+BLOCK-COLLISION			0         5 261  128 128  
+
+BRICK-DESTROY			0	953 123  128 128		1091 123  128 128		1229 123  128 128		1367 123  128 128
+
+
+#enemies
+EDOG-DOWN			0	863 261  128 128
+
+EKID-DOWN			0	1313 379 128 128
+
+
+
+
+# allows multiple files.
+# @otherfile.ext
+
