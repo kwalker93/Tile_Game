@@ -30,7 +30,7 @@ public:
    void normalize ( );
 
    //todo: and make it readable like this first one!!!!
-   inline LONG x ( ) const { left; }
+   inline LONG x ( ) const { return left; }
 
    inline LONG y ( ) const { return top; }
 

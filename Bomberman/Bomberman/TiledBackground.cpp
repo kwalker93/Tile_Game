@@ -71,8 +71,8 @@ bool TiledBackground::buildBackground ( const tstring& configFilename )
 
    mySpriteMap.resize( myNumTilesVert * myNumTilesHoriz );
       
-   int bgWidth  = fileInfo.getTilePixWidth() * myNumTilesHoriz;
-   int bgHeight = fileInfo.getTilePixHeight() * myNumTilesVert;
+   //int bgWidth  = fileInfo.getTilePixWidth() * myNumTilesHoriz;
+   //int bgHeight = fileInfo.getTilePixHeight() * myNumTilesVert;
 
 
 
@@ -92,7 +92,7 @@ bool TiledBackground::buildBackground ( const tstring& configFilename )
    //     the problem.
    //     
 
-   result = myTiledBgTexture.create( myDevice, bgWidth, bgHeight, D3DUSAGE_RENDERTARGET );
+   //result = myTiledBgTexture.create( myDevice, bgWidth, bgHeight, D3DUSAGE_RENDERTARGET );
    //RECT junk = { 0,0, 800, 576 };
    //result = myTiledBgTexture.create( myDevice, 
    //                                  DxAssetManager::getInstance().getConfigAssetPath(_T("SCOTTS_TEST.png")), 
@@ -100,36 +100,46 @@ bool TiledBackground::buildBackground ( const tstring& configFilename )
    //                                  D3DUSAGE_RENDERTARGET );
 
 
-   assert(result); //todo
+   //assert(result); //todo
 
 
    int index = 0;
+
    int tilePixWidth  = fileInfo.getTilePixWidth();
    int tilePixHeight = fileInfo.getTilePixHeight();
+
    for (int row = 0; row < fileInfo.numTileRows(); row++)
    {
       for (int col = 0; col < fileInfo.numTileCols(); col++)
       {
-         
+         //RECT dstRect = { xPos, yPos, tilePixWidth+xPos, tilePixHeight+yPos };
+
+         //DxTexture& srcTileTexture = fileInfo.getTileTexture(row,col);
+
+         //srcTileTexture.stretchRect( myDevice, NULL, myTiledBgTexture, &dstRect );
+
          int xPos = col*tilePixWidth;
-         int yPos = row*tilePixHeight;
-         RECT dstRect = { xPos, yPos, tilePixWidth+xPos, tilePixHeight+yPos };
+         int yPos = row*tilePixHeight; 
 
-         DxTexture& srcTileTexture = fileInfo.getTileTexture(row,col);
-         
-
-         srcTileTexture.stretchRect( myDevice, NULL, myTiledBgTexture, &dstRect );
-         
          mySpriteMap[index].setScale( .25, .25 );
-         if( tileIsCollidable( getTileEnumType( fileInfo.getTileType( row, col ) ) ) )
+
+         if(  fileInfo.getTileType( row, col ) == _T("BRICKS") )
          {
-            mySpriteMap[index].create( "BRICK-DESTROY" );
-            Point pos( (LONG)xPos, (LONG)yPos );
-            mySpriteMap[index].setCollisionArea(Rect( pos, tilePixWidth, tilePixHeight ) );
+            mySpriteMap[index].create( "BRICKS" );
+            //Point pos( (LONG)xPos, (LONG)yPos );
+           // mySpriteMap[index].setCollisionArea(Rect( pos, tilePixWidth, tilePixHeight ) );
+            //mySpriteMap[index].collidable(false);
+         }
+         else if ( fileInfo.getTileType( row, col ) == _T("BLOCKS") )
+         {
+            mySpriteMap[index].create( "BLOCKS" );
+            //Point pos( (LONG)xPos, (LONG)yPos );
+            //mySpriteMap[index].setCollisionArea(Rect( pos, tilePixWidth, tilePixHeight ) );
+            mySpriteMap[index].setDestroyable ( false );
          }
          else
          {
-            mySpriteMap[index].create( "BLOCK-COLLISION" );
+            mySpriteMap[index].create( "GRASS" );
             mySpriteMap[index].collidable(false);
          }
          
@@ -262,7 +272,7 @@ bool TiledBackground::draw ( IDXSPRITE spriteobj, const RECT* dstRect )
    
    //TODO: Need to change locations
    D3DXVECTOR3 vPos( 0, 0, 0 );
-   HRESULT hr = myTiledBgTexture.draw( spriteobj, &vPos, D3DCOLOR_XRGB(255,255,255), &dRect );
+   HRESULT hr = myTiledBgTexture.draw( spriteobj, vPos.x, vPos.y, D3DCOLOR_XRGB(255,255,255));
    
    //drawMySpriteMap( spriteobj );
 

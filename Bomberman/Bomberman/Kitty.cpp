@@ -7,27 +7,43 @@
 
 //Check on device
 //=======================================================================
+//
 Kitty::Kitty ( )
 {
    myFirstTimeFlag = true;
    myDirection = STILLDOWN;
-   mySpeed = 1.3F;
+   mySpeed = 0.0F;
 	myPosition.x = myPosition.y = myPosition.z = 0;
 	myLastPosition.x = myLastPosition.y = myLastPosition.z = 0;
 
 }
 //=======================================================================
+//
 Kitty::~Kitty ( )
 {
+
 }
 //=======================================================================
-bool Kitty::init()
+//
+bool Kitty::init( IDXDEVICE device, int xPos, int yPos )
 {
    myDirection = STILLDOWN;
-   //TODO: other static init...?
+   loadCharacterAnimations();
+   
+   bool result = mySprite.create( "BCAT-STILL" );
+
+   mySprite.setScale( .25f, .25f );
+   mySprite.setPosition( float(xPos), float(yPos) );
+   myPosition.x = mySprite.getXPosition();
+   myPosition.y = mySprite.getYPosition();
+   mySpeed = 1.3f;
+
+   assert(result);
+   
    return true;
 }
 //=======================================================================
+//
 void Kitty::update()
 {
    myLastPosition.x = myPosition.x;
@@ -38,8 +54,15 @@ void Kitty::update()
 
 }
 //=======================================================================
+//
+bool Kitty::draw ( IDXSPRITE spriteObj )
+{ 
+   mySprite.draw( spriteObj );
 
+   return true;
+}
 //=======================================================================
+//
 bool Kitty::loadCharacterAnimations ()
 {
    if( myFirstTimeFlag )
@@ -113,8 +136,8 @@ bool Kitty::goUp ( )
 {
    Direction temp = myDirection;
    myDirection = Direction::UP;
-   mySprite.setXVel(+0.0f);
-   mySprite.setYVel(-mySpeed);   //TODO :  Constant somewhere for kitty speed
+   mySprite.setXVel( mySpeed - mySpeed );
+   mySprite.setYVel(-mySpeed);
    //mySprite.changeAnimation( "BCAT-UP" );
 
    if(myDirection != temp)
@@ -123,11 +146,12 @@ bool Kitty::goUp ( )
    return true;
 }
 //=======================================================================
+//
 bool Kitty::goDown ( )
 {
    Direction temp = myDirection;
    myDirection = Direction::DOWN;
-   mySprite.setXVel(+0.0f);
+   mySprite.setXVel(mySpeed - mySpeed);
    mySprite.setYVel(+mySpeed);   //TODO :  Constant somewhere for kitty speed
    //mySprite.changeAnimation( "BCAT-UP" );
    if(myDirection != temp)
@@ -136,12 +160,13 @@ bool Kitty::goDown ( )
    return true;
 }
 //=======================================================================
+//
 bool Kitty::goLeft()
 {
    Direction temp = myDirection;
    myDirection = Direction::LEFT;
    mySprite.setXVel(-mySpeed);
-   mySprite.setYVel(+0.0f); //TODO :  Constant somewhere for kitty speed
+   mySprite.setYVel(mySpeed - mySpeed);
    //mySprite.changeAnimation( "BCAT-UP" );
    if(myDirection != temp)
       mySprite.changeAnimation( myCatWalkLeftAnim );
@@ -149,18 +174,20 @@ bool Kitty::goLeft()
    return true;
 }
 //=======================================================================
+//
 bool Kitty::goRight()
 {
    Direction temp = myDirection;
    myDirection = Direction::RIGHT;
    mySprite.setXVel(+mySpeed);
-   mySprite.setYVel(+0.0f); //TODO :  Constant somewhere for kitty speed
+   mySprite.setYVel( mySpeed - mySpeed ); //TODO :  Constant somewhere for kitty speed
    if(myDirection != temp)
       mySprite.changeAnimation( myCatWalkRightAnim );
 
    return true;
 }
-
+//=======================================================================
+//
 bool Kitty::goReverse()
 {
    mySprite.setXVel( -mySprite.getXVel() );
@@ -169,6 +196,7 @@ bool Kitty::goReverse()
 }
 
 //=======================================================================
+//
 bool Kitty::goStillUp()
 {
    mySprite.changeAnimation( myCatStillUpAnim );
@@ -176,6 +204,7 @@ bool Kitty::goStillUp()
 }
 
 //=======================================================================
+//
 bool Kitty::goStillDown()
 {
    mySprite.changeAnimation( myCatStillDownAnim );
@@ -183,6 +212,7 @@ bool Kitty::goStillDown()
 }
 
 //=======================================================================
+//
 bool Kitty::goStillLeft()
 {
    mySprite.changeAnimation( myCatStillLeftAnim );
@@ -190,6 +220,7 @@ bool Kitty::goStillLeft()
 }
 
 //=======================================================================
+//
 bool Kitty::goStillRight()
 {
    mySprite.changeAnimation( myCatStillRightAnim );
@@ -198,6 +229,7 @@ bool Kitty::goStillRight()
 
 
 //=======================================================================
+//
 bool Kitty::stillDirection( Direction prevDirection )
 {
    switch( prevDirection )
@@ -224,39 +256,4 @@ bool Kitty::stillDirection( Direction prevDirection )
          break;
    }
    return true;
-}
-//=======================================================================
-
-bool Kitty::create ( IDXDEVICE device, int xPos, int yPos )
-{
-   myDirection = STILLDOWN;
-   loadCharacterAnimations();
-   
-   // Kitty::bCatStandStill.drawFrame( DxFramework::spriteInterface(), &myPlayerPos, &D3DXVECTOR2(1,1), 0, NULL, D3DCOLOR_ARGB( 255, 255, 255, 255 ) );
-   //TODO: Multiple animations associated with Kitty sprite
-   bool b = mySprite.create( "BCAT-STILL" );
-
-   mySprite.setScale( .25f, .25f );
-   mySprite.evaluateCenter();
-   Rect boundRect( xPos, yPos, xPos+32, yPos+32 );
-   mySprite.setCollisionArea( boundRect );
-   mySprite.setPosition( float(xPos), float(yPos) );
-   myPosition.x = mySprite.getXPosition();
-   myPosition.y = mySprite.getYPosition();
-
-   assert(b);
-
-   //TODO: OTHER ANIMATIONS ?  Add?  Select??
-   
-   return b;
-}
-
-//=======================================================================
-bool Kitty::draw ( IDXSPRITE spriteObj )
-{
-   bool  b = true;
-   
-   mySprite.draw( spriteObj );
-
-   return b;
 }

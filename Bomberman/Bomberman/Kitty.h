@@ -2,9 +2,8 @@
 #if !defined(_KITTY_H_)
 #define _KITTY_H_
 
-#include "DxFramework\DxImage.h"
-#include "DxFramework\DxGameSprite.h"
-//#include "DxFramework\DxTexture.h"
+#include "DxFramework/DxImage.h"
+#include "DxFramework/DxGameSprite.h"
 #include "DxFramework/DxAnimation.h"
 #include "Utilities/TTypes.h"
 
@@ -28,15 +27,12 @@ public:
    // And... STATE might be more than just direction and motion....
 
 
-   bool init ();
+   bool init ( IDXDEVICE device, int xPos, int yPos );
    void update ();
    void shutdown ();
-
-   bool create ( IDXDEVICE device, int xPos, int yPos );
    bool draw ( IDXSPRITE spriteobj );
-   bool collidesWith ( const DxGameSprite& other){ return mySprite.collidesWith( other ); };
-   bool radialCollidesWith ( const DxGameSprite& other){ return mySprite.radialCollidesWith( other ); };
-   bool goStop ( );     // Disables ALL motion
+
+   bool goStop();       // Disables ALL motion
    bool goUp();         // enabled upward motion UNTIL motion changes or is stopped
    bool goDown();       // LAST motion call WINS
    bool goLeft();
@@ -48,12 +44,12 @@ public:
    bool goStillLeft();
    bool goStillRight();
 
-
-
+   bool collidesWith ( const DxGameSprite& other){ return mySprite.collidesWith( other ); };
+   bool radialCollidesWith ( const DxGameSprite& other){ return mySprite.radialCollidesWith( other ); };
    void setMyPosition( D3DXVECTOR3 pos ){ myPosition = pos; mySprite.setPosition(myPosition.x, myPosition.y ); }
    D3DXVECTOR3 getMyPosition() { return myPosition; }
-   D3DXVECTOR3 getLastPosition(){ return myLastPosition; }
-   DxGameSprite getSprite(){ return mySprite; }
+   D3DXVECTOR3 getLastPosition() { return myLastPosition; }
+   DxGameSprite getSprite() { return mySprite; }
 
 private:
    bool loadCharacterAnimations();
@@ -75,21 +71,14 @@ private:
    DxAnimation    myCatBlowUpAnim;
    
    //Vectors for currentPosition, lastPosition, scale, center, color, velocity
-   // last velocity, acceleration (Need a get mypos method)
    D3DXVECTOR3    myPosition;
 	D3DXVECTOR3    myLastPosition;   
 
-	//DxTexture      myTexture;
    Direction      myDirection;
    DxGameSprite   mySprite;
    float          mySpeed;
 
    bool           myFirstTimeFlag;
-   
-   //Taken from bomb which took them from gamesprite
-   // Might not be neccasary
-
-
 
 };
 #endif //_TESTAPP_H_

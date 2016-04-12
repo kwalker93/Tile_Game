@@ -22,7 +22,7 @@ public:
    bool parseConfig ( const tstring& name );
    void shutdown ();
    
-   //tstring getAssetPath ( const tstring& name );
+   //tstring getAssetFilePath ( const tstring& name );
    tstring getConfigAssetPath ( const tstring& name );
    DxTexture* getTexture ( const tstring& name );
    DxAnimation* getAnimation ( const tstring& name );
@@ -33,15 +33,13 @@ private:
 
    DxAssetManager ();
    ~DxAssetManager ();
-   bool parse ( const tstring& configFile );
+   //bool parse ( const tstring& configFile );
    bool addTextureAsset ( const tstring& name, POINT* srcSize = NULL );
 
-   unsigned int    myConfigFileCount;
    unsigned int    myTextureCount;
    unsigned int    mySurfaceCount;
    unsigned int    myAnimationCount;
    tstring         myAssetPath;
-   tstring         myConfigFiles[ourMaxCachedItemsCount];
    DxTexture       myTextures[ourMaxCachedItemsCount];
    DxSurface       mySurfaces[ourMaxCachedItemsCount];
    DxAnimation     myAnimations[ourMaxCachedItemsCount];

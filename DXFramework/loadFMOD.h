@@ -44,6 +44,7 @@ public:
 	typedef FMOD_RESULT F_API TypeFMOD_Channel_GetPaused             (FMOD_CHANNEL *channel, FMOD_BOOL *paused);
 	typedef FMOD_RESULT F_API TypeFMOD_Channel_SetVolume             (FMOD_CHANNEL *channel, float volume);
 	typedef FMOD_RESULT F_API TypeFMOD_Channel_GetVolume             (FMOD_CHANNEL *channel, float *volume);
+   typedef FMOD_RESULT F_API TypeFMOD_Channel_IsPlaying             (FMOD_CHANNEL *channel, bool *isPlaying);
 
 	typedef FMOD_RESULT F_API TypeFMOD_Channel_SetMode               (FMOD_CHANNEL *channel, FMOD_MODE mode);
 	typedef FMOD_RESULT F_API TypeFMOD_Channel_GetMode               (FMOD_CHANNEL *channel, FMOD_MODE *mode);
@@ -78,6 +79,7 @@ public:
 	TypeFMOD_Channel_GetPaused            *dllPtrChannel_GetPaused;
 	TypeFMOD_Channel_SetVolume            *dllPtrChannel_SetVolume;
 	TypeFMOD_Channel_GetVolume            *dllPtrChannel_GetVolume;
+   TypeFMOD_Channel_IsPlaying            *dllPtrChannel_IsPlaying;
 	TypeFMOD_Channel_SetMode              *dllPtrChannel_SetMode;
 	TypeFMOD_Channel_GetMode              *dllPtrChannel_GetMode;
 	TypeFMOD_Channel_SetLoopCount         *dllPtrChannel_SetLoopCount;

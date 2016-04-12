@@ -54,6 +54,9 @@ public:
    int numColumns () const { return myNumTilesHoriz; }
    int numRows () const { return myNumTilesVert; }
 
+   DxGameSprite getSprite (){ return mySprite; }
+   
+
    std::vector<DxGameSprite> mySpriteMap;
    
 private:
@@ -80,12 +83,6 @@ private:
       int         idNum;
       int         xPos, yPos, pixWidth, pixHeight;
    };
-
-   
-
-   
-
-
 
 private:
 

@@ -28,7 +28,7 @@ bool loadFMOD::checkDllPtr ( void* p, const TCHAR* name )
 bool loadFMOD::loadAllProcAddresses ( )
 {
    bool b = false;
-   fmodInst = LoadLibrary( _T("lib\\fmodL.dll") );
+   fmodInst = LoadLibrary( _T("..\\..\\..\\DXFramework\\lib\\fmodL.dll") );
    DWORD gle = ::GetLastError();
 
    if (fmodInst != NULL) 
@@ -55,6 +55,7 @@ bool loadFMOD::loadAllProcAddresses ( )
       dllPtrChannel_GetPaused          = (TypeFMOD_Channel_GetPaused            *) GetProcAddress(fmodInst, _T("FMOD_Channel_GetPaused"));
       dllPtrChannel_SetVolume          = (TypeFMOD_Channel_SetVolume            *) GetProcAddress(fmodInst, _T("FMOD_Channel_SetVolume"));
       dllPtrChannel_GetVolume          = (TypeFMOD_Channel_GetVolume            *) GetProcAddress(fmodInst, _T("FMOD_Channel_GetVolume"));
+      dllPtrChannel_IsPlaying          = (TypeFMOD_Channel_IsPlaying            *) GetProcAddress(fmodInst, _T("FMOD_Channel_IsPlaying"));
       dllPtrChannel_SetMode            = (TypeFMOD_Channel_SetMode              *) GetProcAddress(fmodInst, _T("FMOD_Channel_SetMode"));
       dllPtrChannel_GetMode            = (TypeFMOD_Channel_GetMode              *) GetProcAddress(fmodInst, _T("FMOD_Channel_GetMode"));
       dllPtrChannel_SetLoopCount       = (TypeFMOD_Channel_SetLoopCount         *) GetProcAddress(fmodInst, _T("FMOD_Channel_SetLoopCount"));
@@ -85,6 +86,7 @@ bool loadFMOD::loadAllProcAddresses ( )
       b &= checkDllPtr( dllPtrChannel_GetPaused          , _T("FMOD_Channel_GetPaused"));
       b &= checkDllPtr( dllPtrChannel_SetVolume          , _T("FMOD_Channel_SetVolume"));
       b &= checkDllPtr( dllPtrChannel_GetVolume          , _T("FMOD_Channel_GetVolume"));
+      b &= checkDllPtr( dllPtrChannel_IsPlaying          , _T("FMOD_Channel_IsPlaying"));
       b &= checkDllPtr( dllPtrChannel_SetMode            , _T("FMOD_Channel_SetMode"));
       b &= checkDllPtr( dllPtrChannel_GetMode            , _T("FMOD_Channel_GetMode"));
       b &= checkDllPtr( dllPtrChannel_SetLoopCount       , _T("FMOD_Channel_SetLoopCount"));

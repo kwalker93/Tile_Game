@@ -17,7 +17,6 @@ protected:
    //LPCTSTR 
 private:
    DxTexture* myTexture;
-   DxAnimation myAnimation;
    D3DCOLOR bgColor;
    D3DCOLOR bgColor2;
    D3DCOLOR bgColor3;

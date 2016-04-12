@@ -6,7 +6,7 @@
 
 //=======================================================================
 DxGameSprite::DxGameSprite ( )
-:myRotation(0), isCollidable(true), myVisible(true), myCenter( 0, 0 ), 
+:myRotation(0), isCollidable(true), myVisible(true), isDestroyable(true), myCenter( 0, 0 ), 
 myVelocity( 0, 0, 0 ), myLastVelocity( 0, 0, 0 ), myAccel( 0, 0, 0 ), 
 myLastAccel( 0, 0, 0 ),myScale( 1, 1 ), myPosition( 0, 0, 0 ), myLastPosition ( 0, 0, 0 )
 {
@@ -93,6 +93,7 @@ void DxGameSprite::setPosition ( float x, float y )
    setXPosition( x );
    setYPosition( y );
 }
+
 //=======================================================================
 void DxGameSprite::setXPosition ( float value )
 {
@@ -123,8 +124,11 @@ void DxGameSprite::setScale ( float scaleX, float scaleY )
 //===========================================================================
 void DxGameSprite::draw (IDXSPRITE spriteObj, D3DCOLOR color)
 {
-   myAnimation.drawFrame ( spriteObj, &myPosition, &myScale, 
-								    myRotation, &myCenter,  color );
+	if ( isVisible() )
+	{
+      myAnimation.drawFrame ( spriteObj, &myPosition, &myScale, 
+						      myRotation, &myCenter,  color );
+	}
 }
 
 //=======================================================================
@@ -205,16 +209,16 @@ bool DxGameSprite::radialCollidesWith ( const DxGameSprite& other  )
    else
       radiusOne = getHeight() / 2;
 
-   centerOne.x = getXPosition() + radiusOne;
-   centerOne.y = getYPosition() + radiusOne;
+   centerOne.x = getXPosition() + (float)radiusOne;
+   centerOne.y = getYPosition() + (float)radiusOne;
 
    if( other.getWidth() > other.getHeight() )
       radiusTwo = other.getWidth() / 2.0;
    else
       radiusTwo = other.getHeight() / 2.0;
 
-   centerTwo.x = other.getXPosition() + radiusTwo;
-   centerTwo.y = other.getYPosition() + radiusTwo;
+   centerTwo.x = other.getXPosition() + (float)radiusTwo;
+   centerTwo.y = other.getYPosition() + (float)radiusTwo;
 
    double deltaX = centerOne.x - centerTwo.x;
    double deltaY = centerTwo.y - centerOne.y;
@@ -239,7 +243,6 @@ bool DxGameSprite::radialCollidesWith ( const DxGameSprite& other  )
 
 
 }
-
 //=======================================================================
 
 void DxGameSprite::toggleVisible ()

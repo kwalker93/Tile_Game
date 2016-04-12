@@ -37,12 +37,9 @@ bool Game::gameInit ( )
 
    bgColor2 = D3DCOLOR_XRGB( 0, 0, 0 );
 
-   myTexture = DxAssetManager::getInstance().getTexture("THEENDTEXTURE");
+   myTexture = DxAssetManager::getInstance().getTexture("spritesheet.png");
 
-   DxTexture* ghost = DxAssetManager::getInstance().getTexture("GHOST");
-   ghost->stretchRect( device(), NULL, *myTexture, &Rect( Point(0,0), ghost->width(), ghost->height() ) );
-
-   return myAnimation.init( device(), "CANDYCORN-LOOP", 10 );
+   return myTexture != NULL;
 }
 
 //=======================================================================
@@ -65,7 +62,7 @@ void Game::gameRun ( )
 	   }*/
       //myAnimation.drawFrame( spriteInterface(), NULL, &D3DXVECTOR2(5,5), 0, NULL, D3DCOLOR_ARGB( 255,255,255,255 ) );
       //myAnimation.update();
-      myTexture->draw( spriteInterface(), NULL, NULL, 6.28f, NULL );
+      myTexture->drawStretch( spriteInterface(), &Rect(0,0,100,100), &Rect(0,0,50,50) );//&Rect(0,0,100,100), &Rect(0,0,50,50), 1.0f );
 	   if(myKeyboard.keyPressed(VK_SPACE))
 	   {
 	      bgColor = D3DCOLOR_XRGB( rand()% 255 , rand()% 255, rand()% 255);

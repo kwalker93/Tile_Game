@@ -179,6 +179,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\CollisionManager.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Enemy.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Kitty.cpp"
 				>
 			</File>
@@ -222,6 +230,14 @@
 			</File>
 			<File
 				RelativePath=".\Bomberman.h"
+				>
+			</File>
+			<File
+				RelativePath=".\CollisionManager.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Enemy.h"
 				>
 			</File>
 			<File

@@ -15,6 +15,9 @@
 // You must first load a sound file into the DxSoundIdentifier
 //    using DxSound::load().
 //    example: mySoundInterface->load( filepath, mySoundIdentifier );
+//
+// When closing a program, call releaseSound() for each sound in your program.
+// Then call shutdown.
 //-------------------------------------------------------------------------------------------
 
 #pragma once
@@ -54,6 +57,9 @@ public:
    void update ();
    void shutdown ();
 
+   // release a sound (required if interface is set to fmod)
+   void releaseSound ( DxSoundIdentifier& identifier );
+
    bool play ( DxSoundIdentifier& identifier );
 
    // continuously loop through a sound
@@ -66,10 +72,13 @@ public:
    bool stop ( DxSoundIdentifier& identifier );
 
    // has a sound stopped playing
-   bool isStopped ( DxSoundIdentifier& identifier );
+   bool isPlaying ( DxSoundIdentifier& identifier );
 
    // pause a sound that is playing (calling play should play from paused point)
    bool pause ( DxSoundIdentifier& identifier );
+
+   // if volume is 0 or lower, then sound is muted.  if volume is 100 or greater, then sound is set to max.
+   void setVolume ( DxSoundIdentifier& identifier, int volume = 100 );
 
    //types of sound: music, sfx
 
@@ -79,9 +88,12 @@ private:
 private:
    InterfaceTypes myInterfaceType;
 
+   static bool interfaceInitialized;
+
    // DirectSound interface
    CSoundManager* dsound;
 
+   // FMOD interface
    loadFMOD fmodInterface;
 
    FMOD_SYSTEM* fmSystem;

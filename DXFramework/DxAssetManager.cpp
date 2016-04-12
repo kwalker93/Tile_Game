@@ -71,7 +71,8 @@ bool DxAssetManager::init ( const tstring& configFilename, const TCHAR* rootPath
       if ( configFile )
       {
          fclose( configFile );
-      }   
+      }
+      return false;
    }
 
    myAssetPath = assetDir;
@@ -89,7 +90,7 @@ bool DxAssetManager::parseConfig ( const tstring& filename )
 
    if ( !script.is_open() || script.bad() )
    {
-      logln( _T("Unable to load Asset Animation File:\"%s\""), filename.c_str() );
+      logln( _T("Unable to load Asset Configuration File:\"%s\""), filename.c_str() );
       return false;
    }
 
@@ -100,8 +101,9 @@ bool DxAssetManager::parseConfig ( const tstring& filename )
       tstringstream ss(line);
       tstring token;
       ss >> token;
-      if ( token == "@file" && ss >> token )
+      if ( token == "@file" && std::getline( ss, token ) )
       {
+         token = Util::trimBoth( token );
          addTextureAsset( token );
          currentTexture = getTexture( token );
       }
@@ -191,7 +193,7 @@ DxAnimation DxAssetManager::getAnimationCopy ( const tstring& name, float speed,
 
 //=======================================================================
 DxAssetManager::DxAssetManager ()
-:myConfigFileCount(0), mySurfaceCount(0), myTextureCount(0), myAnimationCount(0)
+:mySurfaceCount(0), myTextureCount(0), myAnimationCount(0)
 {
 }
 
@@ -201,33 +203,33 @@ DxAssetManager::~DxAssetManager ()
 }
 
 //=======================================================================
-bool DxAssetManager::parse ( const tstring& assetConfig )
-{
-   tifstream configFile( assetConfig.c_str(), std::ios_base::in  );
-   DWORD gle = GetLastError();      // not likely to work in this instance... tbd
-   
-   if ( !configFile.is_open() || configFile.bad() )
-   {
-      logln( _T("Unable to load Asset Configuration File:\"%s\""), assetConfig.c_str() );
-      return false;
-   }
-   ConfigParser parser;
-   tstring line;
-   while ( parser.getNextLine( configFile, line ) )
-   {
-      if ( myConfigFileCount >= ourMaxCachedItemsCount )
-      {
-         break;
-      }
-
-      tstringstream ss( line );
-      ss >> myConfigFiles[myConfigFileCount];
-      myConfigFileCount++;
-   }
-
-   configFile.close();
-   return true;
-}
+//bool DxAssetManager::parse ( const tstring& assetConfig )
+//{
+//   tifstream configFile( assetConfig.c_str(), std::ios_base::in  );
+//   DWORD gle = GetLastError();      // not likely to work in this instance... tbd
+//   
+//   if ( !configFile.is_open() || configFile.bad() )
+//   {
+//      logln( _T("Unable to load Asset Configuration File:\"%s\""), assetConfig.c_str() );
+//      return false;
+//   }
+//   ConfigParser parser;
+//   tstring line;
+//   while ( parser.getNextLine( configFile, line ) )
+//   {
+//      if ( myConfigFileCount >= ourMaxCachedItemsCount )
+//      {
+//         break;
+//      }
+//
+//      tstringstream ss( line );
+//      ss >> myConfigFiles[myConfigFileCount];
+//      myConfigFileCount++;
+//   }
+//
+//   configFile.close();
+//   return true;
+//}
 
 //=======================================================================
 bool DxAssetManager::addTextureAsset ( const tstring& name, POINT* srcSize )

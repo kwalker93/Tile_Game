@@ -27,35 +27,34 @@ Game::~Game ( )
 //=======================================================================
 bool Game::gameInit ( )
 {
-   
+   bool result = true;
    myGameTitle.append("BomberCat");
    winSetTitle ( myGameTitle );
-   bool result = true;
 
+   //sets Background Color
+   bgColor = D3DCOLOR_XRGB( 255, 200, 250 );
 
+   //Misc init
    //to use the assetsManager it must be initialized via the following:
    DxAssetManager::getInstance().init( "animations.txt" );
-
-   myBgRect = Rect( 0, 0, winScreenWidth(), winScreenHeight() );
-
-   bgColor = D3DCOLOR_XRGB( 0, 0, 100 );
-
-   result &= myLevelBgnds[0].init( device(), _T("level_one.config") );
-
-   myKitty.init( );   
-   myKitty.create( device(), 32, 32 );
-   myBomb.init( device() );
-   otherKitty.init( );
-   otherKitty.create( device(), 200, 200 );
-
    myKeyboard.keyboardInit( hWnd() );
+   myCollsionManager.init();
 
-
-   // init sound
-   mySoundInterface = DxSound::getInterface( DxSound::directSound );
+   //sound init
+   mySoundInterface = DxSound::getInterface( DxSound::fmod );
    mySoundInterface->init( hWnd() );
-   mySoundInterface->load( _T( "Assets\\HamsterDance.wav" ), mySound );
+   mySoundInterface->load( _T("Assets\\HamsterDance.wav"), mySound );
    mySoundInterface->loop( mySound );
+
+
+   //Level init
+   result &= myLevelBgnds.init( device(), _T("level_one.config") );
+   //myBgRect = Rect( 0, 0, winScreenWidth(), winScreenHeight() );
+
+   //Character inits
+   myKitty.init( device(), 36, 36 );   
+   myBomb.init( device(), int(myKitty.getMyPosition().x), int(myKitty.getMyPosition().y) );
+   myEnemy.init( device(), 132, 100, 3);
 
    return true;
 }
@@ -65,18 +64,19 @@ void Game::gameRun ( )
 {
    // pre-render
    const int minMove = 2;
+   TiledBackground&  levelRef = myLevelBgnds;
 
    // clear the backbuffer
    device()->ColorFill( backBuffer(), NULL, bgColor );
 
    // Objects update...
-   myLevelBgnds[0].update();
+   myLevelBgnds.update();
    myKitty.update();
-   otherKitty.update();
+   myEnemy.update();
    myBomb.update();
 
    // play sound
-   //mySoundInterface->play( mySound );
+   mySoundInterface->play( mySound );
 
    // start rendering
 
@@ -88,14 +88,12 @@ void Game::gameRun ( )
 
       if ( SUCCEEDED(spriteInterface()->Begin( D3DXSPRITE_ALPHABLEND )) )
       {
-         // sprite rendering...
-         
-         //myLevelBgnds[0].draw( spriteInterface(), &myBgRect );
-         myLevelBgnds[0].drawMySpriteMap( spriteInterface() );
+         // sprite rendering...       
+         myLevelBgnds.drawMySpriteMap( spriteInterface() );
 
          myBomb.draw( spriteInterface() );       
          myKitty.draw( spriteInterface() );
-        //otherKitty.draw( spriteInterface() );
+         myEnemy.draw( spriteInterface() );
          
 
 
@@ -103,26 +101,22 @@ void Game::gameRun ( )
 	      if(myKeyboard.keyPressed(VK_DOWN))
 	      {
             myKitty.goDown();
-            //myKitty.collision( myKitty.getSprite(), otherKitty.getSprite() );
             keyCount++;
          }
          else if(myKeyboard.keyPressed(VK_LEFT))
 	      {
             keyCount++;
             myKitty.goLeft();
-            //myKitty.collision( myKitty.getSprite(), otherKitty.getSprite() );
          }
          else if(myKeyboard.keyPressed(VK_RIGHT))
 	      {
             keyCount++;
             myKitty.goRight();
-            //myKitty.collision( myKitty.getSprite(), otherKitty.getSprite() );
          }
          else if(myKeyboard.keyPressed(VK_UP))
 	      {
             keyCount++;
             myKitty.goUp();
-            //myKitty.collision( myKitty.getSprite(), otherKitty.getSprite() );
          }
 
          // Stop all kitty motion first, then check keyboard
@@ -133,32 +127,47 @@ void Game::gameRun ( )
          // Separate keyboard checks so MULTIPLE KEYS can be tested...
          if( myKeyboard.keyPressed(VK_SPACE))
          {
-            myBomb.place( int(myKitty.getMyPosition().x), int(myKitty.getMyPosition().y) );
+            myBomb.place( myKitty.getMyPosition(), myKitty.getSprite().getWidth(), myKitty.getSprite().getHeight() );
          }
-         else
+
+
+         if( myCollsionManager.worldCollisions( myEnemy.getSprite(), levelRef ) )
          {
+            myEnemy.Stop();          
+            D3DXVECTOR3 snEPos = myEnemy.getLastPosition();
+            myEnemy.setMyPosition( snEPos );
+            myEnemy.changeDirection();
+         }  
+
+         if( myCollsionManager.worldCollisions( myKitty.getSprite(), levelRef ) )
+         {
+            myKitty.goStop();
+            D3DXVECTOR3 snPos = myKitty.getLastPosition();
+            myKitty.setMyPosition( snPos );
          }
 
+         if( myBomb.getIsExploding() )
+         {
+            for( int i = 0; i < 4; i++)
+            {
+               myCollsionManager.exploisionCollisions( myBomb.getSprite(i), levelRef );
+            }
+         }
 
-         //TODO:KLUGDE
-         //collisions not rally how theres supposed to work but hey it's a start
-         
-         int indexTopLeft = ( (int)myKitty.getMyPosition().x / 32 ) + 
-                            ( (int)myKitty.getMyPosition().y / 32 ) * myLevelBgnds[0].numColumns();
-         int indexBottomRight = ( (int)( myKitty.getMyPosition().x + myKitty.getSprite().getWidth() ) / 32 ) + 
-                                ( (int)( myKitty.getMyPosition().y + + myKitty.getSprite().getHeight() ) / 32 ) * 
-                                myLevelBgnds[0].numColumns();
-
-         if(  ( myKitty.collidesWith( myLevelBgnds[0].mySpriteMap[indexTopLeft] ) &&  
-                myLevelBgnds[0].mySpriteMap[indexTopLeft].collidable() ) ||
-              ( myKitty.collidesWith( myLevelBgnds[0].mySpriteMap[indexBottomRight] ) &&  
-                myLevelBgnds[0].mySpriteMap[indexBottomRight].collidable() ) )
+         //not working correctly collision area too big
+         /*if( myCollsionManager.spriteCollsions( myKitty.getSprite(), myEnemy.getSprite() ) )
          {
             myKitty.goStop();
             D3DXVECTOR3 snPos = myKitty.getLastPosition();
             myKitty.setMyPosition( snPos );
 
-         }
+            myEnemy.goStop();          
+            D3DXVECTOR3 snEPos = myEnemy.getLastPosition();
+            myEnemy.setMyPosition( snEPos );
+            myEnemy.changeDirection();
+         } */        
+
+
 
 
 
@@ -170,6 +179,12 @@ void Game::gameRun ( )
       device()->EndScene();
       device()->Present( NULL, NULL, NULL, NULL );
    }
+   
+   //if the escape key is pressed, destroy
+   if ( DxKeyboard::keyPressed( VK_ESCAPE ) )
+	   {
+		   onDestroy();
+	   }
 
 }
 

@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "DxSound.h"
 
+bool interfaceExists = false;
+
 DxSound::DxSound ()
 {
    extradriverdata = 0;
@@ -36,9 +38,14 @@ DxSound* DxSound::getInterface (  unsigned int type  )
       useType = none;
    }
 
-
    static DxSound soundInterface;
-   soundInterface.setInterfaceType( useType );
+
+   if ( !interfaceExists )
+   {
+      soundInterface.setInterfaceType( useType );
+
+      interfaceExists = true;
+   }
 
    return &soundInterface;
 }
@@ -50,8 +57,7 @@ void DxSound::setInterfaceType ( InterfaceTypes type )
   switch ( myInterfaceType )
    {
    case fmod:
-      //fmod::system::create();
-      break;
+       break;
 
    case directSound:
       break;
@@ -93,7 +99,6 @@ bool DxSound::init ( HWND hwnd )
 
       fmodInterface.dllPtrSystem_Init( fmSystem, 32, FMOD_INIT_NORMAL, extradriverdata );
 
-      //fmod::system::init();
       break;
 
    case directSound:
@@ -131,7 +136,7 @@ void DxSound::update ()
    switch ( myInterfaceType )
    {
    case fmod:
-      //fmod::system::update();
+      fmodInterface.dllPtrSystem_Update( fmSystem );
       break;
 
    case directSound:
@@ -154,7 +159,7 @@ void DxSound::shutdown ()
    switch ( myInterfaceType )
    {
    case fmod:
-      //fmod::system::release();
+      fmodInterface.dllPtrSystem_Close( fmSystem );
       break;
 
    case directSound:
@@ -174,6 +179,11 @@ void DxSound::shutdown ()
    }
 }
 
+void DxSound::releaseSound ( DxSoundIdentifier& identifier )
+{
+   identifier.shutdown( &fmodInterface );
+}
+
 // continuously loop through a sound
 void DxSound::loop ( DxSoundIdentifier& identifier, bool enable )
 {
@@ -189,9 +199,14 @@ bool DxSound::load ( const tstring& soundFileName , DxSoundIdentifier& identifie
    bool result = false;
    CSound* wave = NULL;
 
+   FMOD_RESULT fresult;
+   FMOD_SOUND* fsound = NULL;
+
    switch ( myInterfaceType )
    {
    case fmod:
+      fresult = fmodInterface.dllPtrSystem_CreateSound( fmSystem, soundFileName.c_str(), FMOD_DEFAULT, 0, &fsound );
+      identifier.load( soundFileName, fsound );
       break;
 
    case directSound:
@@ -201,7 +216,7 @@ bool DxSound::load ( const tstring& soundFileName , DxSoundIdentifier& identifie
       char s[255];
       sprintf( s, "%s", soundFileName.c_str() );
       hr = dsound->Create( &wave, s );
-      if ( SUCCEEDED( result ) )
+      if ( SUCCEEDED( hr ) )
          result = identifier.load( soundFileName, wave );
       else
          result = false;
@@ -227,6 +242,7 @@ bool DxSound::play ( DxSoundIdentifier& identifier )
    switch ( myInterfaceType )
    {
    case fmod:
+      isPlaying = identifier.play( &fmodInterface, fmSystem );
       break;
 
    case directSound:
@@ -237,7 +253,6 @@ bool DxSound::play ( DxSoundIdentifier& identifier )
       break;
 
    case none:
-      isPlaying = identifier.play();
       break;
 
    default:
@@ -254,6 +269,7 @@ bool DxSound::stop ( DxSoundIdentifier& identifier )
    switch ( myInterfaceType )
    {
    case fmod:
+      identifier.stop( &fmodInterface );
       break;
 
    case directSound:
@@ -264,7 +280,6 @@ bool DxSound::stop ( DxSoundIdentifier& identifier )
       break;
 
    case none:
-      isStopped = identifier.stop();
       break;
 
    default:
@@ -276,11 +291,11 @@ bool DxSound::stop ( DxSoundIdentifier& identifier )
 }
 
 // has a sound stopped playing
-bool DxSound::isStopped ( DxSoundIdentifier& identifier )
+bool DxSound::isPlaying ( DxSoundIdentifier& identifier )
 {
    bool isStopped = false;
 
-   isStopped = identifier.isStopped();
+   isStopped = identifier.isPlaying( &fmodInterface );
 
    return isStopped;
 }
@@ -293,16 +308,17 @@ bool DxSound::pause ( DxSoundIdentifier& identifier )
    switch ( myInterfaceType )
    {
    case fmod:
+      isPaused = identifier.pause( &fmodInterface );
       break;
 
    case directSound:
+      isPaused = identifier.pause();
       break;
 
    case winNative:
       break;
 
    case none:
-      isPaused = identifier.pause();
       break;
 
    default:
@@ -311,4 +327,27 @@ bool DxSound::pause ( DxSoundIdentifier& identifier )
 
 
    return isPaused;
+}
+
+void DxSound::setVolume ( DxSoundIdentifier& identifier, int volume )
+{
+   switch ( myInterfaceType )
+   {
+   case fmod:
+      identifier.setVolume( volume, &fmodInterface );
+      break;
+
+   case directSound:
+      identifier.setVolume( volume );
+      break;
+
+   case winNative:
+      break;
+
+   case none:
+      break;
+
+   default:
+      break;
+   }
 }

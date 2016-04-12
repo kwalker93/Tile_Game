@@ -16,10 +16,13 @@
 #include "DxFramework/DxTypes.h"
 #include "Bomberman/TiledBackground.h"
 #include "Bomberman/Kitty.h"
+#include "Bomberman/Enemy.h"
 #include "Bomberman/Bomb.h"
 #include "Bomberman/Kitty.h"
 #include "DxFramework/DxSound.h"
 #include "DxFramework/DxSoundIdentifier.h"
+#include "Bomberman/CollisionManager.h"
+
 
  
 class Game : public DxFramework
@@ -50,15 +53,15 @@ private:
    tstring     myGameTitle;
 
 
-   TiledBackground   myLevelBgnds[ 1 ];
+   TiledBackground   myLevelBgnds;//[ 1 ]
    Bomb              myBomb;
    Kitty             myKitty;
-   Kitty             otherKitty;
+   Enemy             myEnemy;
    DxKeyboard        myKeyboard;
    D3DXVECTOR3       myPlayerPos;
    D3DXVECTOR3       myPlayerLastPos;
    RECT              myBgRect;
-   //DxGameSprite      mySprite;
+   CollisionManager  myCollsionManager;
 
    DxSound* mySoundInterface;
    DxSoundIdentifier mySound;

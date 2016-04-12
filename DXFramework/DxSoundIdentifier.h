@@ -12,6 +12,7 @@
 
 #include "Utilities/TTypes.h"
 #include "DirectSound.h"
+#include "loadFMOD.h"
 
 class DxSoundIdentifier
 {
@@ -23,22 +24,35 @@ public:
    tstring fileName () { return myFileName; }
 
 private:
+   bool shutdown ( loadFMOD* fmodInterface = NULL );
+
    bool load ( const tstring& filename, CSound* wave );
+   bool load ( const tstring& filename, FMOD_SOUND* fsound );
 
    void loop ( bool enabled = true );
 
-   bool play ();
-   bool stop ();
-   bool pause ();
+   bool play ( loadFMOD* fmodInterface = NULL, FMOD_SYSTEM* fmSystem = NULL );
+   bool stop ( loadFMOD* fmodInterface = NULL );
+   bool pause ( loadFMOD* fmodInterface = NULL );
    
-   bool isStopped ();
+   bool isPlaying ( loadFMOD* fmodInterface = NULL );
    bool isLooping () { return myLoopEnabled; }
+
+   void setVolume ( int volume, loadFMOD* fmodInterface = NULL );
 
 private:
    // the actual sound for DirectSound
-   CSound* sound;
+   CSound* myDsound;
+
+   // volume setting for DirectSound
+   long myVolume;
+
+   // the actual sound for FMOD
+   FMOD_SOUND* myFsound;
+   FMOD_CHANNEL* myFchannel;
 
    bool myIsPlaying;
+   FMOD_BOOL myIsPaused;
    bool myLoopEnabled;
 
    // current time position in the sound

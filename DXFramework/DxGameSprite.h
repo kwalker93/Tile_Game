@@ -73,6 +73,8 @@ public:
    bool collidable ( bool flag ) { return (isCollidable = flag); }
    bool collidable () const { return isCollidable; } 
    bool collidesWith ( const DxGameSprite& other );
+   bool setDestroyable ( bool flag ){ return (isDestroyable = flag); }
+   bool getDestroyable() const { return isDestroyable; }
    bool radialCollidesWith ( const DxGameSprite& otherSprite  );
 	void toggleVisible();
 	bool isVisible(){return myVisible;}
@@ -84,7 +86,7 @@ private:
 	D3DXVECTOR3    myVelocity;
 	D3DXVECTOR3    myLastVelocity;
 	D3DXVECTOR3    myAccel;
-   D3DXVECTOR3    myLastAccel;
+    D3DXVECTOR3    myLastAccel;
 
 	float          myRotation;
 	D3DXVECTOR2    myScale;
@@ -92,9 +94,10 @@ private:
 	D3DCOLOR       myColor;    //WHAT COLOR IS THIS???
 
 	bool           myVisible;
-   bool           isCollidable;
+    bool           isCollidable;
+   bool           isDestroyable;
 
-	Rect		      myCollisionArea;
+	Rect		   myCollisionArea;
 
 	//////////////////////////
 	DxAnimation    myAnimation;
