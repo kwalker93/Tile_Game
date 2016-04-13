@@ -16,8 +16,6 @@
 #include "DxFramework/DxTypes.h"
 #include "Bomberman/TiledBackground.h"
 #include "Bomberman/Kitty.h"
-#include "Bomberman/Enemy.h"
-#include "Bomberman/Bomb.h"
 #include "Bomberman/Kitty.h"
 #include "DxFramework/DxSound.h"
 #include "DxFramework/DxSoundIdentifier.h"
@@ -54,9 +52,7 @@ private:
 
 
    TiledBackground   myLevelBgnds;//[ 1 ]
-   Bomb              myBomb;
    Kitty             myKitty;
-   Enemy             myEnemy;
    DxKeyboard        myKeyboard;
    D3DXVECTOR3       myPlayerPos;
    D3DXVECTOR3       myPlayerLastPos;

@@ -53,9 +53,7 @@ bool Game::gameInit ( )
 
    //Character inits
    myKitty.init( device(), 36, 36 );   
-   myBomb.init( device(), int(myKitty.getMyPosition().x), int(myKitty.getMyPosition().y) );
-   myEnemy.init( device(), 132, 100, 3);
-
+   
    return true;
 }
 
@@ -72,8 +70,6 @@ void Game::gameRun ( )
    // Objects update...
    myLevelBgnds.update();
    myKitty.update();
-   myEnemy.update();
-   myBomb.update();
 
    // play sound
    mySoundInterface->play( mySound );
@@ -90,10 +86,8 @@ void Game::gameRun ( )
       {
          // sprite rendering...       
          myLevelBgnds.drawMySpriteMap( spriteInterface() );
-
-         myBomb.draw( spriteInterface() );       
+   
          myKitty.draw( spriteInterface() );
-         myEnemy.draw( spriteInterface() );
          
 
 
@@ -124,21 +118,6 @@ void Game::gameRun ( )
             myKitty.goStop();
 
 
-         // Separate keyboard checks so MULTIPLE KEYS can be tested...
-         if( myKeyboard.keyPressed(VK_SPACE))
-         {
-            myBomb.place( myKitty.getMyPosition(), myKitty.getSprite().getWidth(), myKitty.getSprite().getHeight() );
-         }
-
-
-         if( myCollsionManager.worldCollisions( myEnemy.getSprite(), levelRef ) )
-         {
-            myEnemy.Stop();          
-            D3DXVECTOR3 snEPos = myEnemy.getLastPosition();
-            myEnemy.setMyPosition( snEPos );
-            myEnemy.changeDirection();
-         }  
-
          if( myCollsionManager.worldCollisions( myKitty.getSprite(), levelRef ) )
          {
             myKitty.goStop();
@@ -146,26 +125,8 @@ void Game::gameRun ( )
             myKitty.setMyPosition( snPos );
          }
 
-         if( myBomb.getIsExploding() )
-         {
-            for( int i = 0; i < 4; i++)
-            {
-               myCollsionManager.exploisionCollisions( myBomb.getSprite(i), levelRef );
-            }
-         }
 
-         //not working correctly collision area too big
-         /*if( myCollsionManager.spriteCollsions( myKitty.getSprite(), myEnemy.getSprite() ) )
-         {
-            myKitty.goStop();
-            D3DXVECTOR3 snPos = myKitty.getLastPosition();
-            myKitty.setMyPosition( snPos );
-
-            myEnemy.goStop();          
-            D3DXVECTOR3 snEPos = myEnemy.getLastPosition();
-            myEnemy.setMyPosition( snEPos );
-            myEnemy.changeDirection();
-         } */        
+            
 
 
 
