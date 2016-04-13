@@ -180,7 +180,7 @@ void DxTexture::destroy ( void )
 void DxTexture::stretchRect ( IDXDEVICE device, RECT* srcRect, IDXTEXTURE dstTexture, RECT* dstRect )
 {
    IDXSURFACE srcSurface = NULL, dstSurface = NULL, prevTarget = NULL;
-   HRESULT hr;   
+   HRESULT hr;
 
    hr = myTexture->GetSurfaceLevel( 0, &srcSurface );
    assert( SUCCEEDED(hr) );
