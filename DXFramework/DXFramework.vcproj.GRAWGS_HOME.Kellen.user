@@ -9,7 +9,7 @@
 			Name="Debug|Win32"
 			>
 			<DebugSettings
-				Command=""
+				Command="C:\Users\Kellen\Desktop\Tile_Game.git\trunk\Bomberman\Bomberman\Debug\Bomberman.exe"
 				WorkingDirectory=""
 				CommandArguments=""
 				Attach="false"
