@@ -120,6 +120,13 @@ void DxGameSprite::setScale ( float scaleX, float scaleY )
 {
    myScale.x = scaleX;
    myScale.y = scaleY;
+
+   myCollisionArea.bottom = ( (long)myCollisionArea.top + getHeight() ) * myScale.y;
+	myCollisionArea.right = ( (long)myCollisionArea.left + getWidth() ) * myScale.x;
+   myCollisionArea.top = (long)myCollisionArea.top;
+	myCollisionArea.left = (long)myCollisionArea.left;
+
+
 }
 //===========================================================================
 void DxGameSprite::draw (IDXSPRITE spriteObj, D3DCOLOR color)

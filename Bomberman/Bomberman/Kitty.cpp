@@ -30,9 +30,10 @@ bool Kitty::init( IDXDEVICE device, int xPos, int yPos )
    myDirection = STILLDOWN;
    loadCharacterAnimations();
    
+   mySprite.setScale( .25f, .25f );
    bool result = mySprite.create( "BCAT-STILL" );
 
-   mySprite.setScale( .25f, .25f );
+   
    mySprite.setPosition( float(xPos), float(yPos) );
    myPosition.x = mySprite.getXPosition();
    myPosition.y = mySprite.getYPosition();

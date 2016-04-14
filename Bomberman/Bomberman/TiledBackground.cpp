@@ -125,20 +125,26 @@ bool TiledBackground::buildBackground ( const tstring& configFilename )
 
          if(  fileInfo.getTileType( row, col ) == _T("BRICKS") )
          {
+            mySpriteMap[index].setScale(1.25f, 1.25f);
             mySpriteMap[index].create( "BRICKS" );
+            
             //Point pos( (LONG)xPos, (LONG)yPos );
            // mySpriteMap[index].setCollisionArea(Rect( pos, tilePixWidth, tilePixHeight ) );
             //mySpriteMap[index].collidable(false);
          }
          else if ( fileInfo.getTileType( row, col ) == _T("BLOCKS") )
          {
+            mySpriteMap[index].setScale(1.25f, 1.25f);
             mySpriteMap[index].create( "BLOCKS" );
+            
+
             //Point pos( (LONG)xPos, (LONG)yPos );
             //mySpriteMap[index].setCollisionArea(Rect( pos, tilePixWidth, tilePixHeight ) );
             mySpriteMap[index].setDestroyable ( false );
          }
          else
          {
+            mySpriteMap[index].setScale(1.25f, 1.25f);
             mySpriteMap[index].create( "GRASS" );
             mySpriteMap[index].collidable(false);
          }
