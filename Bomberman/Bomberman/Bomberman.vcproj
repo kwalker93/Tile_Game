@@ -210,6 +210,10 @@
 				RelativePath=".\TileDescParser.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\Unit.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -246,6 +250,10 @@
 			</File>
 			<File
 				RelativePath=".\TileDescParser.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Unit.h"
 				>
 			</File>
 		</Filter>
