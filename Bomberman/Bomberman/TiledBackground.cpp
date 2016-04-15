@@ -10,7 +10,7 @@
 TiledBackground::TiledBackground()
 {
    myNumTilesVert = 
-      myNumTilesHoriz = 0;
+   myNumTilesHoriz = 0;
    myDevice = NULL;
 }
 
@@ -123,19 +123,19 @@ bool TiledBackground::buildBackground ( const tstring& configFilename )
 
          mySpriteMap[index].setScale( .25, .25 );
 
-         if(  fileInfo.getTileType( row, col ) == _T("BRICKS") )
+         if(  fileInfo.getTileType( row, col ) == _T("WATER") )
          {
             mySpriteMap[index].setScale(1.25f, 1.25f);
-            mySpriteMap[index].create( "BRICKS" );
+            mySpriteMap[index].create( "WATER" );
             
             //Point pos( (LONG)xPos, (LONG)yPos );
            // mySpriteMap[index].setCollisionArea(Rect( pos, tilePixWidth, tilePixHeight ) );
             //mySpriteMap[index].collidable(false);
          }
-         else if ( fileInfo.getTileType( row, col ) == _T("BLOCKS") )
+         else if ( fileInfo.getTileType( row, col ) == _T("FOREST") )
          {
             mySpriteMap[index].setScale(1.25f, 1.25f);
-            mySpriteMap[index].create( "BLOCKS" );
+            mySpriteMap[index].create( "FOREST" );
             
 
             //Point pos( (LONG)xPos, (LONG)yPos );
@@ -158,6 +158,57 @@ bool TiledBackground::buildBackground ( const tstring& configFilename )
 
    return true;
 }
+
+//===================================================================================================>
+//
+void TiledBackground::waterRising( int numOfTurns )
+{
+	//remove number of turns by 10 to set the right tiles to water tiles
+	int offset = numOfTurns - 10;	
+   if( offset < 0 )
+   {
+      return;
+   }
+
+   int topRow = 0 + offset;
+   int bottomRow = myNumTilesVert - ( offset + 1 );
+   int leftCol = 0 + offset;
+   int rightCol = myNumTilesHoriz - ( offset + 1 );
+
+   int index = 0;
+   int i = 0;
+      
+   for( i = 0; ( i + topRow ) < myNumTilesVert; i++ )
+   {
+      index = ( topRow + i ) * myNumTilesHoriz + leftCol;
+      mySpriteMap[index].changeAnimation( "WATER", 10 ); 
+      index = ( topRow + i ) * myNumTilesHoriz + rightCol;
+      mySpriteMap[index].changeAnimation( "WATER", 10 ); 
+   }
+
+   for( i = 0; ( i + leftCol ) < myNumTilesHoriz; i++ )
+   {
+      index = topRow * myNumTilesHoriz + ( leftCol + i );
+      mySpriteMap[index].changeAnimation( "WATER", 10 ); 
+      index = bottomRow * myNumTilesHoriz + ( rightCol - i );
+      mySpriteMap[index].changeAnimation( "WATER", 10 ); 
+   }
+   
+
+   
+
+
+
+	//this will set the borders of the map to water tiles, and keep closing in
+   /*for(int i = 0; i < mySpriteMap.size(); i++)
+	{
+		mySpriteMap[i][temp] = waterTile;
+		mySpriteMap[temp][i] = waterTile;
+		mySpriteMap[i][(this->mapSize - 1) - temp] = waterTile;
+		mySpriteMap[(this->mapSize - 1) - temp][i] = waterTile;
+	}*/
+}
+
 //===================================================================================================>
 //
 TiledBackground::TileType TiledBackground::getTileEnumType( const tstring& label )
@@ -167,14 +218,14 @@ TiledBackground::TileType TiledBackground::getTileEnumType( const tstring& label
       return GRASS;
    }
 
-   if( label == "BRICKS" )
+   if( label == "WATER" )
    {
-      return BRICKS;
+      return WATER;
    }
 
-   if( label == "BLOCKS" )
+   if( label == "FOREST" )
    {
-      return BLOCKS;
+      return FOREST;
    }
 
    assert(false);
@@ -193,8 +244,8 @@ bool TiledBackground::tileIsCollidable( TiledBackground::TileType tileEnumType )
       return false;     
       break;
       //List colidable tile names here
-   case BRICKS:
-   case BLOCKS:
+   case WATER:
+   case FOREST:
       return true;
    default:
       return true;
@@ -285,6 +336,8 @@ bool TiledBackground::draw ( IDXSPRITE spriteobj, const RECT* dstRect )
    return SUCCEEDED( hr );  //TODO
 }
 
+//===================================================================================================>
+//
 bool TiledBackground::drawMySpriteMap( IDXSPRITE spriteobj )
 {
    for( size_t i = 0; i < mySpriteMap.size(); i++ )
@@ -294,3 +347,4 @@ bool TiledBackground::drawMySpriteMap( IDXSPRITE spriteobj )
 
    return true;
 }
+

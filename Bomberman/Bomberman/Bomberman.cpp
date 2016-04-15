@@ -53,6 +53,9 @@ bool Game::gameInit ( )
 
    //Character inits
    myKitty.init( device(), 36, 36 );   
+  
+   //TESTING PURPOSES. COMMENT OUT WHEN NOT NEEDED
+   myTurnCount = 0;
    
    return true;
 }
@@ -111,6 +114,14 @@ void Game::gameRun ( )
 	      {
             keyCount++;
             myKitty.goUp();
+                     }
+  
+
+
+         if( myKeyboard.keyPressed( VK_SPACE) )
+         {
+            levelRef.waterRising( myTurnCount );
+            myTurnCount++;
          }
 
          // Stop all kitty motion first, then check keyboard

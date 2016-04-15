@@ -34,8 +34,8 @@ public:
    enum TileType
    {
       GRASS,
-      BRICKS,
-      BLOCKS
+      WATER,
+      FOREST
    };
 
    bool init ( IDXDEVICE dev, const tstring& bgConfigFilename );
@@ -56,6 +56,7 @@ public:
 
    DxGameSprite getSprite (){ return mySprite; }
    
+   void waterRising( int numOfTurns );
 
    std::vector<DxGameSprite> mySpriteMap;
    
@@ -76,6 +77,8 @@ private:
 
    RECT        myBgSrcRect;
    int         myBgWidth, myBgHeight;
+
+   
 
    struct TileDescr 
    {

@@ -50,6 +50,7 @@ private:
    
    tstring     myGameTitle;
 
+   int         myTurnCount;
 
    TiledBackground   myLevelBgnds;//[ 1 ]
    Kitty             myKitty;
