@@ -19,6 +19,7 @@
 #include "Bomberman\Player.h"
 #include "Bomberman\Unit.h"
 
+
 //========================================================================
 class PlayerManager
 {
@@ -35,14 +36,19 @@ public:
    bool update();
    bool shutdown();
 
-   bool switchTurnToNextPlayer();  // signals the PlayerManager to move priority to the next player
+   bool endCurrentTurn();  // signals the PlayerManager to move priority to the next player
+   int  getNumElapsedTurns();
+   int  checkUnitTotals();
+
 
 private:
+   int     elapsedTurns;
    bool    isPlayerOneActing;
+
    Player* playerOnePtr;
    Player* playerTwoPtr;
 
-
+   
 
 };
 

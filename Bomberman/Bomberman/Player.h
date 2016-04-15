@@ -17,6 +17,7 @@
 #include <dinput.h>
 #include "DxFramework\DXFramework.h"
 #include "Bomberman\Unit.h"
+#include "Bomberman\GameStates.h"
 
 //========================================================================
 class Player
@@ -36,7 +37,8 @@ public:
    bool  getPlayerOneStatus();
    
    // Signals
-   bool  unitKilled();
+   bool unitKilled();
+   bool playerLoses();
 
 
 // private methods/data

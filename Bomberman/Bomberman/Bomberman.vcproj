@@ -237,6 +237,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\GameStates.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Kitty.h"
 				>
 			</File>

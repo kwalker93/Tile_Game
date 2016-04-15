@@ -31,7 +31,6 @@
 #include "Utilities/NonCopyable.h"
 #include "Utilities/TTypes.h"
 
-
 // libraries
 #pragma comment( lib, "winmm.lib" )
 #pragma comment( lib, "user32.lib" )

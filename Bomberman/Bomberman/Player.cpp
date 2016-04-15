@@ -2,6 +2,7 @@
 #include <stdafx.h>
 #include "Bomberman\Player.h"
 #include "Bomberman\Unit.h"
+#include "Bomberman\GameStates.h"
 
 //========================================================================
 Player::Player()
@@ -22,7 +23,7 @@ bool Player::init( bool playerOne, int numUnits )
    for ( int ix = 0; ix < this->myUnitCount; ix++ )
    {
       // TODO: 
-      // myUnits[ix]->init(); 
+      // myUnits[ix].init(); 
    }
    
    return true;
