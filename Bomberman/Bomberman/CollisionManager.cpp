@@ -39,18 +39,19 @@ void CollisionManager::shutdown(){}
 //
 bool CollisionManager::worldCollisions( DxGameSprite sprite, TiledBackground&  LevelRef )
 {
-   int indexTopLeft = ( (int)sprite.getXPosition() / 32 ) + 
-                      ( (int)sprite.getYPosition() / 32 ) *  LevelRef.numColumns();
+   RECT collision = sprite.getCollisionArea();
+   int indexTopLeft = ( (int)collision.left / 32 ) + 
+                      ( (int)collision.top / 32 ) *  LevelRef.numColumns();
 
-   int indexBottomLeft = ( (int)sprite.getXPosition() / 32 ) + 
-                         ( ( (int)sprite.getYPosition() + sprite.getHeight() ) / 32 ) *
+   int indexBottomLeft = ( (int)collision.left / 32 ) + 
+                         ( (int)collision.bottom / 32 ) *
                          LevelRef.numColumns();
 
-   int indexTopRight = ( ( (int)sprite.getXPosition() + sprite.getWidth() ) / 32 ) + 
-                       ( (int)sprite.getYPosition() / 32 ) * LevelRef.numColumns();
+   int indexTopRight = ( (int)collision.right / 32 ) + 
+                       ( (int)collision.top / 32 ) * LevelRef.numColumns();
 
-   int indexBottomRight = ( ( (int)sprite.getXPosition() + sprite.getWidth() ) / 32 ) +
-                          ( ( (int)sprite.getYPosition() + sprite.getHeight() ) / 32 ) * 
+   int indexBottomRight = ( (int)collision.right / 32 ) +
+                          ( (int)collision.bottom / 32 ) * 
                           LevelRef.numColumns();
 
    if( ( sprite.collidesWith( LevelRef.mySpriteMap[indexTopLeft] )&&  
@@ -80,18 +81,19 @@ bool CollisionManager::worldCollisions( DxGameSprite sprite, TiledBackground&  L
 //
 bool CollisionManager::exploisionCollisions( DxGameSprite sprite, TiledBackground&  LevelRef )
 {
-   int indexTopLeft = ( (int)sprite.getXPosition() / 32 ) + 
-                      ( (int)sprite.getYPosition() / 32 ) *  LevelRef.numColumns();
+   RECT collision = sprite.getCollisionArea();
+   int indexTopLeft = ( (int)collision.left / 32 ) + 
+                      ( (int)collision.top / 32 ) *  LevelRef.numColumns();
 
-   int indexBottomLeft = ( (int)sprite.getXPosition() / 32 ) + 
-                         ( ( (int)sprite.getYPosition() + sprite.getHeight() ) / 32 ) *
+   int indexBottomLeft = ( (int)collision.left / 32 ) + 
+                         ( (int)collision.bottom / 32 ) *
                          LevelRef.numColumns();
 
-   int indexTopRight = ( ( (int)sprite.getXPosition() + sprite.getWidth() ) / 32 ) + 
-                       ( (int)sprite.getYPosition() / 32 ) * LevelRef.numColumns();
+   int indexTopRight = ( (int)collision.right / 32 ) + 
+                       ( (int)collision.top / 32 ) * LevelRef.numColumns();
 
-   int indexBottomRight = ( ( (int)sprite.getXPosition() + sprite.getWidth() ) / 32 ) +
-                          ( ( (int)sprite.getYPosition() + sprite.getHeight() ) / 32 ) * 
+   int indexBottomRight = ( (int)collision.right / 32 ) +
+                          ( (int)collision.bottom / 32 ) * 
                           LevelRef.numColumns();
 
    if( ( sprite.collidesWith( LevelRef.mySpriteMap[indexTopLeft] )&&  
@@ -100,7 +102,7 @@ bool CollisionManager::exploisionCollisions( DxGameSprite sprite, TiledBackgroun
       if( LevelRef.mySpriteMap[indexTopLeft].getDestroyable())
       {
          LevelRef.mySpriteMap[indexTopLeft].setDestroyable( false );
-         LevelRef.mySpriteMap[indexTopLeft].changeAnimation ( myGrassAnim );
+         LevelRef.mySpriteMap[indexTopLeft].changeAnimation ( myBoomBrickAnim ); 
          LevelRef.mySpriteMap[indexTopLeft].collidable( false );
       }
       return true;
@@ -111,7 +113,7 @@ bool CollisionManager::exploisionCollisions( DxGameSprite sprite, TiledBackgroun
       if( LevelRef.mySpriteMap[indexBottomLeft].getDestroyable())
       {
          LevelRef.mySpriteMap[indexBottomLeft].setDestroyable( false );
-         LevelRef.mySpriteMap[indexBottomLeft].changeAnimation ( myGrassAnim );
+         LevelRef.mySpriteMap[indexBottomLeft].changeAnimation ( myBoomBrickAnim );
          LevelRef.mySpriteMap[indexBottomLeft].collidable( false );
       } 
       return true;
@@ -122,7 +124,7 @@ bool CollisionManager::exploisionCollisions( DxGameSprite sprite, TiledBackgroun
       if( LevelRef.mySpriteMap[indexTopRight].getDestroyable())
       {
          LevelRef.mySpriteMap[indexTopRight].setDestroyable( false );
-         LevelRef.mySpriteMap[indexTopRight].changeAnimation( myGrassAnim );
+         LevelRef.mySpriteMap[indexTopRight].changeAnimation( myBoomBrickAnim );
          LevelRef.mySpriteMap[indexTopRight].collidable( false );
       }
       return true;
@@ -133,7 +135,7 @@ bool CollisionManager::exploisionCollisions( DxGameSprite sprite, TiledBackgroun
       if( LevelRef.mySpriteMap[indexBottomRight].getDestroyable())
       {
          LevelRef.mySpriteMap[indexBottomRight].setDestroyable( false );
-         LevelRef.mySpriteMap[indexBottomRight].changeAnimation ( myGrassAnim );
+         LevelRef.mySpriteMap[indexBottomRight].changeAnimation ( myBoomBrickAnim );
          LevelRef.mySpriteMap[indexBottomRight].collidable( false );
       }
       return true;

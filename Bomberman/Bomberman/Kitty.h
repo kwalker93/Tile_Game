@@ -5,6 +5,8 @@
 #include "DxFramework/DxImage.h"
 #include "DxFramework/DxGameSprite.h"
 #include "DxFramework/DxAnimation.h"
+#include "DxFramework/DxSound.h"
+#include "DxFramework/DxSoundIdentifier.h"
 #include "Utilities/TTypes.h"
 
 class Kitty
@@ -50,6 +52,8 @@ public:
    D3DXVECTOR3 getMyPosition() { return myPosition; }
    D3DXVECTOR3 getLastPosition() { return myLastPosition; }
    DxGameSprite getSprite() { return mySprite; }
+   //Test Method
+   void die();
 
 private:
    bool loadCharacterAnimations();
@@ -72,13 +76,17 @@ private:
    
    //Vectors for currentPosition, lastPosition, scale, center, color, velocity
    D3DXVECTOR3    myPosition;
-	D3DXVECTOR3    myLastPosition;   
+   D3DXVECTOR3    myLastPosition;   
 
    Direction      myDirection;
    DxGameSprite   mySprite;
    float          mySpeed;
 
    bool           myFirstTimeFlag;
+
+   DxSound* mySoundInterface;
+   DxSoundIdentifier mySound;
+   DxSoundIdentifier myDeath;
 
 };
 #endif //_TESTAPP_H_

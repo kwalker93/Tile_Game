@@ -8,10 +8,12 @@
 #include "Utilities/NonCopyable.h"
 #include "Utilities/TTypes.h"
 #include "Utilities/Rect.h"
+#include "Utilities/Point.h"
 #include "DxFramework/DxTexture.h"
 #include "DxFramework/DxTypes.h"
 #include "DxFramework/DxAnimation.h"
 #include "DxFramework/DxAssetManager.h"
+
 
 class DxGameSprite
 {
@@ -36,7 +38,9 @@ public:
    //pass in group of animations ????
 
    //MUST have working animation copy constructor/assignment operator
+   bool changeAnimation( const tstring& animationName, float speed, D3DCOLOR color = 0 );
    bool changeAnimation( DxAnimation& newAnimation );
+   DxAnimation& getAnimation( );
 
 	void transform ( float x, float y, D3DXVECTOR2 center, float rotation, D3DXVECTOR2 scale, D3DCOLOR color );
 	inline float getXPosition ( ) const { return myPosition.x; }
@@ -68,7 +72,7 @@ public:
 	RECT getCollisionArea(){return myCollisionArea;}
 	void setCollisionArea(RECT collisionArea);
 
-   void draw( IDXSPRITE spriteobj, D3DCOLOR color = D3DCOLOR_XRGB( 241,242,243 ) );
+   void draw( IDXSPRITE spriteobj, D3DCOLOR color = D3DCOLOR_XRGB( 255, 255, 255) );
    
    bool collidable ( bool flag ) { return (isCollidable = flag); }
    bool collidable () const { return isCollidable; } 
@@ -94,11 +98,11 @@ private:
 	D3DCOLOR       myColor;    //WHAT COLOR IS THIS???
 
 	bool           myVisible;
-    bool           isCollidable;
+   bool           isCollidable;
    bool           isDestroyable;
 
-	Rect		   myCollisionArea;
-
+	Rect		      myCollisionArea;
+   Point          myCollisionOffset;
 	//////////////////////////
 	DxAnimation    myAnimation;
 	//DxAnimation    myAnimations[10];       //TODO: fix this const size.

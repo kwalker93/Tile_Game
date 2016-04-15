@@ -68,12 +68,24 @@ void DxGameSprite::destroy ( )
    myCollisionArea.set( 0, 0, 0, 0 );
 }
 
+//=======================================================================
+bool DxGameSprite::changeAnimation( const tstring& animationName, float speed, D3DCOLOR color )
+{
+   myAnimation = DxAssetManager::getInstance().getAnimationCopy( animationName, speed, color );
+   return true;
+}
 
 //=======================================================================
 bool DxGameSprite::changeAnimation( DxAnimation& newAnimation )
 {
    myAnimation = newAnimation;
    return true;
+}
+
+//=======================================================================
+ DxAnimation& DxGameSprite::getAnimation( )
+{
+   return myAnimation;
 }
 
 //=======================================================================
@@ -120,13 +132,6 @@ void DxGameSprite::setScale ( float scaleX, float scaleY )
 {
    myScale.x = scaleX;
    myScale.y = scaleY;
-
-   myCollisionArea.bottom = ( (long)myCollisionArea.top + getHeight() ) * myScale.y;
-	myCollisionArea.right = ( (long)myCollisionArea.left + getWidth() ) * myScale.x;
-   myCollisionArea.top = (long)myCollisionArea.top;
-	myCollisionArea.left = (long)myCollisionArea.left;
-
-
 }
 //===========================================================================
 void DxGameSprite::draw (IDXSPRITE spriteObj, D3DCOLOR color)
@@ -188,8 +193,8 @@ void DxGameSprite::update()
 	myPosition     += myVelocity;
 
 	// update collision area
-   myCollisionArea.x( (long)myPosition.x );
-   myCollisionArea.y( (long)myPosition.y );
+   myCollisionArea.x( (long)myPosition.x + myCollisionOffset.x);
+   myCollisionArea.y( (long)myPosition.y + myCollisionOffset.y);
 
    myAnimation.update();
 
@@ -260,6 +265,8 @@ void DxGameSprite::toggleVisible ()
 //=======================================================================
 void DxGameSprite::setCollisionArea (RECT collisionArea)
 {
-	myCollisionArea = collisionArea;
+   myCollisionArea = collisionArea;
+   myCollisionOffset.x = myCollisionArea.left - (long)myPosition.x;
+   myCollisionOffset.y =  myCollisionArea.top - (long)myPosition.y;
 }
 

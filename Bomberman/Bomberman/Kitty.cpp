@@ -29,14 +29,17 @@ bool Kitty::init( IDXDEVICE device, int xPos, int yPos )
 {
    myDirection = STILLDOWN;
    loadCharacterAnimations();
-   
    mySprite.setScale( .25f, .25f );
+   mySoundInterface = DxSound::getInterface( DxSound::fmod );
+   mySoundInterface->load( _T("Assets\\Cat_Steps.mp3"), mySound );
+   mySoundInterface->load( _T("Assets\\Cat_Death.mp3"), myDeath );
+   
    bool result = mySprite.create( "BCAT-STILL" );
 
-   
    mySprite.setPosition( float(xPos), float(yPos) );
    myPosition.x = mySprite.getXPosition();
    myPosition.y = mySprite.getYPosition();
+
    mySpeed = 1.3f;
 
    assert(result);
@@ -52,6 +55,7 @@ void Kitty::update()
    mySprite.update();
    myPosition.x = mySprite.getXPosition();
    myPosition.y = mySprite.getYPosition();
+   mySoundInterface->update();
 
 }
 //=======================================================================
@@ -133,8 +137,13 @@ bool Kitty::goStop ( )
    // if kitty is ANY OTHER STILL, change to STILLUP state
 //    ??? Change from any to STILL UP on first keypress????
 //    if kitty is ANY STILL or STILLUP, change to UP state.
+//For Kitty walking
+//    Added sound->play and sound->stop to all go methods works good/ok.
+//    When kitty collides with a wall she moves then stops making the sound
+//    play and stop within frames
 bool Kitty::goUp ( )
 {
+   mySoundInterface->play( mySound ); 
    Direction temp = myDirection;
    myDirection = Direction::UP;
    mySprite.setXVel( mySpeed - mySpeed );
@@ -150,6 +159,7 @@ bool Kitty::goUp ( )
 //
 bool Kitty::goDown ( )
 {
+   mySoundInterface->play( mySound ); 
    Direction temp = myDirection;
    myDirection = Direction::DOWN;
    mySprite.setXVel(mySpeed - mySpeed);
@@ -164,6 +174,7 @@ bool Kitty::goDown ( )
 //
 bool Kitty::goLeft()
 {
+   mySoundInterface->play( mySound ); 
    Direction temp = myDirection;
    myDirection = Direction::LEFT;
    mySprite.setXVel(-mySpeed);
@@ -178,6 +189,7 @@ bool Kitty::goLeft()
 //
 bool Kitty::goRight()
 {
+   mySoundInterface->play( mySound ); 
    Direction temp = myDirection;
    myDirection = Direction::RIGHT;
    mySprite.setXVel(+mySpeed);
@@ -200,6 +212,7 @@ bool Kitty::goReverse()
 //
 bool Kitty::goStillUp()
 {
+   mySoundInterface->stop( mySound );
    mySprite.changeAnimation( myCatStillUpAnim );
    return true;
 }
@@ -208,6 +221,7 @@ bool Kitty::goStillUp()
 //
 bool Kitty::goStillDown()
 {
+   mySoundInterface->stop( mySound );
    mySprite.changeAnimation( myCatStillDownAnim );
    return true;
 }
@@ -216,6 +230,7 @@ bool Kitty::goStillDown()
 //
 bool Kitty::goStillLeft()
 {
+   mySoundInterface->stop( mySound );
    mySprite.changeAnimation( myCatStillLeftAnim );
    return true;
 }
@@ -224,10 +239,17 @@ bool Kitty::goStillLeft()
 //
 bool Kitty::goStillRight()
 {
+   mySoundInterface->stop( mySound );
    mySprite.changeAnimation( myCatStillRightAnim );
    return true;
 }
-
+//=======================================================================
+//Test Method
+void Kitty::die()
+{
+    mySoundInterface->play( myDeath );
+    mySprite.changeAnimation( myCatBlowUpAnim );
+}
 
 //=======================================================================
 //
