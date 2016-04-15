@@ -1,3 +1,8 @@
+
+#pragma once
+#if !defined(__UNIT_H__)
+#define __UNIT_H__
+
 #include <iostream>
 #include <windows.h>
 //#include "DXFramework/DxGameSprite.h"
@@ -51,3 +56,6 @@ private:
 	int myPositionX;
 	LPD3DXSPRITE myImage;
 };
+
+
+#endif

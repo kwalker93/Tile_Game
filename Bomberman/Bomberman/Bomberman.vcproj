@@ -183,6 +183,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Player.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\PlayerManager.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\stdafx.cpp"
 				>
 				<FileConfiguration
@@ -230,6 +238,14 @@
 			</File>
 			<File
 				RelativePath=".\Kitty.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Player.h"
+				>
+			</File>
+			<File
+				RelativePath=".\PlayerManager.h"
 				>
 			</File>
 			<File

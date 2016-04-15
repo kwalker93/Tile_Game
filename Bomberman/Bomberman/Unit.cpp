@@ -39,6 +39,10 @@ Unit::Unit(int maxPower, int lowPower, int maxHealth, int positionY, int positio
 	this->myImage = image;
 }
 
+Unit::~Unit()
+{
+}
+
 //Gets Health
 int Unit::getHealth()
 {
