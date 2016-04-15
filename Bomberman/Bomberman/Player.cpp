@@ -20,7 +20,7 @@ bool Player::init( bool playerOne, int numUnits )
    this->myUnitCount = this->myMaxUnits = numUnits;
    myUnits = new Unit[this->myUnitCount];
 
-   for ( int ix = 0; ix < this->myUnitCount; ix++ )
+   for ( int ix = 0; ix < this->myMaxUnits; ix++ )
    {
       // TODO: 
       // this->myUnits[ix].init(); 
@@ -34,10 +34,11 @@ bool Player::update()
 {
    return true;
 
-   for ( int ix = 0; ix < this->myMaxUnits; ix++ );
+   for ( int ix = 0; ix < this->myMaxUnits; ix++ )
    {
-      if ( this->myUnits[ix] != null )
+      if ( /*Unit exists*/ true )
       {
+         ;
          // TODO:
          // this->myUnits[ix].update();
       }
