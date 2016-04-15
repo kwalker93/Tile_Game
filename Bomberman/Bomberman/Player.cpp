@@ -17,13 +17,13 @@ Player::~Player()
 //========================================================================
 bool Player::init( bool playerOne, int numUnits )
 {
-   this->myUnitCount = numUnits;
+   this->myUnitCount = this->myMaxUnits = numUnits;
    myUnits = new Unit[this->myUnitCount];
 
    for ( int ix = 0; ix < this->myUnitCount; ix++ )
    {
       // TODO: 
-      // myUnits[ix].init(); 
+      // this->myUnits[ix].init(); 
    }
    
    return true;
@@ -33,6 +33,15 @@ bool Player::init( bool playerOne, int numUnits )
 bool Player::update()
 {
    return true;
+
+   for ( int ix = 0; ix < this->myMaxUnits; ix++ );
+   {
+      if ( this->myUnits[ix] != null )
+      {
+         // TODO:
+         // this->myUnits[ix].update();
+      }
+   }
 }
 
 //========================================================================
