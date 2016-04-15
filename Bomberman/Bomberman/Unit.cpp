@@ -21,7 +21,12 @@ Unit::Unit()
 	//this->myImage;
 }
 
-Unit::Unit(int maxPower, int lowPower, int maxHealth, int positionY, int positionX,LPD3DXSPRITE image )
+Unit::~Unit()
+{
+
+}
+
+Unit::Unit(int maxPower, int lowPower, int maxHealth, int positionY, int positionX )
 {
 	
 	// Max health for this unit.
@@ -36,11 +41,28 @@ Unit::Unit(int maxPower, int lowPower, int maxHealth, int positionY, int positio
 	this->myPositionY = positionY;
 	this->myPositionX = positionX;
 	this->calculateDamage();
-	this->myImage = image;
+
 }
 
-Unit::~Unit()
+bool Unit::gameInit(int xPos, int yPos)
 {
+	this->myImage.setScale(.25, .25);
+	bool result = this->myImage.create("Eye1");
+
+	this->myImage.setPosition(float(xPos), float(yPos));
+
+
+//	assert(result);
+
+	return true;
+
+}
+
+bool Unit::draw(IDXSPRITE spriteObj)
+{ 
+   myImage.draw(spriteObj);
+
+   return true;
 }
 
 //Gets Health
