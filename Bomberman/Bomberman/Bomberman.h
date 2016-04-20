@@ -20,6 +20,7 @@
 #include "DxFramework/DxSound.h"
 #include "DxFramework/DxSoundIdentifier.h"
 #include "Bomberman/CollisionManager.h"
+#include "Bomberman/Unit.h" 
 
 
  
@@ -51,6 +52,7 @@ private:
    tstring     myGameTitle;
 
    int         myTurnCount;
+   Unit		myUnits;
 
    TiledBackground   myLevelBgnds;//[ 1 ]
    Kitty             myKitty;

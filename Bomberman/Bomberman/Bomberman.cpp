@@ -52,7 +52,8 @@ bool Game::gameInit ( )
    //myBgRect = Rect( 0, 0, winScreenWidth(), winScreenHeight() );
 
    //Character inits
-   myKitty.init( device(), 36, 36 );   
+  // myKitty.init( device(), 36, 36 );   
+   myUnits.gameInit( 36,36);
   
    //TESTING PURPOSES. COMMENT OUT WHEN NOT NEEDED
    myTurnCount = 0;
@@ -72,7 +73,8 @@ void Game::gameRun ( )
 
    // Objects update...
    myLevelBgnds.update();
-   myKitty.update();
+   //myKitty.update();
+   myUnits.update();
 
    // play sound
    mySoundInterface->play( mySound );
@@ -90,11 +92,11 @@ void Game::gameRun ( )
          // sprite rendering...       
          myLevelBgnds.drawMySpriteMap( spriteInterface() );
    
-         myKitty.draw( spriteInterface() );
-         
+         //myKitty.draw( spriteInterface() );
+         myUnits.draw( spriteInterface() );
 
 
-         int keyCount = 0;       //TODO: KLUDGE
+        /* int keyCount = 0;       //TODO: KLUDGE
 	      if(myKeyboard.keyPressed(VK_DOWN))
 	      {
             myKitty.goDown();
@@ -126,7 +128,7 @@ void Game::gameRun ( )
 
          // Stop all kitty motion first, then check keyboard
          if( keyCount == 0 )
-            myKitty.goStop();
+            myKitty.goStop();*/
 
 
          if( myCollsionManager.worldCollisions( myKitty.getSprite(), levelRef ) )

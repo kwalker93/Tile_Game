@@ -19,6 +19,7 @@ public:
 	Unit();
 	Unit(int maxPower, int lowPower, int maxHealth, int positionY, int positionX );
 	~Unit();
+	 enum Direction{ STILL, STILLUP, STILLDOWN, STILLLEFT, STILLRIGHT, UP, DOWN, LEFT, RIGHT };
 
 public:
 	// getters for reference to get units private variables and stats.
@@ -41,11 +42,16 @@ public:
 	void reduceMovementPoints();
 	int calculateDamage();
 	void resetTurn();
+	void Unit::update();
 
 	enum{ solider1, solider2, solider3 };
 
 
 private:
+	D3DXVECTOR3    myPosition;
+	D3DXVECTOR3    myLastPosition;   
+	Direction      myDirection;
+
 	int MY_MAX_HEALTH;
 	int MY_MAX_POWER;
 	int myHealth;

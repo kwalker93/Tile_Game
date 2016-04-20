@@ -49,20 +49,25 @@ Unit::Unit(int maxPower, int lowPower, int maxHealth, int positionY, int positio
 bool Unit::gameInit(int xPos, int yPos)
 {
 	this->myImage.setScale(.25, .25);
-	bool result = this->myImage.create("Eye1");
+	bool result = this->myImage.create("ESQUID-DOWN");
 
 	this->myImage.setPosition(float(xPos), float(yPos));
-
-
-//	assert(result);
 
 	return true;
 
 }
+void Unit::update()
+{
+   myLastPosition.x = myPosition.x;
+   myLastPosition.y = myPosition.y;
+   myImage.update();
+   myPosition.x = myImage.getXPosition();
+   myPosition.y = myImage.getYPosition();
 
-bool Unit::draw(IDXSPRITE spriteObj)
+}
+bool Unit::draw ( IDXSPRITE spriteObj )
 { 
-   myImage.draw(spriteObj);
+   myImage.draw( spriteObj );
 
    return true;
 }
