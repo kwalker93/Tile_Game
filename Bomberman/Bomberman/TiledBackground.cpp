@@ -182,16 +182,20 @@ void TiledBackground::waterRising( int numOfTurns )
    {
       index = ( topRow + i ) * myNumTilesHoriz + leftCol;
       mySpriteMap[index].changeAnimation( "WATER", 10 ); 
+      mySpriteMap[index].collidable(true);
       index = ( topRow + i ) * myNumTilesHoriz + rightCol;
       mySpriteMap[index].changeAnimation( "WATER", 10 ); 
+      mySpriteMap[index].collidable(true);
    }
 
    for( i = 0; ( i + leftCol ) < myNumTilesHoriz; i++ )
    {
       index = topRow * myNumTilesHoriz + ( leftCol + i );
       mySpriteMap[index].changeAnimation( "WATER", 10 ); 
+      mySpriteMap[index].collidable(true);
       index = bottomRow * myNumTilesHoriz + ( rightCol - i );
       mySpriteMap[index].changeAnimation( "WATER", 10 ); 
+      mySpriteMap[index].collidable(true);
    }
    
 
