@@ -19,7 +19,7 @@ public:
 	Unit();
 	Unit(int maxPower, int lowPower, int maxHealth, int positionY, int positionX );
 	~Unit();
-	 enum Direction{ STILL, STILLUP, STILLDOWN, STILLLEFT, STILLRIGHT, UP, DOWN, LEFT, RIGHT };
+	 enum Direction{ UP, DOWN, LEFT, RIGHT };
 
 public:
 	// getters for reference to get units private variables and stats.
@@ -42,15 +42,25 @@ public:
 	void reduceMovementPoints();
 	int calculateDamage();
 	void resetTurn();
-	void Unit::update();
+	void update();
+	void setMyPosition ( D3DXVECTOR3 pos );
+	DxGameSprite getSprite();
+	D3DXVECTOR3 getLastPosition();
+	bool stop();
+	bool right();
+	bool left();
+	bool down();
+	bool up();
 
 	enum{ solider1, solider2, solider3 };
 
 
 private:
+	DxAnimation	   myUnitImage;
 	D3DXVECTOR3    myPosition;
 	D3DXVECTOR3    myLastPosition;   
 	Direction      myDirection;
+	float			mySpeed;
 
 	int MY_MAX_HEALTH;
 	int MY_MAX_POWER;

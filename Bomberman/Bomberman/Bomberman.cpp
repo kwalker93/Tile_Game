@@ -57,6 +57,7 @@ bool Game::gameInit ( )
   
    //TESTING PURPOSES. COMMENT OUT WHEN NOT NEEDED
    myTurnCount = 0;
+   myButtonCheck = true;
    
    return true;
 }
@@ -96,27 +97,39 @@ void Game::gameRun ( )
          myUnits.draw( spriteInterface() );
 
 
-        /* int keyCount = 0;       //TODO: KLUDGE
-	      if(myKeyboard.keyPressed(VK_DOWN))
+         int keyCount = 0;       //TODO: KLUDGE
+	      if(myKeyboard.keyPressed(VK_DOWN) && myButtonCheck == true)
 	      {
-            myKitty.goDown();
+            //myKitty.goDown();
+			myUnits.down();
             keyCount++;
+			myButtonCheck = false;
          }
-         else if(myKeyboard.keyPressed(VK_LEFT))
+         else if(myKeyboard.keyPressed(VK_LEFT)&& myButtonCheck == true)
 	      {
             keyCount++;
-            myKitty.goLeft();
+           // myKitty.goLeft();
+			myUnits.left();
+			myButtonCheck = false;
          }
-         else if(myKeyboard.keyPressed(VK_RIGHT))
+         else if(myKeyboard.keyPressed(VK_RIGHT)&& myButtonCheck == true)
 	      {
             keyCount++;
-            myKitty.goRight();
+           // myKitty.goRight();
+			myUnits.right();
+			myButtonCheck = false;
          }
-         else if(myKeyboard.keyPressed(VK_UP))
+         else if(myKeyboard.keyPressed(VK_UP)&& myButtonCheck == true)
 	      {
             keyCount++;
-            myKitty.goUp();
-                     }
+            //myKitty.goUp();
+			myUnits.up();
+			myButtonCheck = false;
+          }
+		 else if(myKeyboard.keyPressed(VK_TAB))
+		 {
+			myButtonCheck = true;
+		 }
   
 
 
@@ -124,25 +137,28 @@ void Game::gameRun ( )
          {
             levelRef.waterRising( myTurnCount );
             myTurnCount++;
+			
          }
 
          // Stop all kitty motion first, then check keyboard
          if( keyCount == 0 )
-            myKitty.goStop();*/
+		 {
+          // myKitty.goStop();
+			 myUnits.stop();
+			
+		 }
+		 
 
 
-         if( myCollsionManager.worldCollisions( myKitty.getSprite(), levelRef ) )
+         if( myCollsionManager.worldCollisions( myUnits.getSprite(), levelRef ) )
          {
-            myKitty.goStop();
-            D3DXVECTOR3 snPos = myKitty.getLastPosition();
-            myKitty.setMyPosition( snPos );
+           // myKitty.goStop();
+			 myUnits.stop();
+           // D3DXVECTOR3 snPos = myKitty.getLastPosition();
+			  D3DXVECTOR3 snPos = myUnits.getLastPosition();
+           // myKitty.setMyPosition( snPos );
+			  myUnits.setMyPosition(snPos);
          }
-
-
-            
-
-
-
 
 
          // stop rendering

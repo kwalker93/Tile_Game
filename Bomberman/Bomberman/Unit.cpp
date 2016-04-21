@@ -43,15 +43,39 @@ Unit::Unit(int maxPower, int lowPower, int maxHealth, int positionY, int positio
 	this->myPositionY = positionY;
 	this->myPositionX = positionX;
 	this->calculateDamage();
+}
 
+void Unit::setMyPosition( D3DXVECTOR3 pos )
+{
+	myPosition = pos; myImage.setPosition(myPosition.x, myPosition.y );
+}
+
+DxGameSprite Unit::getSprite() 
+{ 
+	return myImage; 
+}
+D3DXVECTOR3 Unit::getLastPosition()
+{
+	return this->myLastPosition;
 }
 
 bool Unit::gameInit(int xPos, int yPos)
 {
 	this->myImage.setScale(.25, .25);
-	bool result = this->myImage.create("ESQUID-DOWN");
+	this->myImage.create("EDOG-DOWN");
+	//this->myImage.create("BCAT-STILL");
+	//EDOG-DOWN  // BCAT-STILL
+	//this->myImage.isCollidable();
 
 	this->myImage.setPosition(float(xPos), float(yPos));
+	//myUnitImage = DxAssetManager::getInstance().getAnimationCopy( "BCAT-STILL", 10, D3DCOLOR_XRGB( 170, 181, 129 ) );
+	myUnitImage = DxAssetManager::getInstance().getAnimationCopy( "EDOG-DOWN ", 10, D3DCOLOR_XRGB( 170, 181, 129 ) );
+
+	//myImage.changeAnimation( myUnitImage);
+	myPosition.x = myImage.getXPosition();
+	myPosition.y = myImage.getYPosition();
+
+	mySpeed = 32;
 
 	return true;
 
@@ -65,12 +89,50 @@ void Unit::update()
    myPosition.y = myImage.getYPosition();
 
 }
+
 bool Unit::draw ( IDXSPRITE spriteObj )
 { 
    myImage.draw( spriteObj );
 
    return true;
 }
+
+bool Unit::stop()
+{
+	myImage.setXVel(0.0f);
+	myImage.setYVel(0.0f);
+	return true;
+}
+
+bool Unit::right()
+{
+	myImage.setXVel(+mySpeed);
+	myImage.setYVel( mySpeed - mySpeed );
+	this->myDirection = Direction::RIGHT;
+	return true;
+}
+bool Unit::up()
+{
+	myImage.setXVel( mySpeed - mySpeed);
+	myImage.setYVel(-mySpeed);
+	this->myDirection = Direction::UP;
+	return true;
+}
+bool Unit::down()
+{
+	myImage.setXVel( mySpeed - mySpeed);
+	myImage.setYVel(+mySpeed);
+	this->myDirection = Direction::DOWN;
+	return true;
+}
+bool Unit::left()
+{
+	myImage.setXVel(-mySpeed);
+	myImage.setYVel(mySpeed - mySpeed);
+	this->myDirection = Direction::LEFT;
+	return true;
+}
+
 
 //Gets Health
 int Unit::getHealth()

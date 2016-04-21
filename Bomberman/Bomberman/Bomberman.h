@@ -46,6 +46,8 @@ protected:
 
 
 private:
+	bool myButtonCheck;
+
    D3DCOLOR bgColor;
    DxTexture  myImage;	
    
