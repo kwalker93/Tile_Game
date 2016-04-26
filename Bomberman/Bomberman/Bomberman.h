@@ -34,7 +34,10 @@ protected:
    bool gameInit ();
    void gameRun ();
    void gameExit ();
-   //LPCTSTR 
+
+   //Message Box methods
+   int checkIfQuitting();
+   int checkIfReseting();
 
 
    //------------------------------------------------------------

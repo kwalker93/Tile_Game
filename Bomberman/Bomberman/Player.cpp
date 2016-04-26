@@ -38,7 +38,7 @@ bool Player::update()
    {
       if ( /*Unit exists*/ true )
       {
-         ;
+         
          // TODO:
          // this->myUnits[ix].update();
       }

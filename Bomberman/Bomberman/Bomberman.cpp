@@ -28,7 +28,7 @@ Game::~Game ( )
 bool Game::gameInit ( )
 {
    bool result = true;
-   myGameTitle.append("BomberCat");
+   myGameTitle.append("Underground Squirrel Brawl");
    winSetTitle ( myGameTitle );
 
    //sets Background Color
@@ -46,13 +46,10 @@ bool Game::gameInit ( )
    mySoundInterface->load( _T("Assets\\HamsterDance.wav"), mySound );
    mySoundInterface->loop( mySound );
 
-
    //Level init
    result &= myLevelBgnds.init( device(), _T("level_one.config") );
-   //myBgRect = Rect( 0, 0, winScreenWidth(), winScreenHeight() );
 
    //Character inits
-   // myKitty.init( device(), 36, 36 );   
    myUnits.gameInit( 36,36);
 
    //TESTING PURPOSES. COMMENT OUT WHEN NOT NEEDED
@@ -74,7 +71,6 @@ void Game::gameRun ( )
 
    // Objects update...
    myLevelBgnds.update();
-   //myKitty.update();
    myUnits.update();
 
    // play sound
@@ -85,22 +81,17 @@ void Game::gameRun ( )
    if ( SUCCEEDED(device()->BeginScene()) )
    {
       //non-sprite rendering....
-      //myLevelBgnds[0].draw( backBuffer(), &myBgRect );
-
 
       if ( SUCCEEDED(spriteInterface()->Begin( D3DXSPRITE_ALPHABLEND )) )
       {
          // sprite rendering...       
          myLevelBgnds.drawMySpriteMap( spriteInterface() );
 
-         //myKitty.draw( spriteInterface() );
          myUnits.draw( spriteInterface() );
-
 
          int keyCount = 0;       //TODO: KLUDGE
          if(myKeyboard.keyDown(VK_DOWN) && myButtonCheck == true)
          {
-            //myKitty.goDown();
             myUnits.down();
             keyCount++;
             myButtonCheck = false;
@@ -108,21 +99,18 @@ void Game::gameRun ( )
          else if(myKeyboard.keyDown(VK_LEFT)&& myButtonCheck == true)
          {
             keyCount++;
-            // myKitty.goLeft();
             myUnits.left();
             myButtonCheck = false;
          }
          else if(myKeyboard.keyDown(VK_RIGHT)&& myButtonCheck == true)
          {
             keyCount++;
-            // myKitty.goRight();
             myUnits.right();
             myButtonCheck = false;
          }
          else if(myKeyboard.keyDown(VK_UP)&& myButtonCheck == true)
          {
             keyCount++;
-            //myKitty.goUp();
             myUnits.up();
             myButtonCheck = false;
          }
@@ -132,33 +120,18 @@ void Game::gameRun ( )
             myButtonCheck = true;
          }
 
-         //test Code for waterRising()
-         if( myKeyboard.keyPressed( VK_SPACE) )
-         {
-            levelRef.waterRising( myTurnCount );
-            myTurnCount++;
-
-         }
-
          // Stop all kitty motion first, then check keyboard
          if( keyCount == 0 )
          {
-            // myKitty.goStop();
             myUnits.stop();
          }
-
-
 
          if( myCollsionManager.worldCollisions( myUnits.getSprite(), levelRef ) )
          {
-            // myKitty.goStop();
             myUnits.stop();
-            // D3DXVECTOR3 snPos = myKitty.getLastPosition();
             D3DXVECTOR3 snPos = myUnits.getLastPosition();
-            // myKitty.setMyPosition( snPos );
             myUnits.setMyPosition(snPos);
          }
-
 
          // stop rendering
          spriteInterface()->End();
@@ -172,7 +145,10 @@ void Game::gameRun ( )
    //if the escape key is pressed, destroy
    if ( DxKeyboard::keyDown( VK_ESCAPE ) )
    {
-      onDestroy();
+      if( checkIfQuitting() == 6 )
+      {
+         onDestroy();
+      }
    }
 
 }
@@ -182,4 +158,15 @@ void Game::gameExit ( )
 {
 }
 
+
+int Game::checkIfQuitting()
+{
+   return MessageBox(NULL, "Are you sure you want to quit?\n", "Quit?", MB_YESNO | MB_ICONEXCLAMATION );
+}
+
+
+int Game::checkIfReseting()
+{
+   return MessageBox(NULL, "Are you sure you want to reset the map?\n", "Reset Map?", MB_YESNO | MB_ICONEXCLAMATION );
+}
 
