@@ -43,10 +43,12 @@ public:
 
 // private methods/data
 private:
-   Unit* myUnits;      // The units that belong to this player
+   Unit* myUnits[4];      // The units that belong to this player
    int   myUnitCount;  // The current number of units that belong to this player
    int   myMaxUnits;   // The total number of units that initally belonged to this player
    bool  isPlayerOne;  // Whether or not this Player is player one
+   Unit  mySelectUnit;
+
 };
 
 #endif
