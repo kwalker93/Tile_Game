@@ -20,6 +20,9 @@ bool Player::init( bool playerOne, int numUnits )
    this->myUnitCount = this->myMaxUnits = numUnits;
    myUnits = new Unit[this->myUnitCount];
 
+   unit1.create(kj vzkjlvb skj);
+   unit1.setPosition
+
    for ( int ix = 0; ix < this->myMaxUnits; ix++ )
    {
       // TODO: 
@@ -76,4 +79,40 @@ bool Player::unitKilled()
 {
    this->myUnitCount--;
    return true;
+}
+
+//========================================================================
+Unit& Player::getSelectedUnit()
+{
+   return &mySelectedUnit;
+}
+
+//========================================================================
+void Player::setSelectedUnit( Unit& selectedUnit )
+{
+   mySelectedUnit = selectedUnit;
+}
+
+//========================================================================
+void Player::left()
+{
+   mySelectedUnit.left();
+}
+
+//========================================================================
+void Player::down()
+{
+   mySelectedUnit.down();
+}
+
+//========================================================================
+void Player::up()
+{
+   mySelectedUnit.up();
+}
+
+//========================================================================
+void Player::right()
+{
+   mySelectedUnit.right();
 }

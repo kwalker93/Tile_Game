@@ -199,6 +199,14 @@ void DxGameSprite::update()
    myAnimation.update();
 
 }
+//
+////=======================================================================
+//bool DxGameSprite::contains (  const POINT& point )
+//{
+//   return myCollisionArea.contains( point );
+//}
+
+
 
 //=======================================================================
 bool DxGameSprite::collidesWith ( const DxGameSprite& other )

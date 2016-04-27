@@ -90,7 +90,7 @@ private:
 	D3DXVECTOR3    myVelocity;
 	D3DXVECTOR3    myLastVelocity;
 	D3DXVECTOR3    myAccel;
-    D3DXVECTOR3    myLastAccel;
+   D3DXVECTOR3    myLastAccel;
 
 	float          myRotation;
 	D3DXVECTOR2    myScale;

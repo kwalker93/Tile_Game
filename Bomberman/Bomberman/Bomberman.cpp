@@ -90,9 +90,10 @@ void Game::gameRun ( )
          myUnits.draw( spriteInterface() );
 
          int keyCount = 0;       //TODO: KLUDGE
-         if(myKeyboard.keyDown(VK_DOWN) && myButtonCheck == true)
+         if(myKeyboard.keyDown(VK_DOWN) && myButtonCheck == true )
+            //&& myCurrentPlayer.getSelectedUnit() != NULL )
          {
-            myUnits.down();
+            myCurrentPlayer.down();
             keyCount++;
             myButtonCheck = false;
          }
@@ -150,7 +151,6 @@ void Game::gameRun ( )
          onDestroy();
       }
    }
-
 }
 
 //=======================================================================
@@ -158,15 +158,130 @@ void Game::gameExit ( )
 {
 }
 
-
+//=======================================================================
 int Game::checkIfQuitting()
 {
    return MessageBox(NULL, "Are you sure you want to quit?\n", "Quit?", MB_YESNO | MB_ICONEXCLAMATION );
 }
 
-
+//=======================================================================
 int Game::checkIfReseting()
 {
    return MessageBox(NULL, "Are you sure you want to reset the map?\n", "Reset Map?", MB_YESNO | MB_ICONEXCLAMATION );
 }
 
+//=======================================================================
+int Game::aboutMessageBox()
+{
+   return MessageBox(NULL, "", "About", MB_YESNO | MB_ICONEXCLAMATION );
+}
+
+//=======================================================================
+int Game::controlsMessageBox()
+{
+   string line0 = "Winter's coming, and there's only enough acorns in the forest for one family of squirrels!\n";
+   string line1 = "In Underground Squirrel Brawl, players take turns controlling their squirrels and wipe the other player's units.\n\n";
+
+   string line2 = "How to Play: \n";
+
+   string line3 = "1. Click on one of your squirrels to select them.\n";
+   string line4 = "2. Use the arrow keys to move the selected unit on the board. Be mindful of the Info page, since each squirrel has a limited movement range.\n";
+   string line5 = "3. When your selected squirrel is within attacking range of the other player's  squirrel, you can damage them.\n";
+   string line6 = "4. Once a squirrel's health goes to 0, they're toast, so be careful!\n";
+
+   string line7 = "P.S.: Oh, by the way...\n\n\n You better win quickly, or else the nearby river my engulf you with its yearly water rising!\n";
+   
+   
+   string concatString = line0 + line1 + line2 + line3 + line4 + line5 + line6 + line7;
+
+
+
+   return MessageBox(NULL, concatString.c_str(), "Controls", MB_OK | MB_ICONEXCLAMATION );
+}
+
+
+
+//=======================================================================
+//=======================================================================
+//=======================================================================
+//This is just psuedo code for the Game Logic
+
+/*
+Start game---------------------
+
+Set up the board/map----------------------------
+This includes Players with Unit on the board
+Units.init should be in Player.init
+
+Always check if 10 turns has passed. If so, call waterRising()
+
+***( Game should have a myCurrentPlayer variable )***
+Start Player1's turn
+
+Player1 selects a Unit with the Mouse cursor position
+Unit is then assigned to Player1's mySelectedUnit variable
+
+All of Player's functions involving a Unit only apply to the mySelectedUnit
+
+Player1 can move the select Unit
+Player1 can attack with selected Unit
+( change attackable tiles' colors???? )
+
+Player2's relevant Units take damage
+if Unit dies, remove/turn off that Unit from the relevant Player's array
+
+Make a check to see if any Players' Unit are all gone
+
+It now becomes Player2's turn
+
+***Repeat the previous steps, but now with Player2***
+
+
+What we need from this logic:
+
+Player Player1;
+Player Player2;
+Player myCurrentPlayer;
+
+Player1.init();
+Player2.init();
+
+myCurrentPlayer = &Player1;
+myCurrentPlayer = &Player2;
+
+
+
+user can use mouse to click on a unit
+
+bool belongsToPlayerOne()
+
+check if the clicked on unit "contains" the mouse position
+check if the clicked on unit belongs to the current player
+if(  )
+{
+assign the clicked on unit to currentPlayer's mySelectedUnit
+}
+
+Unit mySelectedUnit;
+
+Player.left()
+
+void left()
+{
+mySelectedUnit.left();
+}
+
+moving function 
+mySelectedUnit.left();
+
+now that selected unit is the only one that's movable by the currentPlayer
+
+myCurrentPlayer
+
+
+
+
+
+
+
+*/

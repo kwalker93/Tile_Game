@@ -38,6 +38,8 @@ protected:
    //Message Box methods
    int checkIfQuitting();
    int checkIfReseting();
+   int aboutMessageBox();
+   int controlsMessageBox();
 
 
    //------------------------------------------------------------
