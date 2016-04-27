@@ -65,7 +65,7 @@ bool Unit::init( tstring animationName, int xPos, int yPos)
 	this->myImage.create(animationName);
 
 	this->myImage.setPosition(float(xPos), float(yPos));
-	myUnitImage = DxAssetManager::getInstance().getAnimationCopy( animationName, 10, D3DCOLOR_XRGB( 255, 255, 255 ) );
+	myUnitImage = DxAssetManager::getInstance().getAnimationCopy( animationName, 10 );
 
 	myPosition.x = myImage.getXPosition();
 	myPosition.y = myImage.getYPosition();
