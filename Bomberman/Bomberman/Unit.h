@@ -32,7 +32,7 @@ public:
 	void setImage(string);// might need to change// 
 	int getY();
 	int getX();
-	bool gameInit(int, int);
+	bool init(tstring spriteName, int xPos, int yPos);
 	bool draw (IDXSPRITE spriteObj);
 
 

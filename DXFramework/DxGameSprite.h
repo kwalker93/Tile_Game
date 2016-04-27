@@ -27,40 +27,41 @@ public:
 
 	void shutdown();
 
-	bool create ( const tstring& animationName, D3DCOLOR transcolor = 0 );
+	bool create ( const tstring& animationName, float speed = 0, D3DCOLOR transcolor = 0 );
 	bool create( DxTexture* texture, D3DCOLOR transcolor = 0 );
 	void destroy ( void );
-   
-   //Different types of changeAnimations:
-   //pass in animation
-   //pass in animation name
-   //...
-   //pass in group of animations ????
 
-   //MUST have working animation copy constructor/assignment operator
-   bool changeAnimation( const tstring& animationName, float speed, D3DCOLOR color = 0 );
-   bool changeAnimation( DxAnimation& newAnimation );
-   DxAnimation& getAnimation( );
+	//Different types of changeAnimations:
+	//pass in animation
+	//pass in animation name
+	//...
+	//pass in group of animations ????
 
-	void transform ( float x, float y, D3DXVECTOR2 center, float rotation, D3DXVECTOR2 scale, D3DCOLOR color );
+	//MUST have working animation copy constructor/assignment operator
+	bool changeAnimation( const tstring& animationName, float speed, D3DCOLOR excludeColor = 0 );
+	bool changeAnimation( DxAnimation& newAnimation );
+	DxAnimation& getAnimation( );
+
+	void transform ( float x, float y, D3DXVECTOR2 center, float rotation, D3DXVECTOR2 scale, D3DCOLOR excludeColor );
 	inline float getXPosition ( ) const { return myPosition.x; }
 	inline float getYPosition ( ) const { return myPosition.y; }
 	void setPosition ( float x, float y );
 	void setXPosition ( float value );
 	void setYPosition ( float value );
-   void setScale( float scaleX, float scaleY );
+	void setScale( float scaleX, float scaleY );
 
-   int getWidth() const {return (int)(myAnimation.width() * myScale.x);}
+	int getWidth() const {return (int)(myAnimation.width() * myScale.x);}
 	int getHeight() const {return (int)(myAnimation.height() * myScale.y);}
 
 	float getXVel(){return  myVelocity.x;}
 	float getYVel(){return  myVelocity.y;}
+	D3DXVECTOR3 getLastPostion(){return myLastPosition;}
 	void setXVel(float xV);
 	void setYVel(float yV);
 
-   void evaluateCenter();
-   D3DXVECTOR2 center ( D3DXVECTOR2 center ) { return (myCenter = center); }
-   D3DXVECTOR2 center () const { return myCenter; }
+	void evaluateCenter();
+	D3DXVECTOR2 center ( D3DXVECTOR2 center ) { return (myCenter = center); }
+	D3DXVECTOR2 center () const { return myCenter; }
 
 
 	float getLastXVel(){return  myLastVelocity.x;}
@@ -70,27 +71,32 @@ public:
 	void setLastYVel(float yV);
 
 	RECT getCollisionArea(){return myCollisionArea;}
+	RECT getLastCollisionArea(){return myLastCA;}
 	void setCollisionArea(RECT collisionArea);
 
-   void draw( IDXSPRITE spriteobj, D3DCOLOR color = D3DCOLOR_XRGB( 255, 255, 255) );
+	void draw( IDXSPRITE spriteobj, D3DCOLOR color = D3DCOLOR_XRGB( 255, 255, 255) );
    
-   bool collidable ( bool flag ) { return (isCollidable = flag); }
-   bool collidable () const { return isCollidable; } 
-   bool collidesWith ( const DxGameSprite& other );
-   bool setDestroyable ( bool flag ){ return (isDestroyable = flag); }
-   bool getDestroyable() const { return isDestroyable; }
-   bool radialCollidesWith ( const DxGameSprite& otherSprite  );
+	void drawMyColor( IDXSPRITE spriteobj );
+
+
+	bool collidable ( bool flag ) { return (isCollidable = flag); }
+	bool collidable () const { return isCollidable; } 
+	bool collidesWith ( const DxGameSprite& other );
+	bool setDestroyable ( bool flag ){ return (isDestroyable = flag); }
+	bool getDestroyable() const { return isDestroyable; }
+	bool radialCollidesWith ( const DxGameSprite& otherSprite  );
 	void toggleVisible();
 	bool isVisible(){return myVisible;}
-   
+
 private:
 
 	D3DXVECTOR3    myPosition;
 	D3DXVECTOR3    myLastPosition;
+	Rect		      myLastCA;
 	D3DXVECTOR3    myVelocity;
 	D3DXVECTOR3    myLastVelocity;
 	D3DXVECTOR3    myAccel;
-   D3DXVECTOR3    myLastAccel;
+	D3DXVECTOR3    myLastAccel;
 
 	float          myRotation;
 	D3DXVECTOR2    myScale;
@@ -98,11 +104,11 @@ private:
 	D3DCOLOR       myColor;    //WHAT COLOR IS THIS???
 
 	bool           myVisible;
-   bool           isCollidable;
-   bool           isDestroyable;
+	bool           isCollidable;
+	bool           isDestroyable;
 
 	Rect		      myCollisionArea;
-   Point          myCollisionOffset;
+	Point          myCollisionOffset;
 	//////////////////////////
 	DxAnimation    myAnimation;
 	//DxAnimation    myAnimations[10];       //TODO: fix this const size.

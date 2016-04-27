@@ -59,23 +59,18 @@ D3DXVECTOR3 Unit::getLastPosition()
 	return this->myLastPosition;
 }
 
-bool Unit::gameInit(int xPos, int yPos)
+bool Unit::init( tstring animationName, int xPos, int yPos)
 {
-	this->myImage.setScale(.25, .25);
-	this->myImage.create("EDOG-DOWN");
-	//this->myImage.create("BCAT-STILL");
-	//EDOG-DOWN  // BCAT-STILL
-	//this->myImage.isCollidable();
+	this->myImage.setScale(.5, .5);
+	this->myImage.create(animationName);
 
 	this->myImage.setPosition(float(xPos), float(yPos));
-	//myUnitImage = DxAssetManager::getInstance().getAnimationCopy( "BCAT-STILL", 10, D3DCOLOR_XRGB( 170, 181, 129 ) );
-	myUnitImage = DxAssetManager::getInstance().getAnimationCopy( "EDOG-DOWN ", 10, D3DCOLOR_XRGB( 170, 181, 129 ) );
+	myUnitImage = DxAssetManager::getInstance().getAnimationCopy( animationName, 10, D3DCOLOR_XRGB( 255, 255, 255 ) );
 
-	//myImage.changeAnimation( myUnitImage);
 	myPosition.x = myImage.getXPosition();
 	myPosition.y = myImage.getYPosition();
 
-	mySpeed = 32;
+	mySpeed = 64;
 
 	return true;
 

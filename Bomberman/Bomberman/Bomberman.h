@@ -44,8 +44,8 @@ protected:
 
    //------------------------------------------------------------
    // Windows virtual interface
-   int winScreenWidth() const { return 800; }
-   int winScreenHeight() const { return 608; }
+   int winScreenWidth() const { return 768; }
+   int winScreenHeight() const { return 640; }
    //Below doesn't currently work...
    //LPCTSTR winAppTitleStr () const { "BomberCat"; }
 

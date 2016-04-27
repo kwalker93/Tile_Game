@@ -40,18 +40,18 @@ void CollisionManager::shutdown(){}
 bool CollisionManager::worldCollisions( DxGameSprite sprite, TiledBackground&  LevelRef )
 {
    RECT collision = sprite.getCollisionArea();
-   int indexTopLeft = ( (int)collision.left / 32 ) + 
-                      ( (int)collision.top / 32 ) *  LevelRef.numColumns();
+   int indexTopLeft = ( (int)collision.left / 64 ) + 
+                      ( (int)collision.top / 64 ) *  LevelRef.numColumns();
 
-   int indexBottomLeft = ( (int)collision.left / 32 ) + 
-                         ( (int)collision.bottom / 32 ) *
+   int indexBottomLeft = ( (int)collision.left / 64 ) + 
+                         ( (int)collision.bottom / 64 ) *
                          LevelRef.numColumns();
 
-   int indexTopRight = ( (int)collision.right / 32 ) + 
-                       ( (int)collision.top / 32 ) * LevelRef.numColumns();
+   int indexTopRight = ( (int)collision.right / 64 ) + 
+                       ( (int)collision.top / 64 ) * LevelRef.numColumns();
 
-   int indexBottomRight = ( (int)collision.right / 32 ) +
-                          ( (int)collision.bottom / 32 ) * 
+   int indexBottomRight = ( (int)collision.right / 64 ) +
+                          ( (int)collision.bottom / 64 ) * 
                           LevelRef.numColumns();
 
    if( ( sprite.collidesWith( LevelRef.mySpriteMap[indexTopLeft] )&&  
@@ -82,18 +82,18 @@ bool CollisionManager::worldCollisions( DxGameSprite sprite, TiledBackground&  L
 bool CollisionManager::exploisionCollisions( DxGameSprite sprite, TiledBackground&  LevelRef )
 {
    RECT collision = sprite.getCollisionArea();
-   int indexTopLeft = ( (int)collision.left / 32 ) + 
-                      ( (int)collision.top / 32 ) *  LevelRef.numColumns();
+   int indexTopLeft = ( (int)collision.left / 64 ) + 
+                      ( (int)collision.top / 64 ) *  LevelRef.numColumns();
 
-   int indexBottomLeft = ( (int)collision.left / 32 ) + 
-                         ( (int)collision.bottom / 32 ) *
+   int indexBottomLeft = ( (int)collision.left / 64 ) + 
+                         ( (int)collision.bottom / 64 ) *
                          LevelRef.numColumns();
 
-   int indexTopRight = ( (int)collision.right / 32 ) + 
-                       ( (int)collision.top / 32 ) * LevelRef.numColumns();
+   int indexTopRight = ( (int)collision.right / 64 ) + 
+                       ( (int)collision.top / 64 ) * LevelRef.numColumns();
 
-   int indexBottomRight = ( (int)collision.right / 32 ) +
-                          ( (int)collision.bottom / 32 ) * 
+   int indexBottomRight = ( (int)collision.right / 64 ) +
+                          ( (int)collision.bottom / 64 ) * 
                           LevelRef.numColumns();
 
    if( ( sprite.collidesWith( LevelRef.mySpriteMap[indexTopLeft] )&&  

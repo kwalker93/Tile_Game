@@ -41,16 +41,18 @@ bool Game::gameInit ( )
    myCollsionManager.init();
 
    //sound init
+   
    mySoundInterface = DxSound::getInterface( DxSound::fmod );
    mySoundInterface->init( hWnd() );
    mySoundInterface->load( _T("Assets\\HamsterDance.wav"), mySound );
    mySoundInterface->loop( mySound );
+   
 
    //Level init
    result &= myLevelBgnds.init( device(), _T("level_one.config") );
 
    //Character inits
-   myUnits.gameInit( 36,36);
+   myUnits.init( "ACORN-BROWN", 64,64);
 
    //TESTING PURPOSES. COMMENT OUT WHEN NOT NEEDED
    myTurnCount = 0;
@@ -146,7 +148,7 @@ void Game::gameRun ( )
    //if the escape key is pressed, destroy
    if ( DxKeyboard::keyDown( VK_ESCAPE ) )
    {
-      if( controlsMessageBox() == 9) //checkIfQuitting() == 6 )
+      if( controlsMessageBox() == 6) //checkIfQuitting() == 6 )
       {
          onDestroy();
       }
@@ -180,23 +182,22 @@ int Game::aboutMessageBox()
 int Game::controlsMessageBox()
 {
    string line0 = "Winter's coming, and there's only enough acorns in the forest for one family of squirrels!\n";
-   string line1 = "In Underground Squirrel Brawl, players take turns controlling their squirrels and wipe the other player's units.\n\n";
+   string line1 = "In Underground Squirrel Brawl, players take turns destroying the opponent's squirrels.\n\n";
 
    string line2 = "How to Play: \n";
 
    string line3 = "1. Click on one of your squirrels to select them.\n";
    string line4 = "2. Use the arrow keys to move the selected unit on the board. Be mindful of the Info page, since each squirrel has a limited movement range.\n";
-   string line5 = "3. When your selected squirrel is within attacking range of the other player's  squirrel, you can damage them.\n";
-   string line6 = "4. Once a squirrel's health goes to 0, they're toast, so be careful!\n";
+   string line5 = "3. When your selected squirrel is within attacking range of the other player's squirrels, you can damage them.\n";
+   string line6 = "4. Once a squirrel's health goes to 0, they're toast, so be careful!\n\n";
+   string line7 = "The last player with squirrels remaining wins the game!\n\n\n\n";
 
-   string line7 = "P.S.: Oh, by the way...\n\n\n You better win quickly, or else the nearby river my engulf you with its yearly water rising!\n";
+   string line8 = "Oh, by the way...\n\nYou better win quickly, or else the nearby river might engulf you with its daily flooding!\n";
    
    
-   string concatString = line0 + line1 + line2 + line3 + line4 + line5 + line6 + line7;
+   string concatString = line0 + line1 + line2 + line3 + line4 + line5 + line6 + line7 + line8;
 
-
-
-   return MessageBox(NULL, concatString.c_str(), "Controls", MB_OK | MB_ICONEXCLAMATION );
+   return MessageBox(NULL, concatString.c_str(), "Controls", MB_YESNO | MB_ICONEXCLAMATION );
 }
 
 

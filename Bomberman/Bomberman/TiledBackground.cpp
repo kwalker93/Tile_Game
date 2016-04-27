@@ -70,38 +70,6 @@ bool TiledBackground::buildBackground ( const tstring& configFilename )
    myNumTilesHoriz = fileInfo.numTileCols();
 
    mySpriteMap.resize( myNumTilesVert * myNumTilesHoriz );
-      
-   //int bgWidth  = fileInfo.getTilePixWidth() * myNumTilesHoriz;
-   //int bgHeight = fileInfo.getTilePixHeight() * myNumTilesVert;
-
-
-
-   //SAS: NOTE: Windows 8 is not working, windows 10, either.
-   //     But works fine one Win7.
-   //     It's got to do with this create.
-   //     The texture created here DOES NOT WORK regardless whether it is done from tiles or a simple file load.
-   //     BUT it DOES work on Win8 if we create a straight texture 
-   //
-   //     Sunday - More information.
-   //     I've installed VS2008, SP1, DirectX Jun2010, SVN, Winmerge;
-   //     All on a clean Windows 10 Professional installation, running in a VMWare virtual machine,
-   //     *** THE BACKGROUND DRAWS PERFECTLY ***
-   //     I think that if you're having problems on your own machines... you should look a bit closer at your installation,
-   //     particularly, reinstall the DirectX_2010, check DxDiag and your video drivers, and get rid of the TONS of bloatware.
-   //     But... it's now verifiably WORKING on a machine that isn't totally overrun with bloat, so it's on YOU to isolate 
-   //     the problem.
-   //     
-
-   //result = myTiledBgTexture.create( myDevice, bgWidth, bgHeight, D3DUSAGE_RENDERTARGET );
-   //RECT junk = { 0,0, 800, 576 };
-   //result = myTiledBgTexture.create( myDevice, 
-   //                                  DxAssetManager::getInstance().getConfigAssetPath(_T("SCOTTS_TEST.png")), 
-   //                                  junk, 
-   //                                  D3DUSAGE_RENDERTARGET );
-
-
-   //assert(result); //todo
-
 
    int index = 0;
 
@@ -121,11 +89,11 @@ bool TiledBackground::buildBackground ( const tstring& configFilename )
          int xPos = col*tilePixWidth;
          int yPos = row*tilePixHeight; 
 
-         mySpriteMap[index].setScale( .25, .25 );
+         mySpriteMap[index].setScale( .5, .5 );
 
          if(  fileInfo.getTileType( row, col ) == _T("WATER") )
          {
-            mySpriteMap[index].setScale(1.25f, 1.25f);
+            mySpriteMap[index].setScale(.5f, .5f);
             mySpriteMap[index].create( "WATER" );
             
             //Point pos( (LONG)xPos, (LONG)yPos );
@@ -134,7 +102,7 @@ bool TiledBackground::buildBackground ( const tstring& configFilename )
          }
          else if ( fileInfo.getTileType( row, col ) == _T("FOREST") )
          {
-            mySpriteMap[index].setScale(1.25f, 1.25f);
+            mySpriteMap[index].setScale(.5f, .5f);
             mySpriteMap[index].create( "FOREST" );
             
 
@@ -144,7 +112,7 @@ bool TiledBackground::buildBackground ( const tstring& configFilename )
          }
          else
          {
-            mySpriteMap[index].setScale(1.25f, 1.25f);
+            mySpriteMap[index].setScale(.5f, .5f);
             mySpriteMap[index].create( "GRASS" );
             mySpriteMap[index].collidable(false);
          }
