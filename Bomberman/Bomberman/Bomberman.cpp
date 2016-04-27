@@ -93,7 +93,7 @@ void Game::gameRun ( )
          if(myKeyboard.keyDown(VK_DOWN) && myButtonCheck == true )
             //&& myCurrentPlayer.getSelectedUnit() != NULL )
          {
-            myCurrentPlayer.down();
+            myUnits.down();
             keyCount++;
             myButtonCheck = false;
          }
@@ -146,7 +146,7 @@ void Game::gameRun ( )
    //if the escape key is pressed, destroy
    if ( DxKeyboard::keyDown( VK_ESCAPE ) )
    {
-      if( checkIfQuitting() == 6 )
+      if( controlsMessageBox() == 9) //checkIfQuitting() == 6 )
       {
          onDestroy();
       }

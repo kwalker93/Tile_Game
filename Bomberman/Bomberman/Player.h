@@ -51,7 +51,7 @@ public:
 
 // private methods/data
 private:
-   Unit* myUnits[4];// The units that belong to this player
+   Unit* myUnits;// The units that belong to this player
    
 
    
