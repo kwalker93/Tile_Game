@@ -21,7 +21,7 @@
 #include "DxFramework/DxSoundIdentifier.h"
 #include "Bomberman/CollisionManager.h"
 #include "Bomberman/Unit.h" 
-
+#include "WinApplFramework/GameMessages.h"
 
  
 class Game : public DxFramework
@@ -38,8 +38,8 @@ protected:
    //Message Box methods
    int checkIfQuitting();
    int checkIfReseting();
-   int aboutMessageBox();
-   int controlsMessageBox();
+
+   bool checkForNewGame();
 
 
    //------------------------------------------------------------
@@ -52,6 +52,7 @@ protected:
 
 private:
 	bool myButtonCheck;
+   GameMessages myGm;
 
    D3DCOLOR bgColor;
    DxTexture  myImage;	

@@ -8,6 +8,9 @@
 #include "NVCUtils/TString.h"
 #include "NVCUtils/NVCUtils.h"
 #include "WinApplFramework.h"
+#include "Utilities/Logger.h"
+#include "resource1.h"
+#include "GameMessages.h"
 
 using namespace NVCUtils;
 
@@ -261,7 +264,7 @@ bool WinApplFramework::winRegisterClass ( void )
 	wcex.cbWndExtra		= sizeof( this );
 	wcex.hInstance		   = hInst();
 	wcex.lpszClassName	= winClassName(); 
-	wcex.lpszMenuName	   = winClassMenu();
+   wcex.lpszMenuName    = MAKEINTRESOURCE(IDR_MENU1);
 	wcex.hCursor		   = winClassCursor();
 	wcex.hbrBackground	= winClassBackgroundBrush();
 	wcex.hIcon			   = winClassIcon();
@@ -387,13 +390,41 @@ void WinApplFramework::winResizeClient ( void )
 }
 
 //---------------------------------------------------------------------------------------- 
-
 LRESULT WinApplFramework::memberWndProc(HWND hWindow, UINT message, WPARAM wParam, LPARAM lParam)
 {
    int result = -1;
+   int boxResult = -1;
 
    if ( message == WM_COMMAND )
    {
+      switch (LOWORD(wParam))
+      {
+      case ID_HELP_CONTROLS:
+         gmMessages.controlsMessageBox();
+         return 0;
+      case ID_HELP_ABOUT:
+         gmMessages.aboutMessageBox();
+         return 0;
+      case ID_FILE_NEWGAME:
+         boxResult = MessageBox(hWnd(), "Are you sure you want to start a new game?", "Start a new game?", MB_YESNO);
+         switch(boxResult)
+         {
+         case IDYES:
+            gmMessages.signalStartNewGame();
+            break;
+         case IDNO:
+            break;
+         default:
+            MessageBox(hWnd(), "ERROR ERROR, DEFAULT CASE ACHIEVED", "WARNING: ACORNS DETONATED", MB_OK);
+            break;
+         }
+         return 0;
+      case ID_FILE_EXIT:
+         MessageBox(hWnd(), "File->Exit clicked.", "Menu Command", MB_OK);
+         return 0;
+      default:
+         break;
+      }
       if ( onCommand( hWindow, wParam, lParam ) == -1 )
          return DefWindowProc(hWindow, message, wParam, lParam);
    }
@@ -415,6 +446,15 @@ LRESULT WinApplFramework::memberWndProc(HWND hWindow, UINT message, WPARAM wPara
    
 	if ( (WM_SYSKEYDOWN == message) && (wParam == VK_F10) )
       return 0;   // Disables Windows Accelerator that causes pause!
+
+   //-----------------------------------------------------------
+   // Typdefs found in resource1.h
+   //    #define IDR_MENU1                       101
+   //    #define ID_HELP_CONTROLS                40001
+   //    #define ID_HELP_ABOUT                   40002
+   //    #define ID_FILE_NEWGAME                 40003
+   //    #define ID_FILE_EXIT                    40004
+   //-----------------------------------------------------------
 
    switch ( message )
    {
@@ -516,6 +556,26 @@ LRESULT CALLBACK startupWndProc ( HWND hWindow, UINT message, WPARAM wParam, LPA
 {
    if ( message == WM_CREATE )
    {
+      //-----------------------------------------------------
+      // Creates menus
+      HMENU hMenu, hHelpMenu, hFileSubMenu, hHelpSubMenu;
+
+      hMenu = CreateMenu();
+
+      hFileSubMenu = CreatePopupMenu();
+      hHelpSubMenu = CreatePopupMenu();
+
+      AppendMenu(hFileSubMenu, MF_STRING, ID_FILE_NEWGAME, "&New Game");
+      AppendMenu(hFileSubMenu, MF_STRING, ID_FILE_EXIT, "E&xit");
+      AppendMenu(hMenu, MF_STRING | MF_POPUP, (UINT)hFileSubMenu, "&File");
+
+      AppendMenu(hHelpSubMenu, MF_STRING, ID_HELP_CONTROLS, "&Controls");
+      AppendMenu(hHelpSubMenu, MF_STRING, ID_HELP_ABOUT, "&About...");
+      AppendMenu(hMenu, MF_STRING | MF_POPUP, (UINT)hHelpSubMenu, "&Help");
+
+      SetMenu(hWindow, hMenu);
+      
+      //-----------------------------------------------------
       // Sanity checks to verify lpCreateParams is a (WinApplFramework*)
       //    1. lParam must pass the Utils::isReservedBadPtr() tests
       //    2. lpCreateParams must pass the Utils::isReservedBadPtr() tests
@@ -530,7 +590,7 @@ LRESULT CALLBACK startupWndProc ( HWND hWindow, UINT message, WPARAM wParam, LPA
 
       CREATESTRUCT* pcs;
       pcs = reinterpret_cast<CREATESTRUCT*>(lParam); // (CREATESTRUCT*)lParam;
-      
+
       // Sanity Checks #1 and #2
       if ( Utils::isReservedBadPtr(pcs) || Utils::isReservedBadPtr(pcs->lpCreateParams) )
       {

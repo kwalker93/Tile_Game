@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "Bomberman/Bomberman.h"
 #include "Bomberman/TiledBackground.h"
+#include "WinApplFramework/GameMessages.h"
 
 
 //=======================================================================
@@ -27,6 +28,12 @@ Game::~Game ( )
 //=======================================================================
 bool Game::gameInit ( )
 {
+   if ( GameMessages::startNewGame )
+   {
+      GameMessages::startNewGame = false;
+      myGameTitle = _T("");
+   }
+
    bool result = true;
    myGameTitle.append("Underground Squirrel Brawl");
    winSetTitle ( myGameTitle );
@@ -62,8 +69,18 @@ bool Game::gameInit ( )
 }
 
 //=======================================================================
+bool Game::checkForNewGame()
+{
+   if( GameMessages::startNewGame )
+      this->gameInit();
+   return false;
+}
+
+//=======================================================================
 void Game::gameRun ( )
 {
+   checkForNewGame();
+
    // pre-render
    const int minMove = 2;
    TiledBackground&  levelRef = myLevelBgnds;
@@ -148,10 +165,7 @@ void Game::gameRun ( )
    //if the escape key is pressed, destroy
    if ( DxKeyboard::keyDown( VK_ESCAPE ) )
    {
-      if( controlsMessageBox() == 6) //checkIfQuitting() == 6 )
-      {
-         onDestroy();
-      }
+      onDestroy();
    }
 }
 
@@ -172,33 +186,6 @@ int Game::checkIfReseting()
    return MessageBox(NULL, "Are you sure you want to reset the map?\n", "Reset Map?", MB_YESNO | MB_ICONEXCLAMATION );
 }
 
-//=======================================================================
-int Game::aboutMessageBox()
-{
-   return MessageBox(NULL, "", "About", MB_YESNO | MB_ICONEXCLAMATION );
-}
-
-//=======================================================================
-int Game::controlsMessageBox()
-{
-   string line0 = "Winter's coming, and there's only enough acorns in the forest for one family of squirrels!\n";
-   string line1 = "In Underground Squirrel Brawl, players take turns destroying the opponent's squirrels.\n\n";
-
-   string line2 = "How to Play: \n";
-
-   string line3 = "1. Click on one of your squirrels to select them.\n";
-   string line4 = "2. Use the arrow keys to move the selected unit on the board. Be mindful of the Info page, since each squirrel has a limited movement range.\n";
-   string line5 = "3. When your selected squirrel is within attacking range of the other player's squirrels, you can damage them.\n";
-   string line6 = "4. Once a squirrel's health goes to 0, they're toast, so be careful!\n\n";
-   string line7 = "The last player with squirrels remaining wins the game!\n\n\n\n";
-
-   string line8 = "Oh, by the way...\n\nYou better win quickly, or else the nearby river might engulf you with its daily flooding!\n";
-   
-   
-   string concatString = line0 + line1 + line2 + line3 + line4 + line5 + line6 + line7 + line8;
-
-   return MessageBox(NULL, concatString.c_str(), "Controls", MB_YESNO | MB_ICONEXCLAMATION );
-}
 
 
 

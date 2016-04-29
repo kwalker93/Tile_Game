@@ -2,7 +2,7 @@
 #pragma once
 
 #include "stdafx.h"
-
+#include "GameMessages.h"
 #include "NVCUtils/NVCUtils.h"
 
 
@@ -173,6 +173,9 @@ private:
    tstring      szAppWndClass;
 
    const static UINT MAX_LOADSTRING = 100;
+
+public:
+   GameMessages gmMessages;
 
 private:
    WinApplFramework( const WinApplFramework& other );  // disabled copy ctor
