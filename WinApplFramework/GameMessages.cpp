@@ -23,7 +23,19 @@ GameMessages::~GameMessages ( )
 //=======================================================================
 int GameMessages::aboutMessageBox()
 {
-   return MessageBox(NULL, "", "About", MB_YESNO | MB_ICONEXCLAMATION );
+   string line0 = "UNDERGROUND SQUIRREL BRAWL\n\n";
+   string line1 = "Developed by:\n";
+   string line2 = "Nathan Contreras\n";
+   string line3 = "Jacinto Molina\n";
+   string line4 = "Kellen Walker\n\n";
+   string line5 = "Northwest Vista College\n";
+   string line6 = "Project Development I - GAME 2332-001\n";
+   string line7 = "Spring 2016\n\n";
+   string line8 = "Version 1.0";
+
+   string concatString = line0 + line1 + line2 + line3 + line4 + line5 + line6 + line7 + line8;
+   
+   return MessageBox(NULL, concatString.c_str(), "About", MB_OK | MB_ICONEXCLAMATION );
 }
 
 //=======================================================================

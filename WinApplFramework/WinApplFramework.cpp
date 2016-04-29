@@ -420,7 +420,8 @@ LRESULT WinApplFramework::memberWndProc(HWND hWindow, UINT message, WPARAM wPara
          }
          return 0;
       case ID_FILE_EXIT:
-         MessageBox(hWnd(), "File->Exit clicked.", "Menu Command", MB_OK);
+         onDestroy();
+         myAppIsRunning = false;
          return 0;
       default:
          break;
