@@ -1,4 +1,9 @@
 
+//=======================================================================
+// Developed by Scott A. Strentzsch
+//   Modified by Nathan Contreras, without permission.
+//=======================================================================
+
 #include "stdafx.h"
 #include <algorithm>
 #include <Commctrl.h>
@@ -395,6 +400,14 @@ LRESULT WinApplFramework::memberWndProc(HWND hWindow, UINT message, WPARAM wPara
    int result = -1;
    int boxResult = -1;
 
+   //------------------------------------------------------//
+   //   Typdefs found in resource1.h                       //
+   //      #define IDR_MENU1                       101     //
+   //      #define ID_HELP_CONTROLS                40001   //
+   //      #define ID_HELP_ABOUT                   40002   // 
+   //      #define ID_FILE_NEWGAME                 40003   //
+   //      #define ID_FILE_EXIT                    40004   // 
+   //------------------------------------------------------//
    if ( message == WM_COMMAND )
    {
       switch (LOWORD(wParam))
@@ -406,7 +419,7 @@ LRESULT WinApplFramework::memberWndProc(HWND hWindow, UINT message, WPARAM wPara
          gmMessages.aboutMessageBox();
          return 0;
       case ID_FILE_NEWGAME:
-         boxResult = MessageBox(hWnd(), "Are you sure you want to start a new game?", "Start a new game?", MB_YESNO);
+         boxResult = gmMessages.newGameMessageBox();
          switch(boxResult)
          {
          case IDYES:
@@ -415,7 +428,7 @@ LRESULT WinApplFramework::memberWndProc(HWND hWindow, UINT message, WPARAM wPara
          case IDNO:
             break;
          default:
-            MessageBox(hWnd(), "ERROR ERROR, DEFAULT CASE ACHIEVED", "WARNING: ACORNS DETONATED", MB_OK);
+            gmMessages.unexpectedErrorMessageBox();
             break;
          }
          return 0;
@@ -447,15 +460,6 @@ LRESULT WinApplFramework::memberWndProc(HWND hWindow, UINT message, WPARAM wPara
    
 	if ( (WM_SYSKEYDOWN == message) && (wParam == VK_F10) )
       return 0;   // Disables Windows Accelerator that causes pause!
-
-   //-----------------------------------------------------------
-   // Typdefs found in resource1.h
-   //    #define IDR_MENU1                       101
-   //    #define ID_HELP_CONTROLS                40001
-   //    #define ID_HELP_ABOUT                   40002
-   //    #define ID_FILE_NEWGAME                 40003
-   //    #define ID_FILE_EXIT                    40004
-   //-----------------------------------------------------------
 
    switch ( message )
    {

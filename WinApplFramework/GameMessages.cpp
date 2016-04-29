@@ -1,4 +1,11 @@
 
+//=======================================================================
+// Nathan Contreras
+//   GameMessages class
+//      Allows the user to create a GameMessages class and create message
+//      boxes that are predefined, or customized.
+//=======================================================================
+
 #include <stdafx.h>
 #include <Windows.h>
 #include <string>
@@ -54,8 +61,25 @@ int GameMessages::controlsMessageBox()
 
    string line8 = "Oh, by the way...\n\nYou better win quickly, or else the nearby river might engulf you with its daily flooding!\n";
    
-   
    string concatString = line0 + line1 + line2 + line3 + line4 + line5 + line6 + line7 + line8;
 
    return MessageBox(NULL, concatString.c_str(), "Controls", MB_YESNO | MB_ICONEXCLAMATION );
+}
+
+//=======================================================================
+int GameMessages::newGameMessageBox()
+{
+   return MessageBox(NULL, "Are you sure you want to start a new game?", "Start a new game?", MB_YESNO);
+}
+
+//=======================================================================
+int GameMessages::unexpectedErrorMessageBox()
+{
+   return MessageBox(NULL, "ERROR ERROR, DEFAULT CASE ACHIEVED", "WARNING: ACORNS DETONATED", MB_OK);
+}
+
+//=======================================================================
+int GameMessages::customMessageBox( LPCSTR message, LPCSTR title, int style )
+{
+   return MessageBox(NULL, message, title, style);
 }
