@@ -12,6 +12,7 @@
 #include "DxFramework/DxTexture.h"
 #include "DxFramework/DxAnimation.h"
 #include "DxFramework/DxKeyboard.h"
+#include "DxFramework/DxMouse.h"
 #include "DxFramework/DxGameSprite.h"
 #include "DxFramework/DxTypes.h"
 #include "Bomberman/TiledBackground.h"
@@ -22,6 +23,7 @@
 #include "Bomberman/CollisionManager.h"
 #include "Bomberman/Unit.h" 
 #include "WinApplFramework/GameMessages.h"
+#include "Bomberman/Player.h"
 
  
 class Game : public DxFramework
@@ -58,6 +60,8 @@ private:
    DxTexture  myImage;	
    
    tstring     myGameTitle;
+   Player		myPlayer1;
+   DxMouse		myMouse;
 
    int         myTurnCount;
    Unit		myUnits;

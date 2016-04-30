@@ -39,25 +39,36 @@ public:
    // Signals
    bool unitKilled();
    bool playerLoses();
+   Unit getUnit(int num);
+   bool unitInit(int x, int y);
+   bool unitUpdate();
+   bool unitDraw(IDXSPRITE spriteInterface);
+
+   bool unitClick(int mouseX, int mouseY);
 
 
-   Unit& Player::getSelectedUnit();
+   Unit getSelectedUnit();
    void setSelectedUnit( Unit& selectedUnit );
 
    void left();
    void down();
    void up();
    void right();
+   void resetUnitMove();
+   void stopAllUnits();
+   void unitCollision();
 
 // private methods/data
 private:
    Unit* myUnits;// The units that belong to this player
-   
 
    int   myUnitCount;  // The current number of units that belong to this player
    int   myMaxUnits;   // The total number of units that initally belonged to this player
    bool  isPlayerOne;  // Whether or not this Player is player one
-   Unit  mySelectedUnit;
+   Unit mySelectedUnit;
+   Unit myPreviousSelectedUnit;
+
+   vector<Unit> myArrayUnits;
 
 };
 

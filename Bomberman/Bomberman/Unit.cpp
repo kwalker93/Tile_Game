@@ -20,6 +20,7 @@ Unit::Unit()
 	this->myPositionY = 0;
 	this->myPositionX = 0;
 	this->calculateDamage();
+	this->myCanMove = false;
 	//this->myImage;
 }
 
@@ -28,9 +29,11 @@ Unit::~Unit()
 
 }
 
+
+
 Unit::Unit(int maxPower, int lowPower, int maxHealth, int positionY, int positionX )
 {
-	
+	this->myCanMove = false;
 	// Max health for this unit.
 	this->MY_MAX_HEALTH = maxHealth;
 	// Max Power for this unit.
@@ -149,6 +152,21 @@ int Unit::getDamage()
 
 }
 
+bool Unit::getCanMove()
+{
+	return this->myCanMove;
+}
+void Unit::setMove()
+{
+	if(this->myCanMove == false)
+	{
+		this->myCanMove = true;
+	}else if( this->myCanMove == true)
+	{
+		this->myCanMove = false;
+	}
+}
+
 //resets the turn for the unit
 void Unit::resetTurn()
 {
@@ -186,12 +204,21 @@ int Unit::calculateDamage()
 //gets the int y coordinate value
 int Unit::getY()
 {
-	return this->myPositionY;
-}
+	return this->myPosition.y;
+}		  
 
 //gets the int x coordinate value
 int Unit::getX()
 {
-	return this->myPositionX;
+	return this->myPosition.x;
 }
 
+void Unit::setY(float newY)
+{
+	myImage.setYPosition(newY);
+}
+
+void Unit::setX(float newX)
+{
+	myImage.setXPosition(newX);
+}

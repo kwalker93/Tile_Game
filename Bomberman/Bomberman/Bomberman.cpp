@@ -45,6 +45,7 @@ bool Game::gameInit ( )
    //to use the assetsManager it must be initialized via the following:
    DxAssetManager::getInstance().init( "animations.txt" );
    myKeyboard.keyboardInit( hWnd() );
+   myMouse.mouseInit( hWnd(), device() );
    myCollsionManager.init();
 
    //sound init
@@ -59,11 +60,14 @@ bool Game::gameInit ( )
    result &= myLevelBgnds.init( device(), _T("level_one.config") );
 
    //Character inits
-   myUnits.init( "ACORN-BROWN", 64,64);
+  // myUnits.init( "ACORN-BROWN", 64,64);
+  // myUnits2.gameInit( 68, 36);
 
    //TESTING PURPOSES. COMMENT OUT WHEN NOT NEEDED
    myTurnCount = 0;
    myButtonCheck = true;
+
+   myPlayer1.unitInit(36 , 36);
 
    return true;
 }
@@ -85,74 +89,80 @@ void Game::gameRun ( )
    const int minMove = 2;
    TiledBackground&  levelRef = myLevelBgnds;
 
+
    // clear the backbuffer
    device()->ColorFill( backBuffer(), NULL, bgColor );
 
    // Objects update...
    myLevelBgnds.update();
-   myUnits.update();
+
+   this->myPlayer1.unitUpdate();
 
    // play sound
-   mySoundInterface->play( mySound );
+   //mySoundInterface->play( mySound );
+   myMouse.mouseUpdate();
 
    // start rendering
 
    if ( SUCCEEDED(device()->BeginScene()) )
    {
       //non-sprite rendering....
-
+		
       if ( SUCCEEDED(spriteInterface()->Begin( D3DXSPRITE_ALPHABLEND )) )
-      {
+	  {  
+		  if(myMouse.mouseButton(0))
+		  {
+			  myPlayer1.unitClick(myMouse.mouseX(),myMouse.mouseY());
+
+		  }
+
          // sprite rendering...       
          myLevelBgnds.drawMySpriteMap( spriteInterface() );
 
-         myUnits.draw( spriteInterface() );
+		 myPlayer1.unitDraw(spriteInterface());
+		 int keyCount = 0;       //TODO: KLUDGE
 
-         int keyCount = 0;       //TODO: KLUDGE
-         if(myKeyboard.keyDown(VK_DOWN) && myButtonCheck == true )
-            //&& myCurrentPlayer.getSelectedUnit() != NULL )
+		 if(myKeyboard.keyDown(VK_DOWN))
+		 {
+			 myPlayer1.down();
+			 keyCount++;
+
+		 }
+         else if(myKeyboard.keyDown(VK_LEFT))
          {
-            myUnits.down();
             keyCount++;
-            myButtonCheck = false;
+			myPlayer1.left();
+
          }
-         else if(myKeyboard.keyDown(VK_LEFT)&& myButtonCheck == true)
+         else if(myKeyboard.keyDown(VK_RIGHT))
          {
             keyCount++;
-            myUnits.left();
-            myButtonCheck = false;
+			myPlayer1.right();
+
          }
-         else if(myKeyboard.keyDown(VK_RIGHT)&& myButtonCheck == true)
+         else if(myKeyboard.keyDown(VK_UP))
          {
-            keyCount++;
-            myUnits.right();
-            myButtonCheck = false;
-         }
-         else if(myKeyboard.keyDown(VK_UP)&& myButtonCheck == true)
-         {
-            keyCount++;
-            myUnits.up();
-            myButtonCheck = false;
+			keyCount++;
+			myPlayer1.up();
+        
          }
          else
          {
             keyCount = 0;
-            myButtonCheck = true;
+
          }
 
          // Stop all kitty motion first, then check keyboard
          if( keyCount == 0 )
          {
-            myUnits.stop();
+			this->myPlayer1.stopAllUnits();
          }
 
          if( myCollsionManager.worldCollisions( myUnits.getSprite(), levelRef ) )
          {
-            myUnits.stop();
-            D3DXVECTOR3 snPos = myUnits.getLastPosition();
-            myUnits.setMyPosition(snPos);
+			this->myPlayer1.stopAllUnits();
+           this->myPlayer1.unitCollision();
          }
-
          // stop rendering
          spriteInterface()->End();
       }

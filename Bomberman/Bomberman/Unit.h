@@ -46,11 +46,17 @@ public:
 	void setMyPosition ( D3DXVECTOR3 pos );
 	DxGameSprite getSprite();
 	D3DXVECTOR3 getLastPosition();
+
+	void setY(float newY);
+	void setX(float newX);
+
 	bool stop();
 	bool right();
 	bool left();
 	bool down();
 	bool up();
+	void setMove();
+	bool getCanMove();
 
 	enum{ solider1, solider2, solider3 };
 
@@ -68,6 +74,7 @@ private:
 	int myMovementPoints;
 	int myAttackPower;
 	int myLowPowerLevel;
+	bool myCanMove;
 
 	//Pixel position;
 	int myPositionY;
