@@ -20,8 +20,8 @@ bool Player::init( bool playerOne, int numUnits )
 {
    this->myUnitCount = this->myMaxUnits = numUnits;
    myUnits = new Unit[this->myUnitCount];
-  // int x = 36;
-  // int y = 36;
+   // int x = 36;
+   // int y = 36;
    for ( int ix = 0; ix < this->myMaxUnits; ix++ )
    {
       // TODO: 
@@ -40,7 +40,7 @@ bool Player::unitInit(int x, int y)
 
 	
 	//this.myArrayUnits.at(0).gameInit(x, y);
-	 for(int index = 0; index < this->myArrayUnits.size(); index++)
+	 for(unsigned index = 0; index < this->myArrayUnits.size(); index++)
 	 {
 			this->myArrayUnits[index].init("ACORN-BROWN",x, y);
 			x += 32; 
@@ -52,7 +52,7 @@ bool Player::unitInit(int x, int y)
 //=========Update all the Units==============================================================
 bool Player::unitUpdate()
 {
-	for(int index = 0; index < this->myArrayUnits.size(); index++)
+	for(unsigned index = 0; index < this->myArrayUnits.size(); index++)
 	{
 		this->myArrayUnits.at(index).update();
 	}
@@ -97,7 +97,7 @@ bool Player::unitClick(int mouseX, int mouseY)
 //========Unit Collision===============================================================
 void Player::unitCollision()
 {	
-	for(int index = 0; index < this->myArrayUnits.size(); index++)
+	for(unsigned index = 0; index < this->myArrayUnits.size(); index++)
 	{
 			D3DXVECTOR3 snPos = myArrayUnits.at(index).getLastPosition();
            myArrayUnits.at(index).setMyPosition(snPos);
@@ -107,7 +107,7 @@ void Player::unitCollision()
 //=====Resets All Units CanMove to false==================================================================
 void Player::resetUnitMove()
 {
-	for(int index = 0; index < this->myArrayUnits.size(); index++)
+	for(unsigned index = 0; index < this->myArrayUnits.size(); index++)
 	{
 		if(myArrayUnits.at(index).getCanMove() == true)
 		{
@@ -118,7 +118,7 @@ void Player::resetUnitMove()
 //========Unit Drawing===============================================================
 bool Player::unitDraw(IDXSPRITE spriteInterface)
 {
-	for(int index = 0; index < this->myArrayUnits.size(); index++)
+	for(unsigned index = 0; index < this->myArrayUnits.size(); index++)
 	{
 		this->myArrayUnits.at(index).draw(spriteInterface);
 	}
@@ -183,7 +183,7 @@ bool Player::unitKilled()
 //==========Untested::Gets the Current selected Units or returns the Previous Selected==============================================================
 Unit Player::getSelectedUnit()
 {
-	for(int index = 0; index < this->myArrayUnits.size(); index++)
+	for(unsigned index = 0; index < this->myArrayUnits.size(); index++)
 	{
 		if(this->myArrayUnits.at(index).getCanMove() == true)
 		{
@@ -203,7 +203,7 @@ void Player::setSelectedUnit( Unit& selectedUnit )
 //========Moves the Unit to the left================================================================
 void Player::left()
 {
-	for(int index = 0; index < this->myArrayUnits.size(); index++)
+	for(unsigned index = 0; index < this->myArrayUnits.size(); index++)
 	{
 		if(myArrayUnits.at(index).getCanMove() == true)
 		{
@@ -215,7 +215,7 @@ void Player::left()
 //========Stops all the Units===============================================================
 void Player::stopAllUnits()
 {
-	for(int index = 0; index < this->myArrayUnits.size(); index++)
+	for(unsigned index = 0; index < this->myArrayUnits.size(); index++)
 	{
 		this->myArrayUnits.at(index).stop();
 	}
@@ -224,7 +224,7 @@ void Player::stopAllUnits()
 //============Moves the Unit to the down============================================================
 void Player::down()
 {
-  for(int index = 0; index < this->myArrayUnits.size(); index++)
+  for(unsigned index = 0; index < this->myArrayUnits.size(); index++)
 	{
 		if(myArrayUnits.at(index).getCanMove() == true)
 		{
@@ -237,7 +237,7 @@ void Player::down()
 //===========Moves the Unit to the up=============================================================
 void Player::up()
 {
-	for(int index = 0; index < this->myArrayUnits.size(); index++)
+	for(unsigned index = 0; index < this->myArrayUnits.size(); index++)
 	{
 		if(myArrayUnits.at(index).getCanMove() == true)
 		{
@@ -249,7 +249,7 @@ void Player::up()
 //===========Moves the Unit to the right=============================================================
 void Player::right()
 {
-	for(int index = 0; index < this->myArrayUnits.size(); index++)
+	for(unsigned index = 0; index < this->myArrayUnits.size(); index++)
 	{
 		if(myArrayUnits.at(index).getCanMove() == true)
 		{
