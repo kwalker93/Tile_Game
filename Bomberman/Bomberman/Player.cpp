@@ -16,16 +16,16 @@ Player::~Player()
 }
 
 //========================================================================
-bool Player::init( bool playerOne, int x, int y, int numUnits )
+bool Player::init( bool playerOne, int x, int y, Unit::Type unitType, int numUnits )
 {
    myUnitCount = myMaxUnits = numUnits;
 
-   myArrayUnits.resize(4);
+   myArrayUnits.resize(numUnits);
 
    //this.myArrayUnits.at(0).gameInit(x, y);
-   for(int index = 0; index < myArrayUnits.size(); index++)
+   for(unsigned index = 0; index < myArrayUnits.size(); index++)
    {
-      myArrayUnits[index].init("ACORN-BROWN", x, y);
+      myArrayUnits[index].init(unitType, x, y);
       myArrayUnits[index].getSprite().collidable(true);
       x += 64; 
    }
@@ -40,7 +40,7 @@ bool Player::init( bool playerOne, int x, int y, int numUnits )
 //==========Determines what Unit was Clicked=============================================================
 void Player::unitClick( Point mousePos )
 {
-   for( int i = 0; i < myArrayUnits.size(); i++ )
+   for( unsigned i = 0; i < myArrayUnits.size(); i++ )
    {
       if( myArrayUnits[i].getImage().getCollisionArea().contains( mousePos ) )
       {
@@ -53,7 +53,7 @@ void Player::unitClick( Point mousePos )
 //========Unit Collision===============================================================
 void Player::unitCollision()
 {	
-   for(int index = 0; index < myArrayUnits.size(); index++)
+   for(unsigned index = 0; index < myArrayUnits.size(); index++)
    {
       D3DXVECTOR3 snPos = myArrayUnits[index].getLastPosition();
       myArrayUnits[index].setMyPosition(snPos);
@@ -64,7 +64,7 @@ void Player::unitCollision()
 //=====Resets All Units CanMove to false==================================================================
 void Player::resetUnitMove()
 {
-   for(int index = 0; index < myArrayUnits.size(); index++)
+   for(unsigned index = 0; index < myArrayUnits.size(); index++)
    {
       if(myArrayUnits[index].getCanMove() == true)
       {
@@ -75,7 +75,7 @@ void Player::resetUnitMove()
 //========Unit Drawing===============================================================
 bool Player::unitDraw(IDXSPRITE spriteInterface)
 {
-   for(int index = 0; index < myArrayUnits.size(); index++)
+   for(unsigned index = 0; index < myArrayUnits.size(); index++)
    {
       myArrayUnits[index].draw(spriteInterface);
    }

@@ -28,7 +28,7 @@ public:
    Player();   //Ctor
   ~Player();   //Dtor
 
-   bool init( bool playerOne, int x, int y, int numUnits = 4 );
+  bool init( bool playerOne, int x, int y, Unit::Type unitType, int numUnits = 4 );
    bool update();
    bool shutdown();
 

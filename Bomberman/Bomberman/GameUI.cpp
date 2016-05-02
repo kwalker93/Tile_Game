@@ -29,7 +29,7 @@ bool GameUI::init( IDXFONT font, int xPos, int yPos, D3DCOLOR color, int turnCou
 
    myCurrentUnit.getSprite().setScale( 1.0f, 1.0f );
 
-   myCurrentUnit.init( "BLANK", float(xPos), float(yPos) + 128 );
+   myCurrentUnit.init( Unit::blank, float(xPos), float(yPos) + 128 );
    //set unit image
 
    //myCurrentUnitImage.setScale(1.0f, 1.0f);

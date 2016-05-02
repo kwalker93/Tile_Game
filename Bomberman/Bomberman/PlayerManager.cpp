@@ -24,7 +24,7 @@ bool PlayerManager::init( bool isPlayerOneMovingFirst, Player* ptrPOne,
    
    if ( ptrPOne == NULL ) // if default game is desired
    {
-      playerOnePtr->init(true, 64, 64);
+      playerOnePtr->init(true, 64, 64, Unit::largeGrey);
    }
    else // create custom players
    {
@@ -33,7 +33,7 @@ bool PlayerManager::init( bool isPlayerOneMovingFirst, Player* ptrPOne,
 
    if ( ptrPTwo == NULL ) // if default game is desired
    {
-      playerTwoPtr->init(false, 256, 256);
+      playerTwoPtr->init(false, 256, 256, Unit::smallBrown);
    }
    else // else create custom players
    {

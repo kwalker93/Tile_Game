@@ -18,21 +18,32 @@ class Unit{
 public:
    Unit();
    Unit(int maxPower, int lowPower, int maxHealth, int positionY, int positionX );
-   ~Unit();
+  ~Unit();
+
    enum Direction{ UP, DOWN, LEFT, RIGHT };
+   enum Type { 
+      blank = 0,
+      acornBrown = 1, largeBrown, mediumBrown, smallBrown,
+      acornGrey = 5, largeGrey, mediumGrey, smallGrey,
+      acornOrange = 9, largeOrange, mediumOrange, smallOrange
+   };
+
+   vector<tstring> myUnitStrings;
 
 public:
    // getters for reference to get units private variables and stats.
    //void gameinit();
    //void gameRun();
    //void gameEnd();
+
    int getHealth();
    int getMovementPoints(); // movement points
    int getDamage();
    void setImage(string);// might need to change// 
    int getY();
    int getX();
-   bool init(tstring spriteName, int xPos, int yPos);
+   bool init(Type unitType, int xPos, int yPos);
+   bool initUnitStrings();
    void destroy();
    bool draw (IDXSPRITE spriteObj);
 

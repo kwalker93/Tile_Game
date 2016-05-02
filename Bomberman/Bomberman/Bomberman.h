@@ -25,6 +25,7 @@
 #include "Bomberman/GameUI.h"
 #include "WinApplFramework/GameMessages.h"
 #include "Bomberman/Player.h"
+#include "Bomberman/PlayerManager.h"
 
  
 class Game : public DxFramework
@@ -57,9 +58,21 @@ private:
    D3DCOLOR             bgColor;
    DxTexture            myImage;	
    
+<<<<<<< .mine
+   PlayerManager myManager;
+   tstring       myGameTitle;
+   Player	     myPlayer1;
+   Player        myPlayer2;
+   DxMouse		  myMouse;
+||||||| .r43
+   tstring     myGameTitle;
+   Player		myPlayer1;
+   DxMouse		myMouse;
+=======
    tstring              myGameTitle;
    Player		         myPlayer1;
    DxMouse		         myMouse;
+>>>>>>> .r44
 
    int                  myTurnCount;
    Unit		            myUnits;

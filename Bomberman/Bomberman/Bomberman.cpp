@@ -71,7 +71,10 @@ bool Game::gameInit ( )
    myTurnCount = 0;
    myButtonCheck = true;
 
-   myPlayer1.init(true, 128, 128);
+   //Creates out two custom players, and passes them to the player manager
+   myPlayer1.init(true, 64, 64, Unit::largeGrey, 10);
+   myPlayer2.init(false, 64, 512, Unit::mediumBrown, 10);
+   myManager.init(true, &myPlayer1, &myPlayer2);
 
    return true;
 }
@@ -99,7 +102,7 @@ void Game::gameRun ( )
    // Objects update...
    myLevelBgnds.update();
    myGameUI.update();
-   myPlayer1.update();
+   myManager.update();
 
    // play sound
    //mySoundInterface->play( mySound );
@@ -125,6 +128,7 @@ void Game::gameRun ( )
 
          myPlayer1.checkUnitHealths();
          myPlayer1.unitDraw(spriteInterface());
+         myPlayer2.unitDraw(spriteInterface());
 
          myGameUI.draw( spriteInterface() );
 

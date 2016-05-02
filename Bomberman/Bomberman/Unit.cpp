@@ -56,13 +56,22 @@ D3DXVECTOR3 Unit::getLastPosition()
 	return myLastPosition;
 }
 
-bool Unit::init( tstring animationName, int xPos, int yPos)
+bool Unit::init( Unit::Type unitType, int xPos, int yPos)
 {
+<<<<<<< .mine
+	this->myImage.setScale(.5, .5);
+	this->myImage.create(myUnitStrings.at(unitType));
+||||||| .r43
+	this->myImage.setScale(.5, .5);
+	this->myImage.create(animationName);
+=======
 	myImage.setScale(.5, .5);
 	myImage.create(animationName);
+>>>>>>> .r44
 
 	myImage.setPosition(float(xPos), float(yPos));
-	myUnitImage = DxAssetManager::getInstance().getAnimationCopy( animationName, 10 );
+    tstring unitStr = myUnitStrings.at(unitType);
+	myUnitImage = DxAssetManager::getInstance().getAnimationCopy( unitStr, 10 );
 
 	myPosition.x = myImage.getXPosition();
 	myPosition.y = myImage.getYPosition();
@@ -70,7 +79,28 @@ bool Unit::init( tstring animationName, int xPos, int yPos)
 	mySpeed = 64;
 
 	return true;
+}
 
+bool Unit::initUnitStrings()
+{
+   myUnitStrings.push_back("BLANK");
+
+   myUnitStrings.push_back("ACORN-BROWN");
+   myUnitStrings.push_back("LARGE-BROWN");
+   myUnitStrings.push_back("MEDIUM-BROWN");
+   myUnitStrings.push_back("SMALL-BROWN");
+
+   myUnitStrings.push_back("ACORN-GREY");
+   myUnitStrings.push_back("LARGE-GREY");
+   myUnitStrings.push_back("MEDIUM-GREY");
+   myUnitStrings.push_back("SMALL-GREY");
+
+   myUnitStrings.push_back("ACORN-ORANGE");
+   myUnitStrings.push_back("LARGE-ORANGE");
+   myUnitStrings.push_back("MEDIUM-ORANGE");
+   myUnitStrings.push_back("SMALL-ORANGE");
+
+   return true;
 }
 
 void Unit::update()
