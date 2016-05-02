@@ -46,28 +46,31 @@ bool Game::gameInit ( )
    DxAssetManager::getInstance().init( "animations.txt" );
    myKeyboard.keyboardInit( hWnd() );
    myMouse.mouseInit( hWnd(), device() );
-   myCollsionManager.init();
+   myCollisionManager.init();
 
    //sound init
-   
+
    mySoundInterface = DxSound::getInterface( DxSound::fmod );
    mySoundInterface->init( hWnd() );
    mySoundInterface->load( _T("Assets\\HamsterDance.wav"), mySound );
    mySoundInterface->loop( mySound );
-   
+
 
    //Level init
    result &= myLevelBgnds.init( device(), _T("level_one.config") );
 
+   //Game UI init
+   myGameUI.init( fontInterface(), 832, 32, D3DCOLOR_XRGB( 0, 0, 0 ), myTurnCount );
+
    //Character inits
-  // myUnits.init( "ACORN-BROWN", 64,64);
-  // myUnits2.gameInit( 68, 36);
+   // myUnits.init( "ACORN-BROWN", 64,64);
+   // myUnits2.gameInit( 68, 36);
 
    //TESTING PURPOSES. COMMENT OUT WHEN NOT NEEDED
    myTurnCount = 0;
    myButtonCheck = true;
 
-   myPlayer1.unitInit(36 , 36);
+   myPlayer1.init(true, 128, 128);
 
    return true;
 }
@@ -76,7 +79,7 @@ bool Game::gameInit ( )
 bool Game::checkForNewGame()
 {
    if( GameMessages::startNewGame )
-      this->gameInit();
+      gameInit();
    return false;
 }
 
@@ -89,14 +92,13 @@ void Game::gameRun ( )
    const int minMove = 2;
    TiledBackground&  levelRef = myLevelBgnds;
 
-
    // clear the backbuffer
    device()->ColorFill( backBuffer(), NULL, bgColor );
 
    // Objects update...
    myLevelBgnds.update();
-
-   this->myPlayer1.unitUpdate();
+   myGameUI.update();
+   myPlayer1.update();
 
    // play sound
    //mySoundInterface->play( mySound );
@@ -107,44 +109,47 @@ void Game::gameRun ( )
    if ( SUCCEEDED(device()->BeginScene()) )
    {
       //non-sprite rendering....
-		
-      if ( SUCCEEDED(spriteInterface()->Begin( D3DXSPRITE_ALPHABLEND )) )
-	  {  
-		  if(myMouse.mouseButton(0))
-		  {
-			  myPlayer1.unitClick(myMouse.mouseX(),myMouse.mouseY());
 
-		  }
+      if ( SUCCEEDED(spriteInterface()->Begin( D3DXSPRITE_ALPHABLEND )) )
+      {  
+         if(myMouse.mouseButton(0))
+         {
+            myPlayer1.unitClick( myMouse.getPoint() );
+            myGameUI.setCurrentUnit( myPlayer1.getSelectedUnit() );
+         }
 
          // sprite rendering...       
          myLevelBgnds.drawMySpriteMap( spriteInterface() );
+         myPlayer1.unitDraw(spriteInterface());
 
-		 myPlayer1.unitDraw(spriteInterface());
-		 int keyCount = 0;       //TODO: KLUDGE
+         //myGameUI.draw( spriteInterface() );
 
-		 if(myKeyboard.keyDown(VK_DOWN))
-		 {
-			 myPlayer1.down();
-			 keyCount++;
 
-		 }
+         int keyCount = 0;       
+
+         if(myKeyboard.keyDown(VK_DOWN))
+         {
+            myPlayer1.down();
+            keyCount++;
+
+         }
          else if(myKeyboard.keyDown(VK_LEFT))
          {
             keyCount++;
-			myPlayer1.left();
+            myPlayer1.left();
 
          }
          else if(myKeyboard.keyDown(VK_RIGHT))
          {
             keyCount++;
-			myPlayer1.right();
+            myPlayer1.right();
 
          }
          else if(myKeyboard.keyDown(VK_UP))
          {
-			keyCount++;
-			myPlayer1.up();
-        
+            keyCount++;
+            myPlayer1.up();
+
          }
          else
          {
@@ -155,13 +160,14 @@ void Game::gameRun ( )
          // Stop all kitty motion first, then check keyboard
          if( keyCount == 0 )
          {
-			this->myPlayer1.stopAllUnits();
+            myPlayer1.stopAllUnits();
          }
 
-         if( myCollsionManager.worldCollisions( myUnits.getSprite(), levelRef ) )
+         if( myCollisionManager.worldCollisions( myPlayer1.getSelectedUnit().getImage(), levelRef ) )
          {
-			this->myPlayer1.stopAllUnits();
-           this->myPlayer1.unitCollision();
+            myPlayer1.stopAllUnits();
+            D3DXVECTOR3 snPos = myPlayer1.getSelectedUnit().getLastPosition();
+            myPlayer1.getSelectedUnit().setMyPosition( snPos );
          }
          // stop rendering
          spriteInterface()->End();
@@ -195,9 +201,6 @@ int Game::checkIfReseting()
 {
    return MessageBox(NULL, "Are you sure you want to reset the map?\n", "Reset Map?", MB_YESNO | MB_ICONEXCLAMATION );
 }
-
-
-
 
 //=======================================================================
 //=======================================================================

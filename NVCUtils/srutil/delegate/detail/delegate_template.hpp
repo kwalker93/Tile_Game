@@ -87,7 +87,7 @@ namespace srutil
       //       equality is true if same method AND same instance.
       bool operator== ( const SRUTIL_DELEGATE_CLASS_NAME& other ) const
       {
-         return (this->stub_ptr == other.stub_ptr) && (this->object_ptr == other.object_ptr);
+         return (stub_ptr == other.stub_ptr) && (object_ptr == other.object_ptr);
       }
 
       std::string to_string ( ) 

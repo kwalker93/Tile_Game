@@ -197,6 +197,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\DxText.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\DxTexture.cpp"
 				>
 			</File>
@@ -296,6 +300,10 @@
 			</File>
 			<File
 				RelativePath=".\DxSurface.h"
+				>
+			</File>
+			<File
+				RelativePath=".\DxText.h"
 				>
 			</File>
 			<File

@@ -12,7 +12,8 @@
 IDXDEVICE DxFramework::ourDevice = NULL;
 IDXINTERFACE DxFramework::ourInterface = NULL;
 IDXSPRITE DxFramework::ourSpriteInterface = NULL;
-
+IDXFONT DxFramework::ourFontInterface = NULL;
+//D3DPRESENT_PARAMETERS* DxFramework::ourPresentParameters = NULL;
 //=======================================================================
 DxFramework::DxFramework ( )
 :myBackBuffer(NULL)
@@ -53,6 +54,17 @@ bool DxFramework::winPostCreateWindow ( )
    myD3Dpp.hDeviceWindow = hWnd();
    myD3Dpp.PresentationInterval = presentationInterval();
 
+   //myD3Dpp.EnableAutoDepthStencil = enableAutoDepthStencil();
+   //myD3Dpp.AutoDepthStencilFormat = autoDepthStencilFormat();
+
+   //myD3Dpp = ( presentParameters() ? *presentParameters() : myD3Dpp );
+
+   //if ( ourPresentParameters != NULL )
+   //{
+   //   log( _T("Warning: Class Present Parameters Overrided!") );   
+   //}
+   //ourPresentParameters = &myD3Dpp;
+
    result = dxInterface()->CreateDevice( D3DADAPTER_DEFAULT, 
                                          D3DDEVTYPE_HAL, 
                                          hWnd(),
@@ -79,6 +91,13 @@ bool DxFramework::winPostCreateWindow ( )
       return false;
    }
 
+   result = D3DXCreateFont( device(), 18, 0, FW_BOLD, 1, 0, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, "Arial", &ourFontInterface );
+   if( FAILED( result ) )
+   {
+      log( _T("Unable to create font!") );
+      return false;
+   };
+
    return gameInit();
 }
 
@@ -99,6 +118,11 @@ bool DxFramework::winAppExit ( )
 
    DxAssetManager::getInstance().shutdown();
 
+   if( fontInterface() )
+   {
+      ourFontInterface->Release();
+      ourFontInterface = NULL;
+   }
    if ( spriteInterface() )
    {
       ourSpriteInterface->Release();

@@ -7,7 +7,7 @@
 //========================================================================
 Player::Player()
 {
-	
+
 }
 
 //========================================================================
@@ -16,141 +16,85 @@ Player::~Player()
 }
 
 //========================================================================
-bool Player::init( bool playerOne, int numUnits )
+bool Player::init( bool playerOne, int x, int y, int numUnits )
 {
-   this->myUnitCount = this->myMaxUnits = numUnits;
-   myUnits = new Unit[this->myUnitCount];
-   // int x = 36;
-   // int y = 36;
-   for ( int ix = 0; ix < this->myMaxUnits; ix++ )
+   myUnitCount = myMaxUnits = numUnits;
+
+   myArrayUnits.resize(4);
+
+   //this.myArrayUnits.at(0).gameInit(x, y);
+   for(int index = 0; index < myArrayUnits.size(); index++)
    {
-      // TODO: 
-	//   this->myUnits[ix].gameInit(x, y); 
-	  // x +=32;
+      myArrayUnits[index].init("ACORN-BROWN", x, y);
+      x += 64; 
    }
-   
+
    return true;
 }
 
-
-//========Init All the Units===============================================================
-bool Player::unitInit(int x, int y)
- {
-	 myArrayUnits.resize(4);
-
-	
-	//this.myArrayUnits.at(0).gameInit(x, y);
-	 for(unsigned index = 0; index < this->myArrayUnits.size(); index++)
-	 {
-			this->myArrayUnits[index].init("ACORN-BROWN",x, y);
-			x += 32; 
-	 }
-
-	 return true;
-	
- }
-//=========Update all the Units==============================================================
-bool Player::unitUpdate()
-{
-	for(unsigned index = 0; index < this->myArrayUnits.size(); index++)
-	{
-		this->myArrayUnits.at(index).update();
-	}
-	return true;
-}
 //==========Determines what Unit was Clicked=============================================================
-bool Player::unitClick(int mouseX, int mouseY)
+void Player::unitClick( Point mousePos )
 {
-	
-	if( mouseX >= myArrayUnits.at(0).getX() && mouseX <= (myArrayUnits.at(0).getX() +32) 
-		&& mouseY >= myArrayUnits.at(0).getY() && mouseY <= (myArrayUnits.at(0).getY() +32))
-	{
-		resetUnitMove();
-		myArrayUnits.at(0).setMove();
-		return true;
-	}
-	if( mouseX >= myArrayUnits.at(1).getX() && mouseX <= (myArrayUnits.at(1).getX() +32) 
-		&& mouseY >= myArrayUnits.at(1).getY() && mouseY <= (myArrayUnits.at(1).getY() +32))
-	{
-		resetUnitMove();
-		myArrayUnits.at(1).setMove();
-		return true;
-	}
-	if( mouseX >= myArrayUnits.at(2).getX() && mouseX <= (myArrayUnits.at(2).getX() +32) 
-		&& mouseY >= myArrayUnits.at(2).getY() && mouseY <= (myArrayUnits.at(2).getY() +32))
-	{
-		resetUnitMove();
-
-		myArrayUnits.at(2).setMove();
-		return true;
-	}
-	if( mouseX >= myArrayUnits.at(3).getX() && mouseX <= (myArrayUnits.at(3).getX() +32) 
-		&& mouseY >= myArrayUnits.at(3).getY() && mouseY <= (myArrayUnits.at(3).getY() +32))
-	{
-		resetUnitMove();
-		myArrayUnits.at(3).setMove();
-		return true;
-	}
-
-	return false;
+   for( int i = 0; i < myArrayUnits.size(); i++ )
+   {
+      if( myArrayUnits[i].getImage().getCollisionArea().contains( mousePos ) )
+      {
+         resetUnitMove();
+         myArrayUnits[i].setMove();
+         mySelectedUnit = myArrayUnits[i];
+      }
+   }
 }
 //========Unit Collision===============================================================
 void Player::unitCollision()
 {	
-	for(unsigned index = 0; index < this->myArrayUnits.size(); index++)
-	{
-			D3DXVECTOR3 snPos = myArrayUnits.at(index).getLastPosition();
-           myArrayUnits.at(index).setMyPosition(snPos);
-	}
+   for(int index = 0; index < myArrayUnits.size(); index++)
+   {
+      D3DXVECTOR3 snPos = myArrayUnits[index].getLastPosition();
+      myArrayUnits[index].setMyPosition(snPos);
+   }
 }
 
 //=====Resets All Units CanMove to false==================================================================
 void Player::resetUnitMove()
 {
-	for(unsigned index = 0; index < this->myArrayUnits.size(); index++)
-	{
-		if(myArrayUnits.at(index).getCanMove() == true)
-		{
-		this->myArrayUnits.at(index).setMove();
-		}
-	}
+   for(int index = 0; index < myArrayUnits.size(); index++)
+   {
+      if(myArrayUnits[index].getCanMove() == true)
+      {
+         myArrayUnits[index].setMove();
+      }
+   }
 }
 //========Unit Drawing===============================================================
 bool Player::unitDraw(IDXSPRITE spriteInterface)
 {
-	for(unsigned index = 0; index < this->myArrayUnits.size(); index++)
-	{
-		this->myArrayUnits.at(index).draw(spriteInterface);
-	}
+   for(int index = 0; index < myArrayUnits.size(); index++)
+   {
+      myArrayUnits[index].draw(spriteInterface);
+   }
 
-	return true;
+   return true;
 }
 //=======Unit Updates=======================================================================
 Unit Player::getUnit(int num)
 {
-	
-	return this->myArrayUnits[num];
+   return myArrayUnits[num];
 }
 //========================================================================
 bool Player::update()
 {
-   return true;
-
-   for ( int ix = 0; ix < this->myMaxUnits; ix++ )
+   for ( int i = 0; i < myArrayUnits.size(); i++ )
    {
-      if ( /*Unit exists*/ true )
-      {
-         
-         // TODO:
-         // this->myUnits[ix].update();
-      }
+      myArrayUnits[i].update();
    }
+   return true;
 }
 
 //========================================================================
 bool Player::shutdown()
 {
-   delete[] this->myUnits;
+   delete[] myUnits;
 
    return true;
 }
@@ -158,37 +102,37 @@ bool Player::shutdown()
 //========================================================================
 Unit* Player::getMyUnitArr()
 {
-   return this->myUnits;
+   return myUnits;
 }
 
 //========================================================================
 int Player::getMyUnitCount()
 {
-   return this->myUnitCount;
+   return myUnitCount;
 }
 
 //========================================================================
 bool Player::getPlayerOneStatus()
 {
-   return this->isPlayerOne;
+   return isPlayerOne;
 }
 
 //========================================================================
 bool Player::unitKilled()
 {
-   this->myUnitCount--;
+   myUnitCount--;
    return true;
 }
 
 //==========Untested::Gets the Current selected Units or returns the Previous Selected==============================================================
 Unit Player::getSelectedUnit()
 {
-	for(unsigned index = 0; index < this->myArrayUnits.size(); index++)
+	for(unsigned index = 0; index < myArrayUnits.size(); index++)
 	{
-		if(this->myArrayUnits.at(index).getCanMove() == true)
+		if(myArrayUnits[index].getCanMove() == true)
 		{
-			myPreviousSelectedUnit = this->myArrayUnits.at(index);
-			return this->myArrayUnits.at(index);
+			myPreviousSelectedUnit = myArrayUnits[index];
+			return myArrayUnits[index];
 		}	
 	}
 	return myPreviousSelectedUnit;
@@ -200,14 +144,45 @@ void Player::setSelectedUnit( Unit& selectedUnit )
    mySelectedUnit = selectedUnit;
 }
 
+////========Moves the Unit to the left================================================================
+//void Player::left()
+//{
+//   mySelectedUnit.left();
+//}
+////========Stops all the Units===============================================================
+//void Player::stopAllUnits()
+//{
+//   for(int index = 0; index < myArrayUnits.size(); index++)
+//   {
+//      myArrayUnits[index].stop();
+//   }
+//}
+//
+////============Moves the Unit to the down============================================================
+//void Player::down()
+//{
+//   mySelectedUnit.down();
+//}
+//
+////===========Moves the Unit to the up=============================================================
+//void Player::up()
+//{
+//   mySelectedUnit.up();
+//}
+////===========Moves the Unit to the right=============================================================
+//void Player::right()
+//{
+//   mySelectedUnit.right();
+//}
+
 //========Moves the Unit to the left================================================================
 void Player::left()
 {
-	for(unsigned index = 0; index < this->myArrayUnits.size(); index++)
+	for(unsigned index = 0; index < myArrayUnits.size(); index++)
 	{
-		if(myArrayUnits.at(index).getCanMove() == true)
+		if(myArrayUnits[index].getCanMove() == true)
 		{
-			this->myArrayUnits.at(index).left();
+			myArrayUnits[index].left();
 			resetUnitMove();
 		}
 	}
@@ -215,20 +190,20 @@ void Player::left()
 //========Stops all the Units===============================================================
 void Player::stopAllUnits()
 {
-	for(unsigned index = 0; index < this->myArrayUnits.size(); index++)
+	for(unsigned index = 0; index < myArrayUnits.size(); index++)
 	{
-		this->myArrayUnits.at(index).stop();
+		myArrayUnits[index].stop();
 	}
 }
 
 //============Moves the Unit to the down============================================================
 void Player::down()
 {
-  for(unsigned index = 0; index < this->myArrayUnits.size(); index++)
+  for(unsigned index = 0; index < myArrayUnits.size(); index++)
 	{
-		if(myArrayUnits.at(index).getCanMove() == true)
+		if(myArrayUnits[index].getCanMove() == true)
 		{
-			this->myArrayUnits.at(index).down();
+			myArrayUnits[index].down();
 			resetUnitMove();
 		}
 	}
@@ -237,11 +212,11 @@ void Player::down()
 //===========Moves the Unit to the up=============================================================
 void Player::up()
 {
-	for(unsigned index = 0; index < this->myArrayUnits.size(); index++)
+	for(unsigned index = 0; index < myArrayUnits.size(); index++)
 	{
-		if(myArrayUnits.at(index).getCanMove() == true)
+		if(myArrayUnits[index].getCanMove() == true)
 		{
-			this->myArrayUnits.at(index).up();
+			myArrayUnits[index].up();
 			resetUnitMove();
 		}
 	}
@@ -249,11 +224,11 @@ void Player::up()
 //===========Moves the Unit to the right=============================================================
 void Player::right()
 {
-	for(unsigned index = 0; index < this->myArrayUnits.size(); index++)
+	for(unsigned index = 0; index < myArrayUnits.size(); index++)
 	{
-		if(myArrayUnits.at(index).getCanMove() == true)
+		if(myArrayUnits[index].getCanMove() == true)
 		{
-			this->myArrayUnits.at(index).right();
+			myArrayUnits[index].right();
 			resetUnitMove();
 		}
 	}

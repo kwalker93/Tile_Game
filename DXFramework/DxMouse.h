@@ -20,20 +20,22 @@ public:
 	~DxMouse();
  
 	// Public Functions
-	bool mouseInit(HWND hwnd, LPDIRECT3DDEVICE9 d3ddev);
-	void mouseUpdate();
-	void mouseShutdown();
-	int mouseX();
-	int mouseY();
-	int mouseButton(int button);
+	bool  mouseInit(HWND hwnd, LPDIRECT3DDEVICE9 d3ddev);
+	void  mouseUpdate();
+	void  mouseShutdown();
+	int   mouseX();
+	int   mouseY();
+	int   mouseButton(int button);
+
+   Point getPoint() { return myPosition; }
 
 private:
 	//Private member variable
-    Point                   myPosition;
-	LPDIRECTINPUTDEVICE8	myMouse;
-	LPDIRECTINPUT8			myInput;
-	DIMOUSESTATE			myMouseState;
-	HWND					myHwnd;
+   Point                   myPosition;
+	LPDIRECTINPUTDEVICE8	   myMouse;
+	LPDIRECTINPUT8			   myInput;
+	DIMOUSESTATE			   myMouseState;
+	HWND					      myHwnd;
 };
 
 #endif

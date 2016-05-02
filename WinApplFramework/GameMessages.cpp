@@ -19,7 +19,7 @@ bool GameMessages::startNewGame;
 //=======================================================================
 GameMessages::GameMessages ( )
 {
-   this->startNewGame = false;
+   startNewGame = false;
 }
 
 //=======================================================================

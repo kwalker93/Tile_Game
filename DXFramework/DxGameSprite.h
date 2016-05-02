@@ -70,7 +70,7 @@ public:
 	void setLastXVel(float xV);
 	void setLastYVel(float yV);
 
-	RECT getCollisionArea(){return myCollisionArea;}
+	Rect getCollisionArea(){return myCollisionArea;}
 	RECT getLastCollisionArea(){return myLastCA;}
 	void setCollisionArea(RECT collisionArea);
 

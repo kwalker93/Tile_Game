@@ -152,10 +152,10 @@ int WinApplFramework::winMain ( HINSTANCE hInstance,
                                 LPTSTR    lpCmdLine,
                                 int       nCmdShow )
 {
-   this->hInstance = hInstance;
-   this->hPrevInstance = hPrevInstance;
-   this->lpCmdLine = lpCmdLine;
-   this->nCmdShow = nCmdShow;
+   hInstance = hInstance;
+   hPrevInstance = hPrevInstance;
+   lpCmdLine = lpCmdLine;
+   nCmdShow = nCmdShow;
 
    // Load Optional Libraries (non destructively)
    HMODULE hm = LoadLibrary( TEXT("RichEd20.dll") );

@@ -19,25 +19,25 @@ PlayerManager::~PlayerManager()
 bool PlayerManager::init( bool isPlayerOneMovingFirst, Player* ptrPOne,
                           Player* ptrPTwo )
 {
-   this->elapsedTurns = 0;
-   this->isPlayerOneActing = isPlayerOneMovingFirst;
+   elapsedTurns = 0;
+   isPlayerOneActing = isPlayerOneMovingFirst;
    
    if ( ptrPOne == NULL ) // if default game is desired
    {
-      this->playerOnePtr->init(true);
+      playerOnePtr->init(true, 64, 64);
    }
    else // create custom players
    {
-      this->playerOnePtr = ptrPOne;
+      playerOnePtr = ptrPOne;
    }
 
    if ( ptrPTwo == NULL ) // if default game is desired
    {
-      this->playerTwoPtr->init(false);
+      playerTwoPtr->init(false, 256, 256);
    }
    else // else create custom players
    {
-      this->playerTwoPtr = ptrPTwo;
+      playerTwoPtr = ptrPTwo;
    }
 
    return true;
@@ -46,7 +46,7 @@ bool PlayerManager::init( bool isPlayerOneMovingFirst, Player* ptrPOne,
 //========================================================================
 bool PlayerManager::update()
 {
-   return ( this->playerOnePtr->update() && this->playerTwoPtr->update() );
+   return ( playerOnePtr->update() && playerTwoPtr->update() );
 }
 
 //========================================================================
@@ -61,12 +61,12 @@ bool PlayerManager::shutdown()
 //========================================================================
 bool PlayerManager::endCurrentTurn()
 {
-   this->elapsedTurns++;
+   elapsedTurns++;
 
-   if ( this->isPlayerOneActing )
-      this->isPlayerOneActing = false;
+   if ( isPlayerOneActing )
+      isPlayerOneActing = false;
    else
-      this->isPlayerOneActing = true;
+      isPlayerOneActing = true;
 
    return true;
 }
@@ -74,24 +74,24 @@ bool PlayerManager::endCurrentTurn()
 //========================================================================
 int PlayerManager::getNumElapsedTurns()
 {
-   return this->elapsedTurns;
+   return elapsedTurns;
 }
 
 //========================================================================
 int PlayerManager::checkUnitTotals()
 {
-   if ( this->playerOnePtr->getMyUnitCount() <= 0 &&
-        this->playerTwoPtr->getMyUnitCount() <= 0 )
+   if ( playerOnePtr->getMyUnitCount() <= 0 &&
+        playerTwoPtr->getMyUnitCount() <= 0 )
    {   
       return GameStates::GS_DRAW;
    }
-   else if ( this->playerOnePtr->getMyUnitCount() != 0 &&
-             this->playerTwoPtr->getMyUnitCount() <= 0 )
+   else if ( playerOnePtr->getMyUnitCount() != 0 &&
+             playerTwoPtr->getMyUnitCount() <= 0 )
    {
       return GameStates::GS_P1_WINS;
    }
-   else if ( this->playerOnePtr->getMyUnitCount() <= 0 &&
-             this->playerTwoPtr->getMyUnitCount() != 0 )
+   else if ( playerOnePtr->getMyUnitCount() <= 0 &&
+             playerTwoPtr->getMyUnitCount() != 0 )
    {
       return GameStates::GS_P2_WINS;
    }

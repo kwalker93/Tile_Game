@@ -87,7 +87,7 @@ namespace srutil
 		unbind();
 
 		attach_after(&source.list_head);
-		this->sink = sink;
+		sink = sink;
 	}
 }
 #endif// SRUTIL_EVENT_INCLUDED

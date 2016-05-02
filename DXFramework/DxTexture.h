@@ -37,7 +37,7 @@ public:
 
    HRESULT draw ( IDXSPRITE spriteobj, float x, float y, float rotation = 0, D3DCOLOR color = D3DCOLOR_XRGB( 255, 255, 255 ) );
    HRESULT drawScale ( IDXSPRITE spriteobj, float x, float y, float width, float height, float rotation = 0, D3DCOLOR color = D3DCOLOR_XRGB( 255, 255, 255 ) );
-   HRESULT drawStretch ( IDXSPRITE spriteobj, Rect* srcRect, const Rect* dstRect, float rotation = 0, D3DCOLOR color = D3DCOLOR_XRGB( 255, 255, 255 ) );
+   HRESULT drawStretch ( IDXSPRITE spriteobj, Rect* srcRect, Rect* dstRect, float rotation = 0, D3DCOLOR color = D3DCOLOR_XRGB( 255, 255, 255 ) );
 
    HRESULT drawEx ( IDXSPRITE spriteobj, RECT* srcRect, D3DXVECTOR2* center, D3DXVECTOR3* position, float rotation, 
                   D3DCOLOR color = D3DCOLOR_XRGB( 255, 255, 255 ) , D3DXVECTOR2* scale = NULL );

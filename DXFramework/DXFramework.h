@@ -49,6 +49,26 @@ public:
       return ourSpriteInterface;
    }
 
+   //=======================================================================
+   //
+   static IDXFONT fontInterface ()
+   {
+      return ourFontInterface;
+   }
+
+   //=======================================================================
+   //
+   //static D3DPRESENT_PARAMETERS presentParametersInterface ()
+   //{
+   //   if ( ourPresentParameters == NULL)
+   //   {
+   //      D3DPRESENT_PARAMETERS pp;
+   //      ZeroMemory(&pp, sizeof(pp));
+   //     return pp;
+   //   }
+   //   return *ourPresentParameters;
+   //}
+
 protected:
    //=======================================================================
    // The initializer for any pre-game functionality.
@@ -84,6 +104,13 @@ protected:
    //=======================================================================
    // Overrided to call gameExit cleaning up after directX.
    bool winAppExit ( void );
+
+   //=======================================================================
+   // Overrided to 
+   //virtual D3DPRESENT_PARAMETERS* presentParameters ()
+   //{
+   //  return NULL;
+   //}
 
    //=======================================================================
    // The presentation parameters of directX that determines the 
@@ -125,10 +152,25 @@ protected:
       return D3DPRESENT_INTERVAL_DEFAULT; 
    }
 
+   //=======================================================================
+   //virtual BOOL enableAutoDepthStencil ( ) 
+   //{ 
+   //   return false; 
+   //}
+   
+   //=======================================================================
+   //virtual D3DFORMAT autoDepthStencilFormat ( ) 
+   //{ 
+   //   return D3DFMT_UNKNOWN; 
+   //}
+
 private:
-   static IDXINTERFACE   ourInterface;
-   static IDXDEVICE      ourDevice;
-   static IDXSPRITE      ourSpriteInterface;
+   static IDXINTERFACE           ourInterface;
+   static IDXDEVICE              ourDevice;
+   static IDXSPRITE              ourSpriteInterface;
+   static IDXFONT                ourFontInterface;
+   //static D3DPRESENT_PARAMETERS* ourPresentParameters;
+   
    D3DPRESENT_PARAMETERS myD3Dpp;
    IDXSURFACE            myBackBuffer;
 };

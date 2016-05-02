@@ -95,8 +95,8 @@ DxAnimation& DxGameSprite::getAnimation( )
 //=======================================================================
 void DxGameSprite::transform ( float x, float y, D3DXVECTOR2 center, float rotation, D3DXVECTOR2 scale, D3DCOLOR color )
 {
-	this->setXPosition( x );
-	this->setYPosition( y );
+	setXPosition( x );
+	setYPosition( y );
 	myCenter = center;
 	myRotation = rotation;
 	myScale = scale;

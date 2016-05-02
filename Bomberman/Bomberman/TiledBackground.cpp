@@ -110,6 +110,15 @@ bool TiledBackground::buildBackground ( const tstring& configFilename )
             //mySpriteMap[index].setCollisionArea(Rect( pos, tilePixWidth, tilePixHeight ) );
             mySpriteMap[index].setDestroyable ( false );
          }
+         else if(  fileInfo.getTileType( row, col ) == _T("BLANK") )
+         {
+            mySpriteMap[index].setScale(.5f, .5f);
+            mySpriteMap[index].create( "BLANK" );
+            
+            //Point pos( (LONG)xPos, (LONG)yPos );
+           // mySpriteMap[index].setCollisionArea(Rect( pos, tilePixWidth, tilePixHeight ) );
+            //mySpriteMap[index].collidable(false);
+         }
          else
          {
             mySpriteMap[index].setScale(.5f, .5f);
@@ -176,8 +185,8 @@ void TiledBackground::waterRising( int numOfTurns )
 	{
 		mySpriteMap[i][temp] = waterTile;
 		mySpriteMap[temp][i] = waterTile;
-		mySpriteMap[i][(this->mapSize - 1) - temp] = waterTile;
-		mySpriteMap[(this->mapSize - 1) - temp][i] = waterTile;
+		mySpriteMap[i][(mapSize - 1) - temp] = waterTile;
+		mySpriteMap[(mapSize - 1) - temp][i] = waterTile;
 	}*/
 }
 

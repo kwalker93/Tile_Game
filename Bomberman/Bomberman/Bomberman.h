@@ -22,6 +22,7 @@
 #include "DxFramework/DxSoundIdentifier.h"
 #include "Bomberman/CollisionManager.h"
 #include "Bomberman/Unit.h" 
+#include "Bomberman/GameUI.h"
 #include "WinApplFramework/GameMessages.h"
 #include "Bomberman/Player.h"
 
@@ -46,9 +47,8 @@ protected:
 
    //------------------------------------------------------------
    // Windows virtual interface
-   int winScreenWidth() const { return 768; }
-   int winScreenHeight() const { return 640; }
-   //Below doesn't currently work...
+   int winScreenWidth() const { return 1004; }
+   int winScreenHeight() const { return 640; }   //Below doesn't currently work...
    //LPCTSTR winAppTitleStr () const { "BomberCat"; }
 
 
@@ -64,7 +64,7 @@ private:
    DxMouse		myMouse;
 
    int         myTurnCount;
-   Unit		myUnits;
+   Unit		   myUnits;
 
    TiledBackground   myLevelBgnds;//[ 1 ]
    Kitty             myKitty;
@@ -72,10 +72,12 @@ private:
    D3DXVECTOR3       myPlayerPos;
    D3DXVECTOR3       myPlayerLastPos;
    RECT              myBgRect;
-   CollisionManager  myCollsionManager;
+   CollisionManager  myCollisionManager;
 
    DxSound* mySoundInterface;
    DxSoundIdentifier mySound;
+
+   GameUI            myGameUI;
 
 };
 

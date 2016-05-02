@@ -57,11 +57,12 @@ DxTexture::operator IDXTEXTURE ( void )
 bool DxTexture::create ( IDXDEVICE device, const tstring& filename, Rect& srcRect, DWORD usage )
 {
    HRESULT hr;
-
    bool  result;
 
+   assert( getInfoFromFile( filename ) );
+
    // Load the file as a SURFACE, to get just the srcRect
-   DxSurface   srcSurface;
+   DxSurface srcSurface;
    result = srcSurface.createFromFile( device, filename, &srcRect );   
    assert(result);
 
@@ -73,12 +74,12 @@ bool DxTexture::create ( IDXDEVICE device, const tstring& filename, Rect& srcRec
    IDXSURFACE  texSurface = NULL;
    hr = myTexture->GetSurfaceLevel( 0, &texSurface );
    assert(SUCCEEDED(hr));
-
+   
    // BitBlt from srcSurface to texture surface[0]
    hr = srcSurface.draw( device, NULL, texSurface, NULL );
    assert(SUCCEEDED(hr));
 
-   texSurface->Release();
+   IfRelease(&texSurface);
 
    srcSurface.destroy();
    return result;
@@ -180,7 +181,7 @@ void DxTexture::destroy ( void )
 void DxTexture::stretchRect ( IDXDEVICE device, RECT* srcRect, IDXTEXTURE dstTexture, RECT* dstRect )
 {
    IDXSURFACE srcSurface = NULL, dstSurface = NULL, prevTarget = NULL;
-   HRESULT hr;
+   HRESULT hr;   
 
    hr = myTexture->GetSurfaceLevel( 0, &srcSurface );
    assert( SUCCEEDED(hr) );
@@ -195,7 +196,7 @@ void DxTexture::stretchRect ( IDXDEVICE device, RECT* srcRect, IDXTEXTURE dstTex
    if ( dstDescr.Usage & D3DUSAGE_RENDERTARGET )
    {
       hr = device->StretchRect( srcSurface, srcRect, dstSurface, dstRect, D3DTEXF_NONE );
-      assert(SUCCEEDED(hr));
+    //  assert(SUCCEEDED(hr));
    }
 
    IfRelease(&srcSurface);
@@ -217,11 +218,9 @@ HRESULT DxTexture::drawScale ( IDXSPRITE spriteobj, float x, float y, float widt
    Rect dstRect( (LONG)x, (LONG)y, (LONG)(x + width), (LONG)(y + height) );
    return drawStretch( spriteobj, NULL, &dstRect, rotation, color );
 }
-//HRESULT DxTexture::draw ( IDXSPRITE spriteobj, const Rect* dstRect, float rotation, D3DCOLOR color );
-//HRESULT DxTexture::draw ( IDXSPRITE spriteobj, const Rect* srcRect, float x, float y, float rotation, D3DCOLOR color );
 
 //======================================================================
-HRESULT DxTexture::drawStretch ( IDXSPRITE spriteobj, Rect* srcRect, const Rect* dstRect, float rotation, D3DCOLOR color )
+HRESULT DxTexture::drawStretch ( IDXSPRITE spriteobj, Rect* srcRect, Rect* dstRect, float rotation, D3DCOLOR color )
 {
    D3DXVECTOR3 position( (dstRect ? dstRect->left : 0.0f), (dstRect ? dstRect->top : 0.0f), 0.0f );
    D3DXVECTOR2 scale( (dstRect ? dstRect->width() : 1.0f) / (srcRect ? srcRect->width() : width()),

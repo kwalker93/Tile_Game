@@ -10,7 +10,7 @@
 #if !defined(__GAMEMESSAGES_H__)
 #define __GAMEMESSAGES_H__
 
-#include <stdafx.h>
+#include "stdafx.h"
 #include <Windows.h>
 #include <string>
 
