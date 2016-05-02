@@ -77,9 +77,10 @@ bool CollisionManager::worldCollisions( DxGameSprite sprite, TiledBackground&  L
 
    return false;
 }
+
 //========================================================================================
 //
-bool CollisionManager::exploisionCollisions( DxGameSprite sprite, TiledBackground&  LevelRef )
+bool CollisionManager::waterCollisions( DxGameSprite sprite, TiledBackground&  LevelRef )
 {
    RECT collision = sprite.getCollisionArea();
    int indexTopLeft = ( (int)collision.left / 64 ) + 
@@ -97,52 +98,34 @@ bool CollisionManager::exploisionCollisions( DxGameSprite sprite, TiledBackgroun
                           LevelRef.numColumns();
 
    if( ( sprite.collidesWith( LevelRef.mySpriteMap[indexTopLeft] )&&  
-         LevelRef.mySpriteMap[indexTopLeft].collidable() ) )
+         LevelRef.mySpriteMap[indexTopLeft].collidable() &&
+         LevelRef.mySpriteMap[indexTopLeft].getAnimation().name() == "WATER" ) )
    {
-      if( LevelRef.mySpriteMap[indexTopLeft].getDestroyable())
-      {
-         LevelRef.mySpriteMap[indexTopLeft].setDestroyable( false );
-         LevelRef.mySpriteMap[indexTopLeft].changeAnimation ( myBoomBrickAnim ); 
-         LevelRef.mySpriteMap[indexTopLeft].collidable( false );
-      }
       return true;
    }
    else if ( ( sprite.collidesWith( LevelRef.mySpriteMap[indexBottomLeft] ) &&  
-              LevelRef.mySpriteMap[indexBottomLeft].collidable() ) )
+              LevelRef.mySpriteMap[indexBottomLeft].collidable() &&
+         LevelRef.mySpriteMap[indexTopLeft].getAnimation().name() == "WATER" ) )
    {
-      if( LevelRef.mySpriteMap[indexBottomLeft].getDestroyable())
-      {
-         LevelRef.mySpriteMap[indexBottomLeft].setDestroyable( false );
-         LevelRef.mySpriteMap[indexBottomLeft].changeAnimation ( myBoomBrickAnim );
-         LevelRef.mySpriteMap[indexBottomLeft].collidable( false );
-      } 
       return true;
    }
    else if( ( sprite.collidesWith( LevelRef.mySpriteMap[indexTopRight] ) &&  
-            LevelRef.mySpriteMap[indexTopRight].collidable() ) )
+            LevelRef.mySpriteMap[indexTopRight].collidable() &&
+         LevelRef.mySpriteMap[indexTopLeft].getAnimation().name() == "WATER" ) )
    {
-      if( LevelRef.mySpriteMap[indexTopRight].getDestroyable())
-      {
-         LevelRef.mySpriteMap[indexTopRight].setDestroyable( false );
-         LevelRef.mySpriteMap[indexTopRight].changeAnimation( myBoomBrickAnim );
-         LevelRef.mySpriteMap[indexTopRight].collidable( false );
-      }
       return true;
    }
    else if( ( sprite.collidesWith( LevelRef.mySpriteMap[indexBottomRight] ) &&  
-             LevelRef.mySpriteMap[indexBottomRight].collidable() ) )
+             LevelRef.mySpriteMap[indexBottomRight].collidable() &&
+         LevelRef.mySpriteMap[indexTopLeft].getAnimation().name() == "WATER" ) )
    {
-      if( LevelRef.mySpriteMap[indexBottomRight].getDestroyable())
-      {
-         LevelRef.mySpriteMap[indexBottomRight].setDestroyable( false );
-         LevelRef.mySpriteMap[indexBottomRight].changeAnimation ( myBoomBrickAnim );
-         LevelRef.mySpriteMap[indexBottomRight].collidable( false );
-      }
       return true;
    }
 
    return false;
 }
+
+
 //========================================================================================
 //
 bool CollisionManager::spriteCollsions( DxGameSprite sprite1, DxGameSprite sprite2 )

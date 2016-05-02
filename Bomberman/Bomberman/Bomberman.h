@@ -44,40 +44,38 @@ protected:
 
    bool checkForNewGame();
 
-
    //------------------------------------------------------------
    // Windows virtual interface
    int winScreenWidth() const { return 1004; }
    int winScreenHeight() const { return 640; }   //Below doesn't currently work...
    //LPCTSTR winAppTitleStr () const { "BomberCat"; }
 
-
 private:
-	bool myButtonCheck;
-   GameMessages myGm;
+	bool                 myButtonCheck;
+   GameMessages         myGm;
 
-   D3DCOLOR bgColor;
-   DxTexture  myImage;	
+   D3DCOLOR             bgColor;
+   DxTexture            myImage;	
    
-   tstring     myGameTitle;
-   Player		myPlayer1;
-   DxMouse		myMouse;
+   tstring              myGameTitle;
+   Player		         myPlayer1;
+   DxMouse		         myMouse;
 
-   int         myTurnCount;
-   Unit		   myUnits;
+   int                  myTurnCount;
+   Unit		            myUnits;
 
-   TiledBackground   myLevelBgnds;//[ 1 ]
-   Kitty             myKitty;
-   DxKeyboard        myKeyboard;
-   D3DXVECTOR3       myPlayerPos;
-   D3DXVECTOR3       myPlayerLastPos;
-   RECT              myBgRect;
-   CollisionManager  myCollisionManager;
+   TiledBackground      myLevelBgnds;//[ 1 ]
+   Kitty                myKitty;
+   DxKeyboard           myKeyboard;
+   D3DXVECTOR3          myPlayerPos;
+   D3DXVECTOR3          myPlayerLastPos;
+   RECT                 myBgRect;
+   CollisionManager     myCollisionManager;
 
-   DxSound* mySoundInterface;
-   DxSoundIdentifier mySound;
+   DxSound*             mySoundInterface;
+   DxSoundIdentifier    mySound;
 
-   GameUI            myGameUI;
+   GameUI               myGameUI;
 
 };
 

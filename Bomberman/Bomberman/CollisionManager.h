@@ -20,7 +20,7 @@ public:
    
    bool CollisionCalc( DxGameSprite sprite, int numColum );
    bool worldCollisions( DxGameSprite sprite1, TiledBackground&  myLevelRef );
-   bool exploisionCollisions( DxGameSprite sprite, TiledBackground&  LevelRef );
+   bool waterCollisions( DxGameSprite sprite1, TiledBackground&  myLevelRef );   
    bool spriteCollsions( DxGameSprite sprite1, DxGameSprite sprite2 );
 
 private:

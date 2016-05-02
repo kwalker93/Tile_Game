@@ -37,13 +37,9 @@ public:
    void setCurrentUnit( Unit& newUnit );
    void updateCurrentUnitImage();
 
-
    void updateSelectedUnitPowerText();
    void updateSelectedUnitMovementPointsText();
    void updateSelectedUnitHealthText( );
-
-
-
 
 private:
    
@@ -58,6 +54,9 @@ private:
 
    Unit           myCurrentUnit;
    DxGameSprite   myCurrentUnitImage;
+
+   int            myXPos;
+   int            myYPos;
    
 };
 

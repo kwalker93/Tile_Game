@@ -196,7 +196,7 @@ void DxTexture::stretchRect ( IDXDEVICE device, RECT* srcRect, IDXTEXTURE dstTex
    if ( dstDescr.Usage & D3DUSAGE_RENDERTARGET )
    {
       hr = device->StretchRect( srcSurface, srcRect, dstSurface, dstRect, D3DTEXF_NONE );
-    //  assert(SUCCEEDED(hr));
+//      assert(SUCCEEDED(hr));
    }
 
    IfRelease(&srcSurface);

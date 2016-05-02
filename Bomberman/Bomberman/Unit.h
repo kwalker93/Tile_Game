@@ -33,12 +33,17 @@ public:
    int getY();
    int getX();
    bool init(tstring spriteName, int xPos, int yPos);
+   void destroy();
    bool draw (IDXSPRITE spriteObj);
 
    DxGameSprite& getImage() { return myImage; }
 
    // functions
-   int healthEffect(int effect);// health decrease or powerup health increase??
+   int takingDamage(int effect);
+   int healHealth(int effect);
+   
+   
+   
    //void setPosition(int x, int y);
    void reduceMovementPoints();
    int calculateDamage();
@@ -59,6 +64,22 @@ public:
    void setMove();
    bool getCanMove();
 
+   void resetMovePoints() { myMovementPoints = myStartingMovePoints; }
+   void decMovePoints() { if( myMovementPoints > 0 ) { myMovementPoints--; } }
+   void incMovePoints() { if( myMovementPoints < myStartingMovePoints ) { myMovementPoints++; } }
+   
+   bool checkIfDead();
+
+   /*
+      Units damage other Units
+      waterRising water tile kill
+      message box for winner
+      
+      game logic
+         attack other unit, then end turn
+         only select one unit
+   */
+
    enum{ solider1, solider2, solider3 };
 
 
@@ -67,20 +88,21 @@ private:
    D3DXVECTOR3    myPosition;
    D3DXVECTOR3    myLastPosition;   
    Direction      myDirection;
-   float			mySpeed;
+   float			   mySpeed;
 
-   int MY_MAX_HEALTH;
-   int MY_MAX_POWER;
-   int myHealth;
-   int myMovementPoints;
-   int myAttackPower;
-   int myLowPowerLevel;
-   bool myCanMove;
+   int            MY_MAX_HEALTH;
+   int            MY_MAX_POWER;
+   int            myHealth;
+   int            myMovementPoints;
+   int            myStartingMovePoints;
+   int            myAttackPower;
+   int            myLowPowerLevel;
+   bool           myCanMove;
 
    //Pixel position;
-   int myPositionY;
-   int myPositionX;
-   DxGameSprite myImage;
+   int            myPositionY;
+   int            myPositionX;
+   DxGameSprite   myImage;
 };
 
 

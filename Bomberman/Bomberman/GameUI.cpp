@@ -20,8 +20,12 @@ bool GameUI::init( IDXFONT font, int xPos, int yPos, D3DCOLOR color, int turnCou
    myTextColor = color;
    myTurnCounter = turnCounter;
 
+   myXPos = xPos;
+   myYPos = yPos;
+
+
    //set turn counter 
-   myTurnCounterText.create( font, "Turns Counter: ", float(xPos), float(yPos), 64, 64 );  
+   myTurnCounterText.create( font, "Turns Counter: ", float(xPos), float(yPos), 192, 64 );  
 
    myCurrentUnit.getSprite().setScale( 1.0f, 1.0f );
 
@@ -33,13 +37,13 @@ bool GameUI::init( IDXFONT font, int xPos, int yPos, D3DCOLOR color, int turnCou
    myCurrentUnitImage.setPosition( float(xPos), float(yPos) + 128 );
 
    //set health text
-   myHealthText.create( font, "Current Health: ", float(xPos), float(yPos) + 256, 150, 64 );  
+   myHealthText.create( font, "Current Health: ", float(xPos), float(yPos) + 256, 192, 64 );  
    
    //set power text
-   myPowerText.create( font, "Attack Power: ", float(xPos), float(yPos) + 320, 128, 64 );  
+   myPowerText.create( font, "Attack Power: ", float(xPos), float(yPos) + 320, 192, 64 );  
    
    //set move point text
-   myMovePointsText.create( font, "Movement Points: ", float(xPos), float(yPos) + 384, 128, 64 );  
+   myMovePointsText.create( font, "Movement Points: ", float(xPos), float(yPos) + 384, 192, 64 );  
 
    return true;
 }
@@ -92,6 +96,8 @@ void GameUI::setCurrentUnit( Unit& newUnit )
 void GameUI::updateCurrentUnitImage()
 {
    myCurrentUnitImage = myCurrentUnit.getSprite();
+   myCurrentUnitImage.setScale(1.0f, 1.0f);
+   myCurrentUnitImage.setPosition( myXPos + 100, myYPos + 100);
 }
 
 //=======================================================================
@@ -111,7 +117,7 @@ void GameUI::updateSelectedUnitMovementPointsText()
    converter << myCurrentUnit.getMovementPoints();
    tstring temp = _T( converter.str() );
 
-   myMovePointsText.setText( "Movement Point: " + temp );
+   myMovePointsText.setText( "Movement Points: " + temp );
 }
 
 //=======================================================================

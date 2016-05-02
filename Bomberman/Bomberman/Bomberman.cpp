@@ -60,7 +60,8 @@ bool Game::gameInit ( )
    result &= myLevelBgnds.init( device(), _T("level_one.config") );
 
    //Game UI init
-   myGameUI.init( fontInterface(), 832, 32, D3DCOLOR_XRGB( 0, 0, 0 ), myTurnCount );
+   myTurnCount = 1;
+   myGameUI.init( fontInterface(), 732, 32, D3DCOLOR_XRGB( 0, 0, 0 ), myTurnCount );
 
    //Character inits
    // myUnits.init( "ACORN-BROWN", 64,64);
@@ -115,15 +116,17 @@ void Game::gameRun ( )
          if(myMouse.mouseButton(0))
          {
             myPlayer1.unitClick( myMouse.getPoint() );
-            myGameUI.setCurrentUnit( myPlayer1.getSelectedUnit() );
          }
 
+         myGameUI.setCurrentUnit( myPlayer1.getSelectedUnit() );
+         
          // sprite rendering...       
          myLevelBgnds.drawMySpriteMap( spriteInterface() );
+
+         myPlayer1.checkUnitHealths();
          myPlayer1.unitDraw(spriteInterface());
 
-         //myGameUI.draw( spriteInterface() );
-
+         myGameUI.draw( spriteInterface() );
 
          int keyCount = 0;       
 
@@ -157,18 +160,43 @@ void Game::gameRun ( )
 
          }
 
+         if(myKeyboard.keyDown(VK_RETURN))
+         {
+            myPlayer1.getSelectedUnit().takingDamage( 100 );
+         }
+
          // Stop all kitty motion first, then check keyboard
          if( keyCount == 0 )
          {
             myPlayer1.stopAllUnits();
          }
-
-         if( myCollisionManager.worldCollisions( myPlayer1.getSelectedUnit().getImage(), levelRef ) )
+ 
+         if( myCollisionManager.worldCollisions( myPlayer1.getSelectedUnit().getSprite(), levelRef ) )
          {
             myPlayer1.stopAllUnits();
-            D3DXVECTOR3 snPos = myPlayer1.getSelectedUnit().getLastPosition();
-            myPlayer1.getSelectedUnit().setMyPosition( snPos );
+            myPlayer1.unitCollision();
          }
+
+         if( myCollisionManager.waterCollisions( myPlayer1.getSelectedUnit().getSprite(), levelRef ) )
+         {
+            myPlayer1.stopAllUnits();
+            myPlayer1.unitCollision();
+         }
+
+
+         //for(int i = 0; i < 4; i++)
+         //{
+         //   if( myCollisionManager.spriteCollsions( myPlayer1.getSelectedUnit().getSprite(), myPlayer1.getArrayUnits().at(i).getSprite() ) )
+         //   {
+         //      myPlayer1.stopAllUnits();
+         //      myPlayer1.unitCollision();
+         //   }
+         //}
+
+         
+
+
+
          // stop rendering
          spriteInterface()->End();
       }

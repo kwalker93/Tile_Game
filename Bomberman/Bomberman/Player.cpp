@@ -26,11 +26,16 @@ bool Player::init( bool playerOne, int x, int y, int numUnits )
    for(int index = 0; index < myArrayUnits.size(); index++)
    {
       myArrayUnits[index].init("ACORN-BROWN", x, y);
+      myArrayUnits[index].getSprite().collidable(true);
       x += 64; 
    }
 
+   myArrayUnits[0].setMove();
+
    return true;
 }
+
+
 
 //==========Determines what Unit was Clicked=============================================================
 void Player::unitClick( Point mousePos )
@@ -52,6 +57,7 @@ void Player::unitCollision()
    {
       D3DXVECTOR3 snPos = myArrayUnits[index].getLastPosition();
       myArrayUnits[index].setMyPosition(snPos);
+      myArrayUnits[index].incMovePoints();
    }
 }
 
@@ -84,6 +90,7 @@ Unit Player::getUnit(int num)
 //========================================================================
 bool Player::update()
 {
+   checkUnitHealths();
    for ( int i = 0; i < myArrayUnits.size(); i++ )
    {
       myArrayUnits[i].update();
@@ -122,6 +129,18 @@ bool Player::unitKilled()
 {
    myUnitCount--;
    return true;
+}
+
+//========================================================================
+void Player::checkUnitHealths()
+{
+   for(unsigned index = 0; index < myArrayUnits.size(); index++)
+	{
+      if( myArrayUnits[index].checkIfDead() )
+      {
+         myArrayUnits[index].getImage().destroy();
+      }
+   }
 }
 
 //==========Untested::Gets the Current selected Units or returns the Previous Selected==============================================================
@@ -180,10 +199,11 @@ void Player::left()
 {
 	for(unsigned index = 0; index < myArrayUnits.size(); index++)
 	{
-		if(myArrayUnits[index].getCanMove() == true)
+		if(myArrayUnits[index].getCanMove() == true &&
+         myArrayUnits[index].getMovementPoints() > 0 )
 		{
 			myArrayUnits[index].left();
-			resetUnitMove();
+         myArrayUnits[index].decMovePoints();
 		}
 	}
 }
@@ -201,10 +221,11 @@ void Player::down()
 {
   for(unsigned index = 0; index < myArrayUnits.size(); index++)
 	{
-		if(myArrayUnits[index].getCanMove() == true)
+		if(myArrayUnits[index].getCanMove() == true &&
+         myArrayUnits[index].getMovementPoints() > 0)
 		{
 			myArrayUnits[index].down();
-			resetUnitMove();
+         myArrayUnits[index].decMovePoints();
 		}
 	}
 }
@@ -214,10 +235,11 @@ void Player::up()
 {
 	for(unsigned index = 0; index < myArrayUnits.size(); index++)
 	{
-		if(myArrayUnits[index].getCanMove() == true)
+		if(myArrayUnits[index].getCanMove() == true &&
+         myArrayUnits[index].getMovementPoints() > 0)
 		{
 			myArrayUnits[index].up();
-			resetUnitMove();
+         myArrayUnits[index].decMovePoints();
 		}
 	}
 }
@@ -226,10 +248,11 @@ void Player::right()
 {
 	for(unsigned index = 0; index < myArrayUnits.size(); index++)
 	{
-		if(myArrayUnits[index].getCanMove() == true)
+		if(myArrayUnits[index].getCanMove() == true &&
+         myArrayUnits[index].getMovementPoints() > 0)
 		{
 			myArrayUnits[index].right();
-			resetUnitMove();
+         myArrayUnits[index].decMovePoints();         
 		}
 	}
 }

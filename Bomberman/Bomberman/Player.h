@@ -39,6 +39,7 @@ public:
    
    // Signals
    bool unitKilled();
+   void checkUnitHealths();
    bool playerLoses();
    Unit getUnit(int num);
    bool unitUpdate();
@@ -57,6 +58,8 @@ public:
    void resetUnitMove();
    void stopAllUnits();
    void unitCollision();
+
+   std::vector<Unit> getArrayUnits() { return myArrayUnits; }
 
 // private methods/data
 private:

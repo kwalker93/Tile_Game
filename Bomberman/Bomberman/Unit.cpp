@@ -5,23 +5,18 @@
 #include <time.h>
 
 
-
-
-
-
 // Constructor
 Unit::Unit()
 {
-	this->MY_MAX_HEALTH = 100;
-	this->MY_MAX_POWER = 10; 
-	this->myLowPowerLevel = 3;
-	this->myHealth= 75;
-	this->myMovementPoints = 4; // Movement points
-	this->myPositionY = 0;
-	this->myPositionX = 0;
-	this->calculateDamage();
-	this->myCanMove = false;
-	//this->myImage;
+	MY_MAX_HEALTH = 100;
+	MY_MAX_POWER = 10; 
+	myLowPowerLevel = 3;
+	myHealth= 75;
+	myMovementPoints = 4; // Movement points
+	myPositionY = 0;
+	myPositionX = 0;
+	calculateDamage();
+	myCanMove = false;
 }
 
 Unit::~Unit()
@@ -29,23 +24,21 @@ Unit::~Unit()
 
 }
 
-
-
 Unit::Unit(int maxPower, int lowPower, int maxHealth, int positionY, int positionX )
 {
-	this->myCanMove = false;
+	myCanMove = false;
 	// Max health for this unit.
-	this->MY_MAX_HEALTH = maxHealth;
+	MY_MAX_HEALTH = maxHealth;
 	// Max Power for this unit.
-	this->MY_MAX_POWER = maxPower; 
+	MY_MAX_POWER = maxPower; 
 
-	this->myLowPowerLevel = lowPower;
-	this->myHealth= maxHealth;
-	this->myMovementPoints = 4; // Movement points
+	myLowPowerLevel = lowPower;
+	myHealth= maxHealth;
+	myStartingMovePoints = myMovementPoints = 4; // Movement points
 
-	this->myPositionY = positionY;
-	this->myPositionX = positionX;
-	this->calculateDamage();
+	myPositionY = positionY;
+	myPositionX = positionX;
+	calculateDamage();
 }
 
 void Unit::setMyPosition( D3DXVECTOR3 pos )
@@ -57,17 +50,18 @@ DxGameSprite Unit::getSprite()
 { 
 	return myImage; 
 }
+
 D3DXVECTOR3 Unit::getLastPosition()
 {
-	return this->myLastPosition;
+	return myLastPosition;
 }
 
 bool Unit::init( tstring animationName, int xPos, int yPos)
 {
-	this->myImage.setScale(.5, .5);
-	this->myImage.create(animationName);
+	myImage.setScale(.5, .5);
+	myImage.create(animationName);
 
-	this->myImage.setPosition(float(xPos), float(yPos));
+	myImage.setPosition(float(xPos), float(yPos));
 	myUnitImage = DxAssetManager::getInstance().getAnimationCopy( animationName, 10 );
 
 	myPosition.x = myImage.getXPosition();
@@ -78,6 +72,7 @@ bool Unit::init( tstring animationName, int xPos, int yPos)
 	return true;
 
 }
+
 void Unit::update()
 {
    myLastPosition.x = myPosition.x;
@@ -85,7 +80,26 @@ void Unit::update()
    myImage.update();
    myPosition.x = myImage.getXPosition();
    myPosition.y = myImage.getYPosition();
+}
 
+
+void Unit::destroy()
+{
+   myUnitImage.shutdown();
+   myPosition = D3DXVECTOR3(0, 0, 0);
+   myLastPosition = D3DXVECTOR3(0, 0, 0);
+   mySpeed = 0;
+   MY_MAX_HEALTH = 0;
+   MY_MAX_POWER = 0;
+   myHealth = 0;
+   myMovementPoints = 0;
+   myStartingMovePoints = 0;
+   myAttackPower = 0;
+   myLowPowerLevel = 0;
+   myCanMove = false;
+   myPositionY = 0;
+   myPositionX = 0;
+   myImage.destroy();
 }
 
 bool Unit::draw ( IDXSPRITE spriteObj )
@@ -106,111 +120,118 @@ bool Unit::right()
 {
 	myImage.setXVel(+mySpeed);
 	myImage.setYVel( mySpeed - mySpeed );
-	this->myDirection = Direction::RIGHT;
+	myDirection = Direction::RIGHT;
 	return true;
 }
+
 bool Unit::up()
 {
 	myImage.setXVel( mySpeed - mySpeed);
 	myImage.setYVel(-mySpeed);
-	this->myDirection = Direction::UP;
+	myDirection = Direction::UP;
 	return true;
 }
+
 bool Unit::down()
 {
 	myImage.setXVel( mySpeed - mySpeed);
 	myImage.setYVel(+mySpeed);
-	this->myDirection = Direction::DOWN;
+	myDirection = Direction::DOWN;
 	return true;
 }
+
 bool Unit::left()
 {
 	myImage.setXVel(-mySpeed);
 	myImage.setYVel(mySpeed - mySpeed);
-	this->myDirection = Direction::LEFT;
+	myDirection = Direction::LEFT;
 	return true;
 }
-
 
 //Gets Health
 int Unit::getHealth()
 {
-	return this->myHealth;
+	return myHealth;
 }
 
 //Gets Action Points
 int Unit::getMovementPoints()
 {
-	return this->myMovementPoints;
+	return myMovementPoints;
 }
 
 // Gets Damage power
 int Unit::getDamage()
 {
-	
-	return this->myAttackPower;
-
+	return myAttackPower;
 }
 
 bool Unit::getCanMove()
 {
-	return this->myCanMove;
+	return myCanMove;
 }
+
 void Unit::setMove()
 {
-	if(this->myCanMove == false)
+	if(myCanMove == false)
 	{
-		this->myCanMove = true;
-	}else if( this->myCanMove == true)
+		myCanMove = true;
+	}
+   else if( myCanMove == true)
 	{
-		this->myCanMove = false;
+		myCanMove = false;
 	}
 }
 
 //resets the turn for the unit
 void Unit::resetTurn()
 {
-	this->myMovementPoints = 4;
+	myMovementPoints = 4;
 }
+
 // Health affected by attacked
-int Unit::healthEffect(int effect)
+int Unit::takingDamage(int effect)
 {
-
-	return (this->myHealth += effect);
-	
+	return (myHealth -= effect);
 }
 
-// Actions points used in the move, takes in parameter.
-void Unit::reduceMovementPoints()
+int Unit::healHealth(int effect)
 {
-	if(this->myMovementPoints == 0)
-	{
-		// return error message stating no movement points or error checking in the game layer.
+	return (myHealth += effect);
+}
 
-	}else
-	{
-		this->myMovementPoints--;
-	}
+void Unit::killUnit()
+{
+   myHealth = 0;
+}
+
+bool Unit::checkIfDead()
+{
+   if(myHealth <= 0)
+   {
+      return true;
+   }
+   return false;
 }
 
 // Calculates random damage power
 int Unit::calculateDamage()
 {
-	int parameter = (rand() % this->myLowPowerLevel) +this->MY_MAX_POWER; // for now We can change how much to mess with the damage.
-	this->myAttackPower = parameter;
+	int parameter = (rand() % myLowPowerLevel) +MY_MAX_POWER; // for now We can change how much to mess with the damage.
+	myAttackPower = parameter;
 	return myAttackPower;
 }
 
 //gets the int y coordinate value
 int Unit::getY()
 {
-	return this->myPosition.y;
+	return myPosition.y;
 }		  
 
 //gets the int x coordinate value
 int Unit::getX()
 {
-	return this->myPosition.x;
+	return myPosition.x;
 }
 
 void Unit::setY(float newY)
