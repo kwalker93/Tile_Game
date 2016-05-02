@@ -10,16 +10,16 @@
 #include "DxFramework/DxGameSprite.h"
 using namespace std;
 
-class Unit{
+class Unit
+{
 
-
-
-   //constructor
 public:
    Unit();
-   Unit(int maxPower, int lowPower, int maxHealth, int positionY, int positionX );
   ~Unit();
+   Unit(int maxPower, int lowPower, int maxHealth, int positionY, int positionX );
 
+
+   //direction and enemy type enums
    enum Direction{ UP, DOWN, LEFT, RIGHT };
    enum Type { 
       blank = 0,
@@ -31,69 +31,56 @@ public:
    vector<tstring> myUnitStrings;
 
 public:
-   // getters for reference to get units private variables and stats.
-   //void gameinit();
-   //void gameRun();
-   //void gameEnd();
 
-   int getHealth();
-   int getMovementPoints(); // movement points
-   int getDamage();
-   void setImage(string);// might need to change// 
-   int getY();
-   int getX();
+   //setup functions
    bool init(Type unitType, int xPos, int yPos);
    bool initUnitStrings();
+   void update();
    void destroy();
    bool draw (IDXSPRITE spriteObj);
 
-   DxGameSprite& getImage() { return myImage; }
 
-   // functions
-   int takingDamage(int effect);
-   int healHealth(int effect);
-   
-   
-   
-   //void setPosition(int x, int y);
-   void reduceMovementPoints();
-   int calculateDamage();
-   void resetTurn();
-   void update();
    void setMyPosition ( D3DXVECTOR3 pos );
    DxGameSprite getSprite();
    D3DXVECTOR3 getLastPosition();
 
+   bool stop();
+   bool right();
+   bool up();
+   bool down();
+   bool left();
+
+   //getters
+   int getHealth();
+   int getMovementPoints(); 
+   int getDamage();
+   DxGameSprite& getImage() { return myImage; }
+
+   //move bool functions
+   bool getCanMove();
+   void setMove();
+
+   //health functions
+   int takingDamage(int effect);
+   int healHealth(int effect);
+   void killUnit();
+   bool checkIfDead();
+   int calculateDamage();
+
+   //position functions
+   int getY();
+   int getX();
    void setY(float newY);
    void setX(float newX);
 
-   bool stop();
-   bool right();
-   bool left();
-   bool down();
-   bool up();
-   void setMove();
-   bool getCanMove();
 
+   //Movement functions
    void resetMovePoints() { myMovementPoints = myStartingMovePoints; }
    void decMovePoints() { if( myMovementPoints > 0 ) { myMovementPoints--; } }
    void incMovePoints() { if( myMovementPoints < myStartingMovePoints ) { myMovementPoints++; } }
-   void killUnit();
-
-   bool checkIfDead();
-
-   /*
-      Units damage other Units
-      waterRising water tile kill
-      message box for winner
-      
-      game logic
-         attack other unit, then end turn
-         only select one unit
-   */
+   
 
    enum{ solider1, solider2, solider3 };
-
 
 private:
    DxAnimation	   myUnitImage;

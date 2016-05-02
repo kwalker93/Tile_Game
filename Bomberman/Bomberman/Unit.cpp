@@ -5,7 +5,8 @@
 #include <time.h>
 
 
-// Constructor
+//========================================================================================
+//
 Unit::Unit()
 {
 	MY_MAX_HEALTH = 100;
@@ -19,11 +20,15 @@ Unit::Unit()
 	myCanMove = false;
 }
 
+//========================================================================================
+//
 Unit::~Unit()
 {
 
 }
 
+//========================================================================================
+//
 Unit::Unit(int maxPower, int lowPower, int maxHealth, int positionY, int positionX )
 {
 	myCanMove = false;
@@ -41,21 +46,8 @@ Unit::Unit(int maxPower, int lowPower, int maxHealth, int positionY, int positio
 	calculateDamage();
 }
 
-void Unit::setMyPosition( D3DXVECTOR3 pos )
-{
-	myPosition = pos; myImage.setPosition(myPosition.x, myPosition.y );
-}
-
-DxGameSprite Unit::getSprite() 
-{ 
-	return myImage; 
-}
-
-D3DXVECTOR3 Unit::getLastPosition()
-{
-	return myLastPosition;
-}
-
+//========================================================================================
+//
 bool Unit::init( Unit::Type unitType, int xPos, int yPos)
 {
    initUnitStrings();
@@ -74,6 +66,8 @@ bool Unit::init( Unit::Type unitType, int xPos, int yPos)
 	return true;
 }
 
+//========================================================================================
+//
 bool Unit::initUnitStrings()
 {
    myUnitStrings.push_back("BLANK");
@@ -96,6 +90,8 @@ bool Unit::initUnitStrings()
    return true;
 }
 
+//========================================================================================
+//
 void Unit::update()
 {
    myLastPosition.x = myPosition.x;
@@ -105,7 +101,8 @@ void Unit::update()
    myPosition.y = myImage.getYPosition();
 }
 
-
+//========================================================================================
+//
 void Unit::destroy()
 {
    myUnitImage.shutdown();
@@ -125,6 +122,8 @@ void Unit::destroy()
    myImage.destroy();
 }
 
+//========================================================================================
+//
 bool Unit::draw ( IDXSPRITE spriteObj )
 { 
    myImage.draw( spriteObj );
@@ -132,6 +131,29 @@ bool Unit::draw ( IDXSPRITE spriteObj )
    return true;
 }
 
+//========================================================================================
+//
+void Unit::setMyPosition( D3DXVECTOR3 pos )
+{
+	myPosition = pos; myImage.setPosition(myPosition.x, myPosition.y );
+}
+
+//========================================================================================
+//
+DxGameSprite Unit::getSprite() 
+{ 
+	return myImage; 
+}
+
+//========================================================================================
+//
+D3DXVECTOR3 Unit::getLastPosition()
+{
+	return myLastPosition;
+}
+
+//========================================================================================
+//
 bool Unit::stop()
 {
 	myImage.setXVel(0.0f);
@@ -139,6 +161,8 @@ bool Unit::stop()
 	return true;
 }
 
+//========================================================================================
+//
 bool Unit::right()
 {
 	myImage.setXVel(+mySpeed);
@@ -147,6 +171,8 @@ bool Unit::right()
 	return true;
 }
 
+//========================================================================================
+//
 bool Unit::up()
 {
 	myImage.setXVel( mySpeed - mySpeed);
@@ -155,6 +181,8 @@ bool Unit::up()
 	return true;
 }
 
+//========================================================================================
+//
 bool Unit::down()
 {
 	myImage.setXVel( mySpeed - mySpeed);
@@ -163,6 +191,8 @@ bool Unit::down()
 	return true;
 }
 
+//========================================================================================
+//
 bool Unit::left()
 {
 	myImage.setXVel(-mySpeed);
@@ -171,29 +201,37 @@ bool Unit::left()
 	return true;
 }
 
-//Gets Health
+//========================================================================================
+//
 int Unit::getHealth()
 {
 	return myHealth;
 }
 
-//Gets Action Points
+
+//========================================================================================
+//
 int Unit::getMovementPoints()
 {
 	return myMovementPoints;
 }
 
-// Gets Damage power
+//========================================================================================
+//
 int Unit::getDamage()
 {
 	return myAttackPower;
 }
 
+//========================================================================================
+//
 bool Unit::getCanMove()
 {
 	return myCanMove;
 }
 
+//========================================================================================
+//
 void Unit::setMove()
 {
 	if(myCanMove == false)
@@ -206,28 +244,29 @@ void Unit::setMove()
 	}
 }
 
-//resets the turn for the unit
-void Unit::resetTurn()
-{
-	myMovementPoints = 4;
-}
-
-// Health affected by attacked
+//========================================================================================
+//
 int Unit::takingDamage(int effect)
 {
 	return (myHealth -= effect);
 }
 
+//========================================================================================
+//
 int Unit::healHealth(int effect)
 {
 	return (myHealth += effect);
 }
 
+//========================================================================================
+//
 void Unit::killUnit()
 {
    myHealth = 0;
 }
 
+//========================================================================================
+//
 bool Unit::checkIfDead()
 {
    if(myHealth <= 0)
@@ -237,7 +276,8 @@ bool Unit::checkIfDead()
    return false;
 }
 
-// Calculates random damage power
+//========================================================================================
+//
 int Unit::calculateDamage()
 {
 	int parameter = (rand() % myLowPowerLevel) +MY_MAX_POWER; // for now We can change how much to mess with the damage.
@@ -245,23 +285,29 @@ int Unit::calculateDamage()
 	return myAttackPower;
 }
 
-//gets the int y coordinate value
+//========================================================================================
+//
 int Unit::getY()
 {
 	return myPosition.y;
 }		  
 
-//gets the int x coordinate value
+//========================================================================================
+//
 int Unit::getX()
 {
 	return myPosition.x;
 }
 
+//========================================================================================
+//
 void Unit::setY(float newY)
 {
 	myImage.setYPosition(newY);
 }
 
+//========================================================================================
+//
 void Unit::setX(float newX)
 {
 	myImage.setXPosition(newX);
