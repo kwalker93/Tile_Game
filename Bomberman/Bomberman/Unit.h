@@ -78,7 +78,8 @@ public:
    void resetMovePoints() { myMovementPoints = myStartingMovePoints; }
    void decMovePoints() { if( myMovementPoints > 0 ) { myMovementPoints--; } }
    void incMovePoints() { if( myMovementPoints < myStartingMovePoints ) { myMovementPoints++; } }
-   
+   void killUnit();
+
    bool checkIfDead();
 
    /*

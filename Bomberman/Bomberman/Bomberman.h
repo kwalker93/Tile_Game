@@ -58,21 +58,11 @@ private:
    D3DCOLOR             bgColor;
    DxTexture            myImage;	
    
-<<<<<<< .mine
    PlayerManager myManager;
    tstring       myGameTitle;
    Player	     myPlayer1;
    Player        myPlayer2;
    DxMouse		  myMouse;
-||||||| .r43
-   tstring     myGameTitle;
-   Player		myPlayer1;
-   DxMouse		myMouse;
-=======
-   tstring              myGameTitle;
-   Player		         myPlayer1;
-   DxMouse		         myMouse;
->>>>>>> .r44
 
    int                  myTurnCount;
    Unit		            myUnits;

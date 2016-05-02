@@ -58,16 +58,9 @@ D3DXVECTOR3 Unit::getLastPosition()
 
 bool Unit::init( Unit::Type unitType, int xPos, int yPos)
 {
-<<<<<<< .mine
+   initUnitStrings();
 	this->myImage.setScale(.5, .5);
 	this->myImage.create(myUnitStrings.at(unitType));
-||||||| .r43
-	this->myImage.setScale(.5, .5);
-	this->myImage.create(animationName);
-=======
-	myImage.setScale(.5, .5);
-	myImage.create(animationName);
->>>>>>> .r44
 
 	myImage.setPosition(float(xPos), float(yPos));
     tstring unitStr = myUnitStrings.at(unitType);
