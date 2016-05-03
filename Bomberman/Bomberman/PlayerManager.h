@@ -43,6 +43,11 @@ public:
    int  checkUnitTotals();
 
 
+   int player1MessageBox();
+   int player2MessageBox();
+   int drawMessageBox();
+
+
 private:
    int     elapsedTurns;
    bool    isPlayerOneActing;

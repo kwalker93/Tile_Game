@@ -77,7 +77,6 @@ private:
    Unit  myPreviousSelectedUnit;
 
    vector<Unit> myArrayUnits;
-
 };
 
 #endif

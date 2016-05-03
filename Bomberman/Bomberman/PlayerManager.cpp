@@ -55,8 +55,6 @@ bool PlayerManager::draw( IDXSPRITE spriteObj )
    return ( playerOnePtr->unitDraw( spriteObj ) && playerTwoPtr->unitDraw( spriteObj ) );
 }
 
-
-
 //========================================================================
 bool PlayerManager::shutdown()
 {
@@ -85,28 +83,59 @@ int PlayerManager::getNumElapsedTurns()
    return elapsedTurns;
 }
 
-//========================================================================
+//======   Yes = 6        No = 7     ========================================
 int PlayerManager::checkUnitTotals()
 {
    if ( playerOnePtr->getMyUnitCount() <= 0 &&
         playerTwoPtr->getMyUnitCount() <= 0 )
    {   
-      return GameStates::GS_DRAW;
+      return drawMessageBox();
    }
    else if ( playerOnePtr->getMyUnitCount() != 0 &&
              playerTwoPtr->getMyUnitCount() <= 0 )
    {
-      return GameStates::GS_P1_WINS;
+      return player1MessageBox();
    }
    else if ( playerOnePtr->getMyUnitCount() <= 0 &&
              playerTwoPtr->getMyUnitCount() != 0 )
    {
-      return GameStates::GS_P2_WINS;
+      return player2MessageBox();
    }
    else
    {
-      return GameStates::GS_INPROG;
+      return 0;
    }
 }
 
+//=======================================================================
+int PlayerManager::player1MessageBox()
+{
+   string line0 = "Player 1 gets the nuts!\n\n";
+   string line1 = "Would you like to play again?";
 
+   string concatString = line0 + line1;
+   
+   return MessageBox(NULL, concatString.c_str(), "Player 1 Wins!", MB_YESNO | MB_ICONEXCLAMATION );
+}
+
+//=======================================================================
+int PlayerManager::player2MessageBox()
+{
+   string line0 = "Player 2 gets the nuts!\n\n";
+   string line1 = "Would you like to play again?";
+
+   string concatString = line0 + line1;
+   
+   return MessageBox(NULL, concatString.c_str(), "Player 2 Wins!", MB_YESNO | MB_ICONEXCLAMATION );
+}
+
+//=======================================================================
+int PlayerManager::drawMessageBox()
+{
+   string line0 = "All the squirrels were gone and the forest was forever empty...save for the nuts.\n\n";
+   string line1 = "Care to try again?";
+
+   string concatString = line0 + line1;
+   
+   return MessageBox(NULL, concatString.c_str(), "It's a draw!", MB_OK | MB_ICONEXCLAMATION );
+}
