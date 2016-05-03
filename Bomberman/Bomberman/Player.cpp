@@ -256,6 +256,7 @@ void Player::checkWaterCollisions( CollisionManager& collisionManager, TiledBack
       if( collisionManager.waterCollisions( myArrayUnits[i].getImage(), myLevelRef ) )         
       {
          myArrayUnits[i].setHitWaterFlag(true);
+         decUnitCount();
       }
    }
 }

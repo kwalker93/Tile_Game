@@ -123,8 +123,6 @@ void Game::gameRun ( )
 
          // sprite rendering...       
          myLevelBgnds.drawMySpriteMap( spriteInterface() );
-
-         //myPlayer1.checkUnitHealths();
          
          myManager.draw( spriteInterface() );
          myGameUI.draw( spriteInterface() );
