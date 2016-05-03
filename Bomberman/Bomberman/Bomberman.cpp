@@ -179,7 +179,7 @@ void Game::gameRun ( )
          if( myCollisionManager.worldCollisions( myPlayer1.getSelectedUnit().getSprite(), levelRef ) )
          {
             myPlayer1.stopAllUnits();
-            myPlayer1.unitCollision();
+            myPlayer1.singleUnitCollision();
          }
 
          //make attacking collision check

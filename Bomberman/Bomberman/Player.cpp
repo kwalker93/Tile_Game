@@ -76,6 +76,20 @@ void Player::unitCollision()
    }
 }
 
+//=====================================================================================
+void Player::singleUnitCollision()
+{	
+   for(unsigned index = 0; index < myArrayUnits.size(); index++)
+   {
+      if( myArrayUnits[index].getCanMove() == true )
+      {
+         D3DXVECTOR3 snPos = myArrayUnits[index].getLastPosition();
+         myArrayUnits[index].setMyPosition(snPos);
+         myArrayUnits[index].incMovePoints();
+      }      
+   }
+}
+
 //=====Resets All Units CanMove to false==================================================================
 void Player::resetUnitMove()
 {
@@ -87,6 +101,7 @@ void Player::resetUnitMove()
       }
    }
 }
+
 //========Unit Drawing===============================================================
 bool Player::unitDraw(IDXSPRITE spriteInterface)
 {
@@ -97,11 +112,13 @@ bool Player::unitDraw(IDXSPRITE spriteInterface)
 
    return true;
 }
+
 //=======Unit Updates=======================================================================
 Unit Player::getUnit(int num)
 {
    return myArrayUnits[num];
 }
+
 //========================================================================
 bool Player::update()
 {
@@ -178,6 +195,7 @@ void Player::left()
 		}
 	}
 }
+
 //========Stops all the Units===============================================================
 void Player::stopAllUnits()
 {
@@ -214,6 +232,7 @@ void Player::up()
 		}
 	}
 }
+
 //===========Moves the Unit to the right=============================================================
 void Player::right()
 {

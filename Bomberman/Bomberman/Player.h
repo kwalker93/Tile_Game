@@ -60,6 +60,7 @@ public:
    void resetUnitMove();
    void stopAllUnits();
    void unitCollision();
+   void singleUnitCollision();
 
    std::vector<Unit> getArrayUnits() { return myArrayUnits; }
    void checkWaterCollisions( CollisionManager& collisionManager, TiledBackground& levelRef );
