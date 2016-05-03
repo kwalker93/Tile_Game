@@ -20,6 +20,7 @@
 #include "Bomberman\Unit.h"
 
 
+
 //========================================================================
 class PlayerManager
 {
@@ -35,6 +36,7 @@ public:
    bool init( bool isPlayerOneMovingFirst, Player* playerOne = NULL, Player* playerTwo = NULL );
    bool update();
    bool shutdown();
+   bool draw( IDXSPRITE spriteObj );
 
    bool endCurrentTurn();  // signals the PlayerManager to move priority to the next player
    int  getNumElapsedTurns();

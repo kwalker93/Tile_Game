@@ -37,8 +37,10 @@ public:
    void setCurrentUnit( Unit& newUnit );
    void updateCurrentUnitImage();
 
-   void updateSelectedUnitPowerText();
-   void updateSelectedUnitMovementPointsText();
+   void setTurnCounter( int turnCounter ) { myTurnCounter = turnCounter; }
+
+   void updateSelectedUnitPowerText( );
+   void updateSelectedUnitMovementPointsText( );
    void updateSelectedUnitHealthText( );
 
 private:

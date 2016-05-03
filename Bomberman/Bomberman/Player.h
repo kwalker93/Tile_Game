@@ -19,6 +19,7 @@
 #include "Bomberman\Unit.h"
 #include "Bomberman\GameStates.h"
 #include "Utilities/Point.h"
+#include "Bomberman\CollisionManager.h"
 
 //========================================================================
 class Player
@@ -35,18 +36,19 @@ public:
    // Getters
    Unit* getMyUnitArr();
    int   getMyUnitCount();
+   void  decUnitCount(){ myUnitCount--; }
+   void  incUnitCount(){ myUnitCount++; }
    bool  getPlayerOneStatus();
    
    // Signals
    bool unitKilled();
-   void checkUnitHealths();
    bool playerLoses();
    Unit getUnit(int num);
    bool unitUpdate();
    bool unitDraw(IDXSPRITE spriteInterface);
 
    void unitClick( Point mousePos );
-
+   void checkUnitDeaths();
 
    Unit getSelectedUnit();
    void setSelectedUnit( Unit& selectedUnit );
@@ -60,6 +62,8 @@ public:
    void unitCollision();
 
    std::vector<Unit> getArrayUnits() { return myArrayUnits; }
+   void checkWaterCollisions( CollisionManager& collisionManager, TiledBackground& levelRef );
+
 
 // private methods/data
 private:

@@ -132,7 +132,6 @@ bool TiledBackground::buildBackground ( const tstring& configFilename )
       }
    }
 
-
    return true;
 }
 
@@ -158,36 +157,36 @@ void TiledBackground::waterRising( int numOfTurns )
    for( i = 0; ( i + topRow ) < myNumTilesVert; i++ )
    {
       index = ( topRow + i ) * myNumTilesHoriz + leftCol;
-      mySpriteMap[index].changeAnimation( "WATER", 10 ); 
-      mySpriteMap[index].collidable(true);
-      index = ( topRow + i ) * myNumTilesHoriz + rightCol;
-      mySpriteMap[index].changeAnimation( "WATER", 10 ); 
-      mySpriteMap[index].collidable(true);
+      if( mySpriteMap[index].getAnimation().name() != "BLANK" )
+      {
+         mySpriteMap[index].changeAnimation( "WATER", 10 ); 
+         mySpriteMap[index].collidable(true);
+      }
+
+      index = ( topRow + i ) * myNumTilesHoriz + rightCol - 4;
+      if( mySpriteMap[index].getAnimation().name() != "BLANK" )
+      {
+         mySpriteMap[index].changeAnimation( "WATER", 10 ); 
+         mySpriteMap[index].collidable(true);
+      }
    }
 
    for( i = 0; ( i + leftCol ) < myNumTilesHoriz; i++ )
    {
-      index = topRow * myNumTilesHoriz + ( leftCol + i );
-      mySpriteMap[index].changeAnimation( "WATER", 10 ); 
-      mySpriteMap[index].collidable(true);
+      index = topRow * myNumTilesHoriz + ( leftCol + i );      
+      if( mySpriteMap[index].getAnimation().name() != "BLANK" )
+      {
+         mySpriteMap[index].changeAnimation( "WATER", 10 ); 
+         mySpriteMap[index].collidable(true);
+      }
+
       index = bottomRow * myNumTilesHoriz + ( rightCol - i );
-      mySpriteMap[index].changeAnimation( "WATER", 10 ); 
-      mySpriteMap[index].collidable(true);
+      if( mySpriteMap[index].getAnimation().name() != "BLANK" )
+      {
+         mySpriteMap[index].changeAnimation( "WATER", 10 ); 
+         mySpriteMap[index].collidable(true);
+      }
    }
-   
-
-   
-
-
-
-	//this will set the borders of the map to water tiles, and keep closing in
-   /*for(int i = 0; i < mySpriteMap.size(); i++)
-	{
-		mySpriteMap[i][temp] = waterTile;
-		mySpriteMap[temp][i] = waterTile;
-		mySpriteMap[i][(mapSize - 1) - temp] = waterTile;
-		mySpriteMap[(mapSize - 1) - temp][i] = waterTile;
-	}*/
 }
 
 //===================================================================================================>

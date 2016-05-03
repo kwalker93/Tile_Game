@@ -68,12 +68,12 @@ bool Game::gameInit ( )
    // myUnits2.gameInit( 68, 36);
 
    //TESTING PURPOSES. COMMENT OUT WHEN NOT NEEDED
-   myTurnCount = 0;
+   myTurnCount = 1;
    myButtonCheck = true;
 
    //Creates out two custom players, and passes them to the player manager
-   myPlayer1.init(true, 64, 64, Unit::largeGrey, 10);
-   myPlayer2.init(false, 64, 512, Unit::mediumBrown, 10);
+   myPlayer1.init(true, 256, 64, Unit::mediumGrey );
+   myPlayer2.init(false, 256, 512, Unit::mediumBrown );
    myManager.init(true, &myPlayer1, &myPlayer2);
 
    return true;
@@ -103,9 +103,6 @@ void Game::gameRun ( )
    myLevelBgnds.update();
    myGameUI.update();
    myManager.update();
-
-   // play sound
-   //mySoundInterface->play( mySound );
    myMouse.mouseUpdate();
 
    // start rendering
@@ -122,14 +119,14 @@ void Game::gameRun ( )
          }
 
          myGameUI.setCurrentUnit( myPlayer1.getSelectedUnit() );
-         
+         myGameUI.setTurnCounter( myTurnCount );
+
          // sprite rendering...       
          myLevelBgnds.drawMySpriteMap( spriteInterface() );
 
-         myPlayer1.checkUnitHealths();
-         myPlayer1.unitDraw(spriteInterface());
-         myPlayer2.unitDraw(spriteInterface());
-
+         //myPlayer1.checkUnitHealths();
+         
+         myManager.draw( spriteInterface() );
          myGameUI.draw( spriteInterface() );
 
          int keyCount = 0;       
@@ -161,32 +158,42 @@ void Game::gameRun ( )
          else
          {
             keyCount = 0;
-
          }
 
-         if(myKeyboard.keyDown(VK_RETURN))
+         //TESTING IF
+         if(myKeyboard.keyPressed(VK_SHIFT))
          {
-            myPlayer1.getSelectedUnit().takingDamage( 100 );
+            myLevelBgnds.waterRising( myTurnCount );
+            myTurnCount++;
          }
 
-         // Stop all kitty motion first, then check keyboard
+         // Stop all motion first, then check keyboard
          if( keyCount == 0 )
          {
             myPlayer1.stopAllUnits();
          }
  
+         myPlayer1.checkWaterCollisions( myCollisionManager, levelRef );
+         myPlayer2.checkWaterCollisions( myCollisionManager, levelRef );
+
          if( myCollisionManager.worldCollisions( myPlayer1.getSelectedUnit().getSprite(), levelRef ) )
          {
             myPlayer1.stopAllUnits();
             myPlayer1.unitCollision();
          }
 
-         if( myCollisionManager.waterCollisions( myPlayer1.getSelectedUnit().getSprite(), levelRef ) )
-         {
-            myPlayer1.stopAllUnits();
-            myPlayer1.unitCollision();
-         }
+         //make attacking collision check
+         //have a receiving unit and a giving unit stored/passed
+         //have rUnit take damage from gUnit
+         //endTurn or switch active player
 
+         /*                                      make currentPlayer variable               make inactivePlayer variable
+         if( myCollisionManager.attackCollisions( myPlayer1.getSelectedUnit().getSprite(), levelRef ) )
+         {
+
+         }
+         */
+         
 
          //for(int i = 0; i < 4; i++)
          //{

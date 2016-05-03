@@ -58,16 +58,16 @@ private:
    D3DCOLOR             bgColor;
    DxTexture            myImage;	
    
-   PlayerManager myManager;
-   tstring       myGameTitle;
-   Player	     myPlayer1;
-   Player        myPlayer2;
-   DxMouse		  myMouse;
+   PlayerManager        myManager;
+   tstring              myGameTitle;
+   Player	            myPlayer1;
+   Player               myPlayer2;
+   DxMouse		         myMouse;
 
    int                  myTurnCount;
    Unit		            myUnits;
 
-   TiledBackground      myLevelBgnds;//[ 1 ]
+   TiledBackground      myLevelBgnds;
    Kitty                myKitty;
    DxKeyboard           myKeyboard;
    D3DXVECTOR3          myPlayerPos;

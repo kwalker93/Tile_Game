@@ -22,7 +22,6 @@ bool Player::init( bool playerOne, int x, int y, Unit::Type unitType, int numUni
 
    myArrayUnits.resize(numUnits);
 
-   //this.myArrayUnits.at(0).gameInit(x, y);
    for(unsigned index = 0; index < myArrayUnits.size(); index++)
    {
       myArrayUnits[index].init(unitType, x, y);
@@ -34,8 +33,6 @@ bool Player::init( bool playerOne, int x, int y, Unit::Type unitType, int numUni
 
    return true;
 }
-
-
 
 //==========Determines what Unit was Clicked=============================================================
 void Player::unitClick( Point mousePos )
@@ -50,14 +47,32 @@ void Player::unitClick( Point mousePos )
       }
    }
 }
+
+//=====================================================================================
+void Player::checkUnitDeaths()
+{
+   for(unsigned index = 0; index < myArrayUnits.size(); index++)
+   {
+      if( myArrayUnits[index].checkIfDead() ||
+         myArrayUnits[index].getHitWaterFlag() )
+      {
+         myArrayUnits[index].killUnit();
+         decUnitCount();
+      }
+   }
+}
+
 //========Unit Collision===============================================================
 void Player::unitCollision()
 {	
    for(unsigned index = 0; index < myArrayUnits.size(); index++)
    {
-      D3DXVECTOR3 snPos = myArrayUnits[index].getLastPosition();
-      myArrayUnits[index].setMyPosition(snPos);
-      myArrayUnits[index].incMovePoints();
+      if( myArrayUnits[index].getHitWaterFlag() == false )
+      {
+         D3DXVECTOR3 snPos = myArrayUnits[index].getLastPosition();
+         myArrayUnits[index].setMyPosition(snPos);
+         myArrayUnits[index].incMovePoints();
+      }      
    }
 }
 
@@ -90,7 +105,6 @@ Unit Player::getUnit(int num)
 //========================================================================
 bool Player::update()
 {
-   checkUnitHealths();
    for ( int i = 0; i < myArrayUnits.size(); i++ )
    {
       myArrayUnits[i].update();
@@ -131,18 +145,6 @@ bool Player::unitKilled()
    return true;
 }
 
-//========================================================================
-void Player::checkUnitHealths()
-{
-   for(unsigned index = 0; index < myArrayUnits.size(); index++)
-	{
-      if( myArrayUnits[index].checkIfDead() )
-      {
-         myArrayUnits[index].getImage().destroy();
-      }
-   }
-}
-
 //==========Untested::Gets the Current selected Units or returns the Previous Selected==============================================================
 Unit Player::getSelectedUnit()
 {
@@ -162,37 +164,6 @@ void Player::setSelectedUnit( Unit& selectedUnit )
 {
    mySelectedUnit = selectedUnit;
 }
-
-////========Moves the Unit to the left================================================================
-//void Player::left()
-//{
-//   mySelectedUnit.left();
-//}
-////========Stops all the Units===============================================================
-//void Player::stopAllUnits()
-//{
-//   for(int index = 0; index < myArrayUnits.size(); index++)
-//   {
-//      myArrayUnits[index].stop();
-//   }
-//}
-//
-////============Moves the Unit to the down============================================================
-//void Player::down()
-//{
-//   mySelectedUnit.down();
-//}
-//
-////===========Moves the Unit to the up=============================================================
-//void Player::up()
-//{
-//   mySelectedUnit.up();
-//}
-////===========Moves the Unit to the right=============================================================
-//void Player::right()
-//{
-//   mySelectedUnit.right();
-//}
 
 //========Moves the Unit to the left================================================================
 void Player::left()
@@ -255,4 +226,16 @@ void Player::right()
          myArrayUnits[index].decMovePoints();         
 		}
 	}
+}
+
+//===================================================================================================
+void Player::checkWaterCollisions( CollisionManager& collisionManager, TiledBackground&  myLevelRef )
+{
+   for( int i = 0; i < myArrayUnits.size(); i++ )
+   {
+      if( collisionManager.waterCollisions( myArrayUnits[i].getImage(), myLevelRef ) )         
+      {
+         myArrayUnits[i].setHitWaterFlag(true);
+      }
+   }
 }

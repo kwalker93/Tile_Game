@@ -50,6 +50,14 @@ bool PlayerManager::update()
 }
 
 //========================================================================
+bool PlayerManager::draw( IDXSPRITE spriteObj )
+{
+   return ( playerOnePtr->unitDraw( spriteObj ) && playerTwoPtr->unitDraw( spriteObj ) );
+}
+
+
+
+//========================================================================
 bool PlayerManager::shutdown()
 {
    delete[] playerOnePtr;
@@ -99,5 +107,6 @@ int PlayerManager::checkUnitTotals()
    {
       return GameStates::GS_INPROG;
    }
-
 }
+
+

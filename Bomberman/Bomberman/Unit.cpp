@@ -18,6 +18,7 @@ Unit::Unit()
 	myPositionX = 0;
 	calculateDamage();
 	myCanMove = false;
+   hitWater = false;
 }
 
 //========================================================================================
@@ -94,6 +95,10 @@ bool Unit::initUnitStrings()
 //
 void Unit::update()
 {
+   if( checkIfDead() || hitWater == true )
+   {
+      killUnit();
+   }
    myLastPosition.x = myPosition.x;
    myLastPosition.y = myPosition.y;
    myImage.update();
@@ -263,6 +268,8 @@ int Unit::healHealth(int effect)
 void Unit::killUnit()
 {
    myHealth = 0;
+   myImage.changeAnimation("BLANK", 0);
+   myImage.collidable(false);
 }
 
 //========================================================================================
@@ -311,4 +318,20 @@ void Unit::setY(float newY)
 void Unit::setX(float newX)
 {
 	myImage.setXPosition(newX);
+}
+
+
+//========================================================================================
+//
+bool Unit::getHitWaterFlag( )
+{
+   return hitWater;
+}
+
+
+//========================================================================================
+//
+void Unit::setHitWaterFlag( bool newFlag )
+{
+   hitWater = newFlag;
 }

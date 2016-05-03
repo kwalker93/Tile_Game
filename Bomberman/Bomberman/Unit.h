@@ -39,11 +39,11 @@ public:
    void destroy();
    bool draw (IDXSPRITE spriteObj);
 
-
    void setMyPosition ( D3DXVECTOR3 pos );
    DxGameSprite getSprite();
    D3DXVECTOR3 getLastPosition();
 
+   //Move functions
    bool stop();
    bool right();
    bool up();
@@ -73,6 +73,8 @@ public:
    void setY(float newY);
    void setX(float newX);
 
+   bool getHitWaterFlag( );
+   void setHitWaterFlag( bool newFlag );
 
    //Movement functions
    void resetMovePoints() { myMovementPoints = myStartingMovePoints; }
@@ -97,6 +99,7 @@ private:
    int            myAttackPower;
    int            myLowPowerLevel;
    bool           myCanMove;
+   bool           hitWater;
 
    //Pixel position;
    int            myPositionY;
