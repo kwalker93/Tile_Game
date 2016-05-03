@@ -4,6 +4,7 @@
 #include "Bomberman\Player.h"
 #include "Bomberman\Unit.h"
 #include "Bomberman\GameStates.h"
+#include "WinApplFramework\GameMessages.h"
 
 //========================================================================
 PlayerManager::PlayerManager()
@@ -46,7 +47,10 @@ bool PlayerManager::init( bool isPlayerOneMovingFirst, Player* ptrPOne,
 //========================================================================
 bool PlayerManager::update()
 {
-   return ( playerOnePtr->update() && playerTwoPtr->update() );
+   playerOnePtr->update();
+   playerTwoPtr->update();
+   checkGameState(checkUnitTotals());
+   return true;
 }
 
 //========================================================================
@@ -104,6 +108,15 @@ int PlayerManager::checkUnitTotals()
    else
    {
       return 0;
+   }
+}
+
+//========================================================================
+void PlayerManager::checkGameState(int result)
+{
+   if ( result == 6 ) //6 represents "YES" from the message boxes
+   {
+      GameMessages::signalStartNewGame();
    }
 }
 

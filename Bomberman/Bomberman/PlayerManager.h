@@ -41,6 +41,7 @@ public:
    bool endCurrentTurn();  // signals the PlayerManager to move priority to the next player
    int  getNumElapsedTurns();
    int  checkUnitTotals();
+   void checkGameState(int result);
 
 
    int player1MessageBox();
