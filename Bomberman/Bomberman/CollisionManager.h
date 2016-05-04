@@ -31,7 +31,6 @@ private:
    DxAnimation myGrassAnim;
    DxAnimation myBoomBrickAnim;
 
-
 };
 
 #endif 

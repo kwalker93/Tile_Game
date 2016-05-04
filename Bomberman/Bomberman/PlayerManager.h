@@ -39,6 +39,9 @@ public:
    bool draw( IDXSPRITE spriteObj );
 
    bool endCurrentTurn();  // signals the PlayerManager to move priority to the next player
+   
+   void toggleActivePlayerAttackPhase();
+   
    int  getNumElapsedTurns();
    int  checkUnitTotals();
    void checkGameState(int result);

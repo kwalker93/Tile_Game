@@ -37,3 +37,7 @@ MEDIUM-ORANGE		0	140  412  128  128
 SMALL-ORANGE		0	548    4  128  128
 
 
+
+@file reticule.png
+
+ATTACK-CURSOR		0	  0    0  128  128

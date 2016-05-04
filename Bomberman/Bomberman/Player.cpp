@@ -30,6 +30,10 @@ bool Player::init( bool playerOne, int x, int y, Unit::Type unitType, int numUni
       x += 64; 
    }
 
+   myAttackCursor.setScale(0.5f, 0.5f);   
+   myAttackCursor.create("ATTACK-CURSOR");
+   isAttacking = false;
+
    myArrayUnits[0].setMove();
 
    return true;
@@ -110,6 +114,12 @@ bool Player::unitDraw(IDXSPRITE spriteInterface)
    {
       myArrayUnits[index].draw(spriteInterface);
    }
+
+   if( isAttacking = true )
+   {
+      myAttackCursor.draw( spriteInterface );
+   }
+
 
    return true;
 }
@@ -260,3 +270,54 @@ void Player::checkWaterCollisions( CollisionManager& collisionManager, TiledBack
       }
    }
 }
+
+void Player::toggleAttackState()
+{
+   isAttacking = !isAttacking; 
+   
+   if( isAttacking )
+   { 
+      myAttackCursor.setPosition( mySelectedUnit.getX(), mySelectedUnit.getY() - 64 );    
+   } 
+}
+
+void Player::setAttackCursorRight()
+{
+   myAttackCursor.setPosition( mySelectedUnit.getX() + 64, mySelectedUnit.getY() );
+}
+
+void Player::setAttackCursorLeft()
+{
+   myAttackCursor.setPosition( mySelectedUnit.getX() - 64, mySelectedUnit.getY() );
+}
+
+void Player::setAttackCursorUp()
+{
+   myAttackCursor.setPosition( mySelectedUnit.getX(), mySelectedUnit.getY() - 64 );   
+}
+
+void Player::setAttackCursorDown()
+{
+   myAttackCursor.setPosition( mySelectedUnit.getX(), mySelectedUnit.getY() + 64 );   
+}
+
+Unit& Player::findUnitReceivingDamage( DxGameSprite attackCursor )
+{
+   for(int i = 0; i < myArrayUnits.size(); i++)
+   {
+      if( attackCursor.collidesWith( myArrayUnits[i].getImage() ) )
+      {
+         return myArrayUnits[i];
+      }
+   }
+}
+
+
+
+
+
+
+
+
+
+

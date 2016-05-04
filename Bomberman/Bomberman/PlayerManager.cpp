@@ -82,6 +82,19 @@ bool PlayerManager::endCurrentTurn()
 }
 
 //========================================================================
+void PlayerManager::toggleActivePlayerAttackPhase()
+{
+   if ( isPlayerOneActing )
+   {
+      playerOnePtr->toggleAttackState();
+   }  
+   else
+   {
+      playerTwoPtr->toggleAttackState();
+   }
+}
+
+//========================================================================
 int PlayerManager::getNumElapsedTurns()
 {
    return elapsedTurns;
@@ -150,5 +163,5 @@ int PlayerManager::drawMessageBox()
 
    string concatString = line0 + line1;
    
-   return MessageBox(NULL, concatString.c_str(), "It's a draw!", MB_OK | MB_ICONEXCLAMATION );
+   return MessageBox(NULL, concatString.c_str(), "It's a draw!", MB_YESNO | MB_ICONEXCLAMATION );
 }

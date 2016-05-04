@@ -65,6 +65,14 @@ public:
    std::vector<Unit> getArrayUnits() { return myArrayUnits; }
    void checkWaterCollisions( CollisionManager& collisionManager, TiledBackground& levelRef );
 
+   void toggleAttackState();
+
+   void setAttackCursorRight();
+   void setAttackCursorLeft();
+   void setAttackCursorUp();
+   void setAttackCursorDown();
+
+   Unit& Player::findUnitReceivingDamage( DxGameSprite attackCursor );
 
 // private methods/data
 private:
@@ -75,6 +83,10 @@ private:
    bool  isPlayerOne;  // Whether or not this Player is player one
    Unit  mySelectedUnit;
    Unit  myPreviousSelectedUnit;
+
+   bool isAttacking;
+
+   DxGameSprite   myAttackCursor;
 
    vector<Unit> myArrayUnits;
 };
