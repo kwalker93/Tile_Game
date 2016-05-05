@@ -43,7 +43,6 @@ Unit::Unit(int maxPower, int lowPower, int maxHealth, int positionY, int positio
 
 	myPositionY = positionY;
 	myPositionX = positionX;
-	calculateDamage();
 }
 
 //========================================================================================
@@ -57,6 +56,9 @@ bool Unit::init( Unit::Type unitType, int xPos, int yPos)
 	myImage.setPosition(float(xPos), float(yPos));
     tstring unitStr = myUnitStrings.at(unitType);
 	myUnitImage = DxAssetManager::getInstance().getAnimationCopy( unitStr, 10 );
+
+   myHealth = 20;
+   myAttackPower = 10;
 
 	myPosition.x = myImage.getXPosition();
 	myPosition.y = myImage.getYPosition();
@@ -302,6 +304,7 @@ int Unit::calculateDamage()
 {
 	int parameter = (rand() % myLowPowerLevel) +MY_MAX_POWER; // for now We can change how much to mess with the damage.
 	myAttackPower = parameter;
+
 	return myAttackPower;
 }
 

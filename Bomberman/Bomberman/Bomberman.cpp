@@ -214,7 +214,15 @@ void Game::gameRun ( )
                myManager.getCurrentActivePlayer().toggleAttackState();
                myManager.endCurrentTurn();
                
-               myTurnCount = myManager.getNumElapsedTurns() / 2;
+               if ( myManager.getNumElapsedTurns() % 2 == 0 )
+               {
+                  myTurnCount++;
+               }
+               else
+               {
+                  myTurnCount = myManager.getNumElapsedTurns() / 2;
+               }
+
                myLevelBgnds.waterRising( myTurnCount );
                
             }
