@@ -74,7 +74,7 @@ public:
 
    Unit& Player::findUnitReceivingDamage( DxGameSprite attackCursor );
 
-   void resetUnitMoves( Unit& mySelectedUnit );
+   void resetUnitMoves( );
    void resetUnits();
 
 // private methods/data
@@ -91,6 +91,7 @@ private:
 
 public:
    bool  isAttacking;
+   int   myTargetOffset;
    Unit  myPreviousSelectedUnit;
    Unit  mySelectedUnit;
 

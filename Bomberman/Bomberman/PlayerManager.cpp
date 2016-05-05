@@ -143,18 +143,18 @@ int PlayerManager::getNumElapsedTurns()
 //======   Yes = 6        No = 7     ========================================
 int PlayerManager::checkUnitTotals()
 {
-   if ( playerOnePtr->getMyUnitCount() <= 0 &&
-        playerTwoPtr->getMyUnitCount() <= 0 )
+   if ( playerOnePtr->getMyUnitCount() < -4 &&
+        playerTwoPtr->getMyUnitCount() < -4 )
    {   
       return drawMessageBox();
    }
-   else if ( playerOnePtr->getMyUnitCount() != 0 &&
-             playerTwoPtr->getMyUnitCount() <= 0 )
+   else if ( playerOnePtr->getMyUnitCount() >= -4 &&
+             playerTwoPtr->getMyUnitCount() < -4 )
    {
       return player1MessageBox();
    }
-   else if ( playerOnePtr->getMyUnitCount() <= 0 &&
-             playerTwoPtr->getMyUnitCount() != 0 )
+   else if ( playerOnePtr->getMyUnitCount() < -4 &&
+             playerTwoPtr->getMyUnitCount() >= -4 )
    {
       return player2MessageBox();
    }

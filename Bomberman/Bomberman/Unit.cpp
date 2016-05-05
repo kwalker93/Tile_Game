@@ -38,7 +38,8 @@ Unit::Unit(int maxPower, int lowPower, int maxHealth, int positionY, int positio
 	MY_MAX_POWER = maxPower; 
 
 	myLowPowerLevel = lowPower;
-	myHealth= maxHealth;
+	myHealth = 20;
+   myAttackPower = 10;
 	myStartingMovePoints = myMovementPoints = 4; // Movement points
 
 	myPositionY = positionY;
@@ -53,8 +54,11 @@ bool Unit::init( Unit::Type unitType, int xPos, int yPos)
 	this->myImage.setScale(.5, .5);
 	this->myImage.create(myUnitStrings.at(unitType));
 
+   myHealth = 20;
+   myAttackPower = 10;
+
 	myImage.setPosition(float(xPos), float(yPos));
-    tstring unitStr = myUnitStrings.at(unitType);
+   tstring unitStr = myUnitStrings.at(unitType);
 	myUnitImage = DxAssetManager::getInstance().getAnimationCopy( unitStr, 10 );
 
    myHealth = 20;

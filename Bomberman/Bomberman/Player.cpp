@@ -22,6 +22,17 @@ bool Player::init( bool playerOne, int x, int y, Unit::Type unitType, int numUni
    myUnitCount = myMaxUnits = numUnits;
 
    myArrayUnits.resize(numUnits);
+   
+   if( playerOne )
+   {
+      myTargetOffset = 64;
+   }
+   else
+   {
+      myTargetOffset = -64;
+   }
+
+   isPlayerOne = playerOne;
 
    for(unsigned index = 0; index < myArrayUnits.size(); index++)
    {
@@ -230,6 +241,8 @@ void Player::down()
 		{
 			myArrayUnits[index].down();
          myArrayUnits[index].decMovePoints();
+         mySelectedUnit.getImage().setXPosition( myArrayUnits[index].getSprite().getXPosition() );
+         mySelectedUnit.getImage().setYPosition( myArrayUnits[index].getSprite().getYPosition() );
 		}
 	}
 }
@@ -244,6 +257,8 @@ void Player::up()
 		{
 			myArrayUnits[index].up();
          myArrayUnits[index].decMovePoints();
+         mySelectedUnit.getImage().setXPosition( myArrayUnits[index].getSprite().getXPosition() );
+         mySelectedUnit.getImage().setYPosition( myArrayUnits[index].getSprite().getYPosition() );
 		}
 	}
 }
@@ -257,7 +272,9 @@ void Player::right()
          myArrayUnits[index].getMovementPoints() > 0)
 		{
 			myArrayUnits[index].right();
-         myArrayUnits[index].decMovePoints();         
+         myArrayUnits[index].decMovePoints();  
+         mySelectedUnit.setX( myArrayUnits[index].getSprite().getXPosition() );
+         mySelectedUnit.setY( myArrayUnits[index].getSprite().getYPosition() );
 		}
 	}
 }
@@ -281,28 +298,28 @@ void Player::toggleAttackState()
    
    if( isAttacking )
    { 
-      myAttackCursor.setPosition( mySelectedUnit.getX(), mySelectedUnit.getY() - 64 );    
+      myAttackCursor.setPosition( mySelectedUnit.getImage().getXPosition(), mySelectedUnit.getImage().getYPosition() );    
    } 
 }
 
 void Player::setAttackCursorRight()
 {
-   myAttackCursor.setPosition( mySelectedUnit.getX() + 64, mySelectedUnit.getY() );
+   myAttackCursor.setPosition( mySelectedUnit.getImage().getXPosition() + 64, mySelectedUnit.getImage().getYPosition() + myTargetOffset);
 }
 
 void Player::setAttackCursorLeft()
 {
-   myAttackCursor.setPosition( mySelectedUnit.getX() - 64, mySelectedUnit.getY() );
+   myAttackCursor.setPosition( mySelectedUnit.getImage().getXPosition() - 64, mySelectedUnit.getImage().getYPosition() + myTargetOffset );
 }
 
 void Player::setAttackCursorUp()
 {
-   myAttackCursor.setPosition( mySelectedUnit.getX(), mySelectedUnit.getY() - 64 );   
+   myAttackCursor.setPosition( mySelectedUnit.getImage().getXPosition(), mySelectedUnit.getImage().getYPosition() - 64 + myTargetOffset);   
 }
 
 void Player::setAttackCursorDown()
 {
-   myAttackCursor.setPosition( mySelectedUnit.getX(), mySelectedUnit.getY() + 64 );   
+   myAttackCursor.setPosition( mySelectedUnit.getImage().getXPosition(), mySelectedUnit.getImage().getYPosition() + 64 + myTargetOffset);   
 }
 
 Unit& Player::findUnitReceivingDamage( DxGameSprite attackCursor )
@@ -319,19 +336,21 @@ Unit& Player::findUnitReceivingDamage( DxGameSprite attackCursor )
 
 }
 
-void Player::resetUnitMoves(Unit& selectedUnit)
+void Player::resetUnitMoves( )
 {
-   selectedUnit.resetMovePoints();
+   for(int i = 0; i < myArrayUnits.size(); i++)
+   {
+      myArrayUnits[i].resetMovePoints();
+   }
 }
 
 void Player::resetUnits()
 {
    for(int i = 0; i < myArrayUnits.size(); i++)
    {
-      myArrayUnits[i].resetUnit();
+      myArrayUnits[i].resetUnit();      
    }
-
-   myUnitCount = 4;
+   myUnitCount = myMaxUnits;
 }
 
 

@@ -63,10 +63,6 @@ bool Game::gameInit ( )
    myTurnCount = 1;
    myGameUI.init( fontInterface(), 732, 32, D3DCOLOR_XRGB( 0, 0, 0 ), myTurnCount );
 
-   //Character inits
-   // myUnits.init( "ACORN-BROWN", 64,64);
-   // myUnits2.gameInit( 68, 36);
-
    //TESTING PURPOSES. COMMENT OUT WHEN NOT NEEDED
    myTurnCount = 1;
    myButtonCheck = true;
@@ -84,9 +80,9 @@ bool Game::checkForNewGame()
 {
    if( GameMessages::startNewGame )
    {
-      gameInit();
       myManager.playerOnePtr->resetUnits();
       myManager.playerTwoPtr->resetUnits();
+      gameInit();
    }
 
    return false;
@@ -181,7 +177,7 @@ void Game::gameRun ( )
             if(myKeyboard.keyDown(VK_RETURN))
             {
                myManager.getCurrentActivePlayer().toggleAttackState();
-               myManager.getCurrentActivePlayer().resetUnitMoves(myManager.getCurrentActivePlayer().getSelectedUnit());
+               myManager.getCurrentActivePlayer().resetUnitMoves( );
             }
          }
          else if ( myManager.currentlyActingPlayer->isAttacking == true)
@@ -212,8 +208,9 @@ void Game::gameRun ( )
                }
 
                myManager.getCurrentActivePlayer().toggleAttackState();
+               myManager.getCurrentActivePlayer().resetUnitMoves();
                myManager.endCurrentTurn();
-               
+  
                if ( myManager.getNumElapsedTurns() % 2 == 0 )
                {
                   myTurnCount++;
