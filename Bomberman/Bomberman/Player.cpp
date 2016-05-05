@@ -36,6 +36,10 @@ bool Player::init( bool playerOne, int x, int y, Unit::Type unitType, int numUni
 
    myArrayUnits[0].setMove();
 
+   myDummyUnit.init(Unit::blank, 0, 0);
+   myDummyUnit.killUnit();
+   myDummyUnit.getImage().collidable(false);
+
    return true;
 }
 
@@ -311,8 +315,8 @@ Unit& Player::findUnitReceivingDamage( DxGameSprite attackCursor )
       }
    }
 
-   Unit* pNullUnit;
-   return *pNullUnit;
+   return myDummyUnit;
+
 }
 
 

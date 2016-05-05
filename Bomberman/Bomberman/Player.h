@@ -84,6 +84,8 @@ private:
 
    vector<Unit> myArrayUnits;
 
+   Unit         myDummyUnit;
+
 public:
    bool  isAttacking;
    Unit  myPreviousSelectedUnit;

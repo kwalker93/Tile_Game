@@ -121,7 +121,7 @@ void Game::gameRun ( )
       {  
          if(myMouse.mouseButton(0))
          {
-            myPlayer1.unitClick( myMouse.getPoint() );
+            myManager.currentlyActingPlayer->unitClick( myMouse.getPoint() );
          }
 
          myGameUI.setCurrentUnit( myPlayer1.getSelectedUnit() );
@@ -137,26 +137,26 @@ void Game::gameRun ( )
 
          if(myKeyboard.keyDown(VK_DOWN))
          {
-            myPlayer1.down();
+            myManager.currentlyActingPlayer->down();
             keyCount++;
 
          }
          else if(myKeyboard.keyDown(VK_LEFT))
          {
             keyCount++;
-            myPlayer1.left();
+            myManager.currentlyActingPlayer->left();
 
          }
          else if(myKeyboard.keyDown(VK_RIGHT))
          {
             keyCount++;
-            myPlayer1.right();
+            myManager.currentlyActingPlayer->right();
 
          }
          else if(myKeyboard.keyDown(VK_UP))
          {
             keyCount++;
-            myPlayer1.up();
+            myManager.currentlyActingPlayer->up();
 
          }
          else
@@ -174,7 +174,7 @@ void Game::gameRun ( )
          // Stop all motion first, then check keyboard
          if( keyCount == 0 )
          {
-            myPlayer1.stopAllUnits();
+            myManager.currentlyActingPlayer->stopAllUnits();
          }
  
          myPlayer1.checkWaterCollisions( myCollisionManager, levelRef );
@@ -182,8 +182,8 @@ void Game::gameRun ( )
 
          if( myCollisionManager.worldCollisions( myPlayer1.getSelectedUnit().getSprite(), levelRef ) )
          {
-            myPlayer1.stopAllUnits();
-            myPlayer1.singleUnitCollision();
+            myManager.currentlyActingPlayer->stopAllUnits();
+            myManager.currentlyActingPlayer->singleUnitCollision();
          }
 
          if ( myManager.currentlyActingPlayer->isAttacking )
@@ -197,6 +197,7 @@ void Game::gameRun ( )
                }
 
                myManager.currentlyActingPlayer->isAttacking = false;
+               myManager.endCurrentTurn();
             }
             
          }
