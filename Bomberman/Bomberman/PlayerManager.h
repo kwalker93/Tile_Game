@@ -41,6 +41,8 @@ public:
    bool endCurrentTurn();  // signals the PlayerManager to move priority to the next player
    
    void toggleActivePlayerAttackPhase();
+   Player& getCurrentActivePlayer();
+   Player& getCurrentInactivePlayer();
    
    int  getNumElapsedTurns();
    int  checkUnitTotals();

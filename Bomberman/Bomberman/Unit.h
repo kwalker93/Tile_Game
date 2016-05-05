@@ -81,7 +81,7 @@ public:
    void setHitWaterFlag( bool newFlag );
 
    //Movement functions
-   void resetMovePoints() { myMovementPoints = myStartingMovePoints; }
+   void resetMovePoints() { myMovementPoints = 4; }
    void decMovePoints() { if( myMovementPoints > 0 ) { myMovementPoints--; } }
    void incMovePoints() { if( myMovementPoints < myStartingMovePoints ) { myMovementPoints++; } }
    

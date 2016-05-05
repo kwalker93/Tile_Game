@@ -74,6 +74,8 @@ public:
 
    Unit& Player::findUnitReceivingDamage( DxGameSprite attackCursor );
 
+   void resetUnitMoves( Unit& mySelectedUnit );
+
 // private methods/data
 private:
    Unit* myUnits;// The units that belong to this player

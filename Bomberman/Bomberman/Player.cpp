@@ -119,7 +119,7 @@ bool Player::unitDraw(IDXSPRITE spriteInterface)
       myArrayUnits[index].draw(spriteInterface);
    }
 
-   if( isAttacking = true )
+   if( isAttacking == true )
    {
       myAttackCursor.draw( spriteInterface );
    }
@@ -317,6 +317,11 @@ Unit& Player::findUnitReceivingDamage( DxGameSprite attackCursor )
 
    return myDummyUnit;
 
+}
+
+void Player::resetUnitMoves(Unit& selectedUnit)
+{
+   selectedUnit.resetMovePoints();
 }
 
 

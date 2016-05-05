@@ -119,114 +119,108 @@ void Game::gameRun ( )
 
       if ( SUCCEEDED(spriteInterface()->Begin( D3DXSPRITE_ALPHABLEND )) )
       {  
-         if(myMouse.mouseButton(0))
-         {
-            myManager.currentlyActingPlayer->unitClick( myMouse.getPoint() );
-         }
 
-         myGameUI.setCurrentUnit( myPlayer1.getSelectedUnit() );
+         myGameUI.setCurrentUnit( myManager.currentlyActingPlayer->getSelectedUnit() );
          myGameUI.setTurnCounter( myTurnCount );
 
          // sprite rendering...       
          myLevelBgnds.drawMySpriteMap( spriteInterface() );
-         
+
          myManager.draw( spriteInterface() );
          myGameUI.draw( spriteInterface() );
 
-         int keyCount = 0;       
-
-         if(myKeyboard.keyDown(VK_DOWN))
-         {
-            myManager.currentlyActingPlayer->down();
-            keyCount++;
-
-         }
-         else if(myKeyboard.keyDown(VK_LEFT))
-         {
-            keyCount++;
-            myManager.currentlyActingPlayer->left();
-
-         }
-         else if(myKeyboard.keyDown(VK_RIGHT))
-         {
-            keyCount++;
-            myManager.currentlyActingPlayer->right();
-
-         }
-         else if(myKeyboard.keyDown(VK_UP))
-         {
-            keyCount++;
-            myManager.currentlyActingPlayer->up();
-
-         }
-         else
-         {
-            keyCount = 0;
-         }
-
-         //TESTING IF
-         if(myKeyboard.keyPressed(VK_SHIFT))
-         {
-            myLevelBgnds.waterRising( myTurnCount );
-            myTurnCount++;
-         }
-
-         // Stop all motion first, then check keyboard
-         if( keyCount == 0 )
-         {
-            myManager.currentlyActingPlayer->stopAllUnits();
-         }
- 
          myPlayer1.checkWaterCollisions( myCollisionManager, levelRef );
          myPlayer2.checkWaterCollisions( myCollisionManager, levelRef );
 
-         if( myCollisionManager.worldCollisions( myPlayer1.getSelectedUnit().getSprite(), levelRef ) )
+         if( myCollisionManager.worldCollisions( myManager.currentlyActingPlayer->getSelectedUnit().getSprite(), levelRef ) )
          {
             myManager.currentlyActingPlayer->stopAllUnits();
             myManager.currentlyActingPlayer->singleUnitCollision();
          }
 
-         if ( myManager.currentlyActingPlayer->isAttacking )
+         if( myManager.currentlyActingPlayer->isAttacking == false )
          {
-            if( myKeyboard.keyPressed(VK_RETURN) )
+            if(myMouse.mouseButton(0))
             {
-               Unit& pUnit = myManager.currentlyActingPlayer->findUnitReceivingDamage(myManager.currentlyActingPlayer->myAttackCursor);
+               myManager.currentlyActingPlayer->unitClick( myMouse.getPoint() );
+            }
+
+            int keyCount = 0;       
+
+            if(myKeyboard.keyDown(VK_DOWN))
+            {
+               myManager.currentlyActingPlayer->down();
+               keyCount++;
+
+            }
+            else if(myKeyboard.keyDown(VK_LEFT))
+            {
+               keyCount++;
+               myManager.currentlyActingPlayer->left();
+
+            }
+            else if(myKeyboard.keyDown(VK_RIGHT))
+            {
+               keyCount++;
+               myManager.currentlyActingPlayer->right();
+
+            }
+            else if(myKeyboard.keyDown(VK_UP))
+            {
+               keyCount++;
+               myManager.currentlyActingPlayer->up();
+            }
+            else
+            {
+               keyCount = 0;
+            }
+
+            // Stop all motion first, then check keyboard
+            if( keyCount == 0 )
+            {
+               myManager.currentlyActingPlayer->stopAllUnits();
+            }
+
+            if(myKeyboard.keyDown(VK_RETURN))
+            {
+               myManager.getCurrentInactivePlayer().toggleAttackState();
+               myManager.getCurrentActivePlayer().resetUnitMoves(myManager.getCurrentActivePlayer().getSelectedUnit());
+            }
+         }
+         else if ( myManager.currentlyActingPlayer->isAttacking == true)
+         {
+            if(myKeyboard.keyDown(VK_DOWN))
+            {
+               myManager.currentlyActingPlayer->setAttackCursorDown();
+            }
+            else if(myKeyboard.keyDown(VK_LEFT))
+            {
+
+               myManager.currentlyActingPlayer->setAttackCursorLeft();
+
+            }
+            else if(myKeyboard.keyDown(VK_RIGHT))
+            {
+               myManager.currentlyActingPlayer->setAttackCursorRight();
+            }
+            else if(myKeyboard.keyDown(VK_UP))
+            {
+               myManager.currentlyActingPlayer->setAttackCursorUp();
+            }
+
+            if( myKeyboard.keyPressed(VK_SHIFT) )
+            {
+               Unit& pUnit = myManager.getCurrentInactivePlayer().findUnitReceivingDamage(myManager.currentlyActingPlayer->myAttackCursor);
                if ( myManager.currentlyActingPlayer->mySelectedUnit )
                {
                   pUnit.takingDamage(myManager.currentlyActingPlayer->mySelectedUnit.getDamage());
                }
 
-               myManager.currentlyActingPlayer->isAttacking = false;
+               myManager.getCurrentInactivePlayer().toggleAttackState();
                myManager.endCurrentTurn();
             }
-            
-         }
-
-         //make attacking collision check
-         //have a receiving unit and a giving unit stored/passed
-         //have rUnit take damage from gUnit
-         //endTurn or switch active player
-
-         /*                                      make currentPlayer variable               make inactivePlayer variable
-         if( myCollisionManager.attackCollisions( myPlayer1.getSelectedUnit().getSprite(), levelRef ) )
-         {
 
          }
-         */
-         
-
-         //for(int i = 0; i < 4; i++)
-         //{
-         //   if( myCollisionManager.spriteCollsions( myPlayer1.getSelectedUnit().getSprite(), myPlayer1.getArrayUnits().at(i).getSprite() ) )
-         //   {
-         //      myPlayer1.stopAllUnits();
-         //      myPlayer1.unitCollision();
-         //   }
-         //}
-
-         
-
-
 
          // stop rendering
          spriteInterface()->End();

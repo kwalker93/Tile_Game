@@ -109,6 +109,31 @@ void PlayerManager::toggleActivePlayerAttackPhase()
    }
 }
 
+Player& PlayerManager::getCurrentActivePlayer()
+{
+   if ( isPlayerOneActing )
+   {
+      return *playerOnePtr;
+   }  
+   else
+   {
+      return *playerTwoPtr;
+   }
+}
+
+Player& PlayerManager::getCurrentInactivePlayer()
+{
+   if ( isPlayerOneActing )
+   {
+      return *playerTwoPtr;
+   }  
+   else
+   {
+      return *playerOnePtr;
+   }
+}
+
+
 //========================================================================
 int PlayerManager::getNumElapsedTurns()
 {
