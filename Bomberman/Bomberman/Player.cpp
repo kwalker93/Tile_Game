@@ -330,6 +330,8 @@ void Player::resetUnits()
    {
       myArrayUnits[i].resetUnit();
    }
+
+   myUnitCount = 4;
 }
 
 
