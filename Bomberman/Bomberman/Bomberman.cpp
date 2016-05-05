@@ -83,7 +83,12 @@ bool Game::gameInit ( )
 bool Game::checkForNewGame()
 {
    if( GameMessages::startNewGame )
+   {
       gameInit();
+      myManager.playerOnePtr->resetUnits();
+      myManager.playerTwoPtr->resetUnits();
+   }
+
    return false;
 }
 
@@ -216,8 +221,6 @@ void Game::gameRun ( )
 
          }
 
-
-
          // stop rendering
          spriteInterface()->End();
       }
@@ -226,6 +229,8 @@ void Game::gameRun ( )
       device()->EndScene();
       device()->Present( NULL, NULL, NULL, NULL );
    }
+
+   checkForNewGame();
 
    //if the escape key is pressed, destroy
    if ( DxKeyboard::keyDown( VK_ESCAPE ) )

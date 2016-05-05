@@ -136,8 +136,6 @@ void Unit::resetUnit()
 	myHealth= 20;
    myAttackPower = 10;
 	myMovementPoints = 4; // Movement points
-	myPositionY = 0;
-	myPositionX = 0;
 	myCanMove = false;
    hitWater = false;
 }
