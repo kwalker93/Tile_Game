@@ -46,7 +46,6 @@ public:
    int  checkUnitTotals();
    void checkGameState(int result);
 
-
    int player1MessageBox();
    int player2MessageBox();
    int drawMessageBox();
@@ -56,6 +55,8 @@ private:
    int     elapsedTurns;
    bool    isPlayerOneActing;
 
+public:
+   Player* currentlyActingPlayer;
    Player* playerOnePtr;
    Player* playerTwoPtr;
 

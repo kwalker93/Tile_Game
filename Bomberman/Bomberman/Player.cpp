@@ -310,6 +310,9 @@ Unit& Player::findUnitReceivingDamage( DxGameSprite attackCursor )
          return myArrayUnits[i];
       }
    }
+
+   Unit* pNullUnit;
+   return *pNullUnit;
 }
 
 

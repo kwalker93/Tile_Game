@@ -14,6 +14,10 @@ class Unit
 {
 
 public:
+
+   operator bool ( void ) { return myHealth != 0; }
+
+
    Unit();
   ~Unit();
    Unit(int maxPower, int lowPower, int maxHealth, int positionY, int positionX );

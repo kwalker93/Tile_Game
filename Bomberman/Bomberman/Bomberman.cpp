@@ -90,6 +90,12 @@ bool Game::checkForNewGame()
 //=======================================================================
 void Game::gameRun ( )
 {
+   // check if the player is done with their turn.
+   if ( myKeyboard.keyDown(VK_RETURN) ) 
+   {
+      myManager.endCurrentTurn();
+   }
+
    checkForNewGame();
 
    // pre-render
@@ -178,6 +184,21 @@ void Game::gameRun ( )
          {
             myPlayer1.stopAllUnits();
             myPlayer1.singleUnitCollision();
+         }
+
+         if ( myManager.currentlyActingPlayer->isAttacking )
+         {
+            if( myKeyboard.keyPressed(VK_RETURN) )
+            {
+               Unit& pUnit = myManager.currentlyActingPlayer->findUnitReceivingDamage(myManager.currentlyActingPlayer->myAttackCursor);
+               if ( myManager.currentlyActingPlayer->mySelectedUnit )
+               {
+                  pUnit.takingDamage(myManager.currentlyActingPlayer->mySelectedUnit.getDamage());
+               }
+
+               myManager.currentlyActingPlayer->isAttacking = false;
+            }
+            
          }
 
          //make attacking collision check

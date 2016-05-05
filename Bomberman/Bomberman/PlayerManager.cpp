@@ -20,6 +20,15 @@ PlayerManager::~PlayerManager()
 bool PlayerManager::init( bool isPlayerOneMovingFirst, Player* ptrPOne,
                           Player* ptrPTwo )
 {
+   if ( isPlayerOneMovingFirst ) 
+   {
+      this->currentlyActingPlayer = ptrPOne;
+   }
+   else
+   {
+      this->currentlyActingPlayer = ptrPTwo;
+   }
+
    elapsedTurns = 0;
    isPlayerOneActing = isPlayerOneMovingFirst;
    
@@ -74,9 +83,15 @@ bool PlayerManager::endCurrentTurn()
    elapsedTurns++;
 
    if ( isPlayerOneActing )
+   {
       isPlayerOneActing = false;
+      this->currentlyActingPlayer = playerTwoPtr;
+   }
    else
+   {
       isPlayerOneActing = true;
+      this->currentlyActingPlayer = playerOnePtr;
+   }
 
    return true;
 }
