@@ -324,6 +324,14 @@ void Player::resetUnitMoves(Unit& selectedUnit)
    selectedUnit.resetMovePoints();
 }
 
+void Player::resetUnits()
+{
+   for(int i = 0; i < myArrayUnits.size(); i++)
+   {
+      myArrayUnits[i].resetUnit();
+   }
+}
+
 
 
 

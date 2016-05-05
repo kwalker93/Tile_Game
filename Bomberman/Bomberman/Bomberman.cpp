@@ -90,8 +90,6 @@ bool Game::checkForNewGame()
 //=======================================================================
 void Game::gameRun ( )
 {
-   checkForNewGame();
-
    // pre-render
    const int minMove = 2;
    TiledBackground&  levelRef = myLevelBgnds;
@@ -217,6 +215,8 @@ void Game::gameRun ( )
             }
 
          }
+
+
 
          // stop rendering
          spriteInterface()->End();

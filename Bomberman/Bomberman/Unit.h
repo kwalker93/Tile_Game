@@ -41,6 +41,7 @@ public:
    bool initUnitStrings();
    void update();
    void destroy();
+   void resetUnit();
    bool draw (IDXSPRITE spriteObj);
 
    void setMyPosition ( D3DXVECTOR3 pos );

@@ -12,11 +12,10 @@ Unit::Unit()
 	MY_MAX_HEALTH = 100;
 	MY_MAX_POWER = 10; 
 	myLowPowerLevel = 3;
-	myHealth= 75;
+	myHealth= 20;
 	myMovementPoints = 4; // Movement points
 	myPositionY = 0;
 	myPositionX = 0;
-	calculateDamage();
 	myCanMove = false;
    hitWater = false;
 }
@@ -125,6 +124,22 @@ void Unit::destroy()
    myPositionY = 0;
    myPositionX = 0;
    myImage.destroy();
+}
+
+//========================================================================================
+//
+void Unit::resetUnit()
+{
+   MY_MAX_HEALTH = 100;
+	MY_MAX_POWER = 10; 
+	myLowPowerLevel = 3;
+	myHealth= 20;
+   myAttackPower = 10;
+	myMovementPoints = 4; // Movement points
+	myPositionY = 0;
+	myPositionX = 0;
+	myCanMove = false;
+   hitWater = false;
 }
 
 //========================================================================================

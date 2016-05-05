@@ -31,7 +31,7 @@ public:
 
   bool init( bool playerOne, int x, int y, Unit::Type unitType, int numUnits = 4 );
    bool update();
-   bool shutdown();
+   bool shutdown();   
 
    // Getters
    Unit* getMyUnitArr();
@@ -75,6 +75,7 @@ public:
    Unit& Player::findUnitReceivingDamage( DxGameSprite attackCursor );
 
    void resetUnitMoves( Unit& mySelectedUnit );
+   void resetUnits();
 
 // private methods/data
 private:
