@@ -72,7 +72,7 @@ public:
    void setAttackCursorUp();
    void setAttackCursorDown();
 
-   Unit& Player::findUnitReceivingDamage( DxGameSprite attackCursor );
+   Unit& findUnitReceivingDamage( DxGameSprite attackCursor );
 
    void resetUnitMoves( );
    void resetUnits();
