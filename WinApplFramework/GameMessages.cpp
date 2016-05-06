@@ -15,6 +15,7 @@
 using namespace std;
 
 bool GameMessages::startNewGame;
+bool GameMessages::exitGame;
 
 //=======================================================================
 GameMessages::GameMessages ( )

@@ -408,6 +408,14 @@ LRESULT WinApplFramework::memberWndProc(HWND hWindow, UINT message, WPARAM wPara
    //      #define ID_FILE_NEWGAME                 40003   //
    //      #define ID_FILE_EXIT                    40004   // 
    //------------------------------------------------------//
+
+   if ( GameMessages::exitGame == true )
+   {
+      onDestroy();
+      myAppIsRunning = false;
+      return 0;
+   }
+
    if ( message == WM_COMMAND )
    {
       switch (LOWORD(wParam))

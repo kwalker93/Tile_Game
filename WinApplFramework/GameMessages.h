@@ -41,9 +41,11 @@ public:
    int customMessageBox( LPCSTR message, LPCSTR title, int style );
    
    static bool startNewGame;
+   static bool exitGame;
+
    static bool getNewGameStatus(){ return GameMessages::startNewGame; }
    static void signalStartNewGame(){ GameMessages::startNewGame = true; }
-
+   static void signalExitGame(){ GameMessages::exitGame = true; }
 }; 
 
 #endif
