@@ -171,6 +171,11 @@ void PlayerManager::checkGameState(int result)
    {
       GameMessages::signalStartNewGame();
    }
+   else if ( result == 7 )  //7 represents "NO" from the message boxes
+   {
+      GameMessages::signalExitGame();
+   }
+
 }
 
 //=======================================================================
