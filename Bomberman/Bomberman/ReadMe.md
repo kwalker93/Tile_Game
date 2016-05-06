@@ -1,5 +1,3 @@
-
-![Alt Text](kWalker93/Tile_Game/GameArt/GameLogo.PNG)
 ![gamelogo](https://cloud.githubusercontent.com/assets/17038373/15061575/914427b6-12fc-11e6-91e2-8367807b9d4b.PNG)
 
 
