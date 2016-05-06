@@ -1,0 +1,43 @@
+# Base read file. This file will call any sprite sheets needed, 
+# load them, and allow us to create animations from specified
+# frames
+
+
+@file spritesheet.png
+
+#Level	
+GRASS	                        0        140    4  128  128
+WATER	                        0          4  140  128  128
+FOREST                          0        412    4  128  128
+BLANK				0	550  150  128  128
+
+#Brown Squirrels
+
+ACORN-BROWN		0	140  140  128  128
+LARGE-BROWN		0	  4  276  128  128
+MEDIUM-BROWN		0	412  276  128  128
+SMALL-BROWN		0	276  412  128  128
+
+
+
+#Grey Squirrels
+
+ACORN-GREY		0	276  140  128  128
+LARGE-GREY		0	140  276  128  128
+MEDIUM-GREY		0	  4  412  128  128
+SMALL-GREY		0	412  412  128  128
+
+
+
+#Orange Squirrels
+
+ACORN-ORANGE		0	412  140  128  128
+LARGE-ORANGE		0	276  276  128  128
+MEDIUM-ORANGE		0	140  412  128  128
+SMALL-ORANGE		0	548    4  128  128
+
+
+
+@file reticule.png
+
+ATTACK-CURSOR		0	  0    0  128  128
