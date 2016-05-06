@@ -1,5 +1,5 @@
 
-![GameLogo.PNG](https://raw.github.com/kwalker93/Tile_Game/master/GameArt/GameLogo.PNG)
+![GameLogo](https://raw.github.com/kwalker93/Tile_Game/master/GameArt/GameLogo.PNG)
 
 ============================Team Members Information Begins======================================================================================
 
