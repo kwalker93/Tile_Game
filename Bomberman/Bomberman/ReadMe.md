@@ -32,6 +32,9 @@ Stump Tile- Is the Collision where the units aren't able to cross or step on.
 
 ============================Unit in Game=========================================
 
+![squirrel](https://cloud.githubusercontent.com/assets/17038373/15063101/b0f1db84-130c-11e6-9f14-8da3ec58f362.PNG)
+![squirrel2](https://cloud.githubusercontent.com/assets/17038373/15063100/b0f2099c-130c-11e6-9725-c495b5d63ed3.PNG)
+
 There are Two types of Units in the Game Brown Medium Squirrel and Grey Medium Squirrel. 
 All Squirrels will have the saame stats, which include
 
