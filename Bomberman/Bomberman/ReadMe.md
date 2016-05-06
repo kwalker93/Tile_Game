@@ -1,22 +1,19 @@
 
-![Alt Text](Tile_Game/GameArt/GameLogo.PNG)
+![Alt Text](kWalker93/Tile_Game/GameArt/GameLogo.PNG)
 
 
-============================Team Members Information Begins======================================================================================
+============================Team Members Information Begins=================
 
 The game is written in c++ and is based on Directx 9.
 Programmed By: 
 	Nathan Contreras, Jacinto Molina, Kellen Walker 
 
-
-
-============================Game Concept======================================================================================
-
+============================Game Concept============================
 Both Player will have a team of Fighting Squirrels that will be pinned against each other to the death in a turn based arena 
-fighting. The game software is to outlast your opponent’s team of squirrels and make sure your team survives while the other 
+fighting. The game software is to outlast your opponentâ€™s team of squirrels and make sure your team survives while the other 
 team is destroyed. The first player to lose all of his Game team Loses.
 
-============================GamePlay======================================================================================
+============================GamePlay=======================================
 --Game
 This is a Turn based Game so every player will take turns after wasting their 4 movement points.
 The Player will waster their momvements points by moving you'er unit.
@@ -26,13 +23,13 @@ To move the Unit the player will have to click on the unit and that he wants to 
 The Water tiles will start to flood the map after round 10 and all the units in the water tile will die.
 This is done to pin the two teams closer to each other in combat.
 
-============================Tile Types begin=======================================================================
+============================Tile Types begin=======================================
 	
 Water Tile- Is the Death Tile that kills any units on tile while the level is flooding.
 Grass Tile- Is the main tile in the game where the units will be able to walk on.
 Stump Tile- Is the Collision where the units aren't able to cross or step on.
 
-============================Unit in Game=======================================================================
+============================Unit in Game=========================================
 There are Two types of Units in the Game Brown Medium Squirrel and Grey Medium Squirrel. 
 All Squirrels will have the saame stats, which include
 
@@ -43,7 +40,7 @@ All Squirrels will have the saame stats, which include
 4  Movement-Points  
 	- There are 4 movement points in the round each unit will decrament from the movement points.
 
-============================Class Info Begins======================================================================================
+============================Class Info Begins=====================================================
 
 					Program Classes
 
@@ -56,22 +53,22 @@ Unit class -
 	unit class include what type of unit it is, its attack power, its health, when it takes damage,
 	or its position in the Game. Unit class will decide if the unit will also remove an action point from the player once moved.
 
-Collision Manager Class –
+Collision Manager Class â€“
 	Manages all the collisions in the game between our game object.
 
-TileDescParser Class – 
+TileDescParser Class â€“ 
 	Reads in a txt file that will have certain values that will affect the Game level and the game itself. 
 
-Player class – 
-	The Player class is in control of their unit’s movements and attacks in the game. The player class will 
-	also only affect the unit selected by the player’s computer mouse. The player class also controls the collisions 
+Player class â€“ 
+	The Player class is in control of their unitâ€™s movements and attacks in the game. The player class will 
+	also only affect the unit selected by the playerâ€™s computer mouse. The player class also controls the collisions 
 	by the units in the game and will determine if the units are able to move to a certain location.
 
-TiledBackGround Class – 
+TiledBackGround Class â€“ 
 	Generates a tile background that is formatted to be able to be drowned in the game.
 
-GameUI Class – 
-	will have control over what the player User Interface and will display the selected unit’s stats. 
+GameUI Class â€“ 
+	will have control over what the player User Interface and will display the selected unitâ€™s stats. 
 	It will also display the movement points the player has remaining before the players turn is over.
 
 ========================================================================
