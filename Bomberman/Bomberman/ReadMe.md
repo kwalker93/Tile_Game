@@ -25,6 +25,10 @@ The Water tiles will start to flood the map after round 10 and all the units in 
 This is done to pin the two teams closer to each other in combat.
 
 ============================Tile Types begin=======================================
+![grass](https://cloud.githubusercontent.com/assets/17038373/15063122/d66fc718-130c-11e6-8bd4-02beab6341a1.PNG)
+![stump](https://cloud.githubusercontent.com/assets/17038373/15063123/d672ceae-130c-11e6-999b-125c1c1819c3.PNG)
+![watertile](https://cloud.githubusercontent.com/assets/17038373/15063121/d66f8a0a-130c-11e6-9703-38a3cd4a8443.PNG)
+
 	
 Water Tile- Is the Death Tile that kills any units on tile while the level is flooding.
 Grass Tile- Is the main tile in the game where the units will be able to walk on.
