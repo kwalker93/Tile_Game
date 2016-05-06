@@ -9,11 +9,13 @@ Programmed By:
 	Nathan Contreras, Jacinto Molina, Kellen Walker 
 
 ============================Game Concept============================
+
 Both Player will have a team of Fighting Squirrels that will be pinned against each other to the death in a turn based arena 
 fighting. The game software is to outlast your opponent’s team of squirrels and make sure your team survives while the other 
 team is destroyed. The first player to lose all of his Game team Loses.
 
 ============================GamePlay=======================================
+
 --Game
 This is a Turn based Game so every player will take turns after wasting their 4 movement points.
 The Player will waster their momvements points by moving you'er unit.
@@ -30,6 +32,7 @@ Grass Tile- Is the main tile in the game where the units will be able to walk on
 Stump Tile- Is the Collision where the units aren't able to cross or step on.
 
 ============================Unit in Game=========================================
+
 There are Two types of Units in the Game Brown Medium Squirrel and Grey Medium Squirrel. 
 All Squirrels will have the saame stats, which include
 
