@@ -185,14 +185,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\DxSound.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\DxSoundIdentifier.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\DxSurface.cpp"
 				>
 			</File>
@@ -202,22 +194,6 @@
 			</File>
 			<File
 				RelativePath=".\DxTexture.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\fmod.cs"
-				>
-			</File>
-			<File
-				RelativePath=".\fmod_dsp.cs"
-				>
-			</File>
-			<File
-				RelativePath=".\fmod_errors.cs"
-				>
-			</File>
-			<File
-				RelativePath=".\loadFMOD.cpp"
 				>
 			</File>
 			<File
@@ -291,14 +267,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\DxSound.h"
-				>
-			</File>
-			<File
-				RelativePath=".\DxSoundIdentifier.h"
-				>
-			</File>
-			<File
 				RelativePath=".\DxSurface.h"
 				>
 			</File>
@@ -312,30 +280,6 @@
 			</File>
 			<File
 				RelativePath=".\DxTypes.h"
-				>
-			</File>
-			<File
-				RelativePath=".\fmod.h"
-				>
-			</File>
-			<File
-				RelativePath=".\fmod.hpp"
-				>
-			</File>
-			<File
-				RelativePath=".\fmod_codec.h"
-				>
-			</File>
-			<File
-				RelativePath=".\fmod_common.h"
-				>
-			</File>
-			<File
-				RelativePath=".\fmod_dsp.h"
-				>
-			</File>
-			<File
-				RelativePath=".\loadFMOD.h"
 				>
 			</File>
 			<File

@@ -48,12 +48,6 @@ bool Game::gameInit ( )
    myMouse.mouseInit( hWnd(), device() );
    myCollisionManager.init();
 
-   //sound init
-
-   mySoundInterface = DxSound::getInterface( DxSound::fmod );
-   mySoundInterface->init( hWnd() );
-   mySoundInterface->load( _T("Assets\\HamsterDance.wav"), mySound );
-   mySoundInterface->loop( mySound );
 
 
    //Level init

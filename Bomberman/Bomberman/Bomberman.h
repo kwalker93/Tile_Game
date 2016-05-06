@@ -18,8 +18,6 @@
 #include "Bomberman/TiledBackground.h"
 #include "Bomberman/Kitty.h"
 #include "Bomberman/Kitty.h"
-#include "DxFramework/DxSound.h"
-#include "DxFramework/DxSoundIdentifier.h"
 #include "Bomberman/CollisionManager.h"
 #include "Bomberman/Unit.h" 
 #include "Bomberman/GameUI.h"
@@ -74,9 +72,6 @@ private:
    D3DXVECTOR3          myPlayerLastPos;
    RECT                 myBgRect;
    CollisionManager     myCollisionManager;
-
-   DxSound*             mySoundInterface;
-   DxSoundIdentifier    mySound;
 
    GameUI               myGameUI;
 

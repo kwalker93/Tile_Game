@@ -5,8 +5,6 @@
 #include "DxFramework/DxImage.h"
 #include "DxFramework/DxGameSprite.h"
 #include "DxFramework/DxAnimation.h"
-#include "DxFramework/DxSound.h"
-#include "DxFramework/DxSoundIdentifier.h"
 #include "Utilities/TTypes.h"
 
 class Kitty
@@ -84,9 +82,6 @@ private:
 
    bool           myFirstTimeFlag;
 
-   DxSound* mySoundInterface;
-   DxSoundIdentifier mySound;
-   DxSoundIdentifier myDeath;
 
 };
 #endif //_TESTAPP_H_
